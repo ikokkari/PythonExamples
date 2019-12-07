@@ -6,4 +6,4 @@ All computer science instructors are free to use and adapt these examples for th
 
 The Python example programs are distributed under GNU General Public License, Version 3. Rights for all other files belong to their respective owners.
 
-For questions and comments, contact me at ilkka.kokkarinen@gmail.com.
+The author welcomes feedback by email at ilkka.kokkarinen@gmail.com from computer science instructors who use these examples in their courses.
