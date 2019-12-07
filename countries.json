@@ -1,0 +1,2540 @@
+[
+    {
+        "Name": "Afghanistan",
+        "Population": "35623235 people",
+        "Continent": "Asia",
+        "Area": "652230 kilometers squared",
+        "GDP": "19331286549 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "earthquake",
+            "flood"
+        ]
+    },
+    {
+        "Name": "Albania",
+        "Population": "3248655 people",
+        "Continent": "Europe",
+        "Area": "28748 kilometers squared",
+        "GDP": "11398392444 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "earthquake",
+            "flood",
+            "tsunami"
+        ]
+    },
+    {
+        "Name": "Algeria",
+        "Population": "37473690 people",
+        "Continent": "Africa",
+        "Area": "2381741 kilometers squared",
+        "GDP": "166838617796 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "flood",
+            "landslide"
+        ]
+    },
+    {
+        "Name": "American Samoa",
+        "Population": "54719 people",
+        "Continent": "Oceania",
+        "Area": "199 kilometers squared",
+        "GDP": "333800000 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Andorra",
+        "Population": "85458 people",
+        "Continent": "Europe",
+        "Area": "468 kilometers squared",
+        "GDP": "3248924588 US dollars per year",
+        "NaturalHazards": [
+            "avalanche"
+        ]
+    },
+    {
+        "Name": "Angola",
+        "Population": "21274503 people",
+        "Continent": "Africa",
+        "Area": "1246700 kilometers squared",
+        "GDP": "102626929544 US dollars per year",
+        "NaturalHazards": [
+            "flood"
+        ]
+    },
+    {
+        "Name": "Anguilla",
+        "Population": "16086 people",
+        "Continent": "NorthAmerica",
+        "Area": "91 kilometers squared",
+        "GDP": "211174149 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Antigua and Barbuda",
+        "Population": "91295 people",
+        "Continent": "NorthAmerica",
+        "Area": "442 kilometers squared",
+        "GDP": "1259259259 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Argentina",
+        "Population": "41827217 people",
+        "Continent": "SouthAmerica",
+        "Area": "2766890 kilometers squared",
+        "GDP": "583168571071 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "flood"
+        ]
+    },
+    {
+        "Name": "Armenia",
+        "Population": "3125790 people",
+        "Continent": "Asia",
+        "Area": "29743 kilometers squared",
+        "GDP": "10529182498 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "earthquake"
+        ]
+    },
+    {
+        "Name": "Aruba",
+        "Population": "109118 people",
+        "Continent": "NorthAmerica",
+        "Area": "180 kilometers squared",
+        "GDP": "2584463687 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Australia",
+        "Population": "23502754 people",
+        "Continent": "Oceania",
+        "Area": "7741220 kilometers squared",
+        "GDP": "1339140527498 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "tropical cyclone",
+            "wildfire"
+        ]
+    },
+    {
+        "Name": "Austria",
+        "Population": "8452081 people",
+        "Continent": "Europe",
+        "Area": "83871 kilometers squared",
+        "GDP": "376950249528 US dollars per year",
+        "NaturalHazards": [
+            "avalanche",
+            "earthquake",
+            "landslide"
+        ]
+    },
+    {
+        "Name": "Azerbaijan",
+        "Population": "9643103 people",
+        "Continent": "Asia",
+        "Area": "86600 kilometers squared",
+        "GDP": "53047140347 US dollars per year",
+        "NaturalHazards": [
+            "drought"
+        ]
+    },
+    {
+        "Name": "Bahamas",
+        "Population": "359142 people",
+        "Continent": "NorthAmerica",
+        "Area": "13880 kilometers squared",
+        "GDP": "8853519100 US dollars per year",
+        "NaturalHazards": [
+            "flood",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Bahrain",
+        "Population": "1389036 people",
+        "Continent": "Asia",
+        "Area": "760 kilometers squared",
+        "GDP": "31125851063 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "Bangladesh",
+        "Population": "156380192 people",
+        "Continent": "Asia",
+        "Area": "143998 kilometers squared",
+        "GDP": "195078665827 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "flood",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Barbados",
+        "Population": "275746 people",
+        "Continent": "NorthAmerica",
+        "Area": "430 kilometers squared",
+        "GDP": "4385250000 US dollars per year",
+        "NaturalHazards": [
+            "landslide",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Belarus",
+        "Population": "9469915 people",
+        "Continent": "Europe",
+        "Area": "207600 kilometers squared",
+        "GDP": "54608962634 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Belgium",
+        "Population": "10841093 people",
+        "Continent": "Europe",
+        "Area": "30528 kilometers squared",
+        "GDP": "455085726960 US dollars per year",
+        "NaturalHazards": [
+            "flood"
+        ]
+    },
+    {
+        "Name": "Belize",
+        "Population": "337209 people",
+        "Continent": "NorthAmerica",
+        "Area": "22966 kilometers squared",
+        "GDP": "1752861127 US dollars per year",
+        "NaturalHazards": [
+            "flood",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Benin",
+        "Population": "9865290 people",
+        "Continent": "Africa",
+        "Area": "112622 kilometers squared",
+        "GDP": "8290986804 US dollars per year",
+        "NaturalHazards": [
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "Bermuda",
+        "Population": "69839 people",
+        "Continent": "NorthAmerica",
+        "Area": "54 kilometers squared",
+        "GDP": "5573710000 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Bhutan",
+        "Population": "773646 people",
+        "Continent": "Asia",
+        "Area": "38394 kilometers squared",
+        "GDP": "2057947621 US dollars per year",
+        "NaturalHazards": [
+            "landslide"
+        ]
+    },
+    {
+        "Name": "Bolivia",
+        "Population": "10573218 people",
+        "Continent": "SouthAmerica",
+        "Area": "1098581 kilometers squared",
+        "GDP": "32997684515 US dollars per year",
+        "NaturalHazards": [
+            "flood"
+        ]
+    },
+    {
+        "Name": "Bosnia and Herzegovina",
+        "Population": "3726569 people",
+        "Continent": "Europe",
+        "Area": "51197 kilometers squared",
+        "GDP": "16191716214 US dollars per year",
+        "NaturalHazards": [
+            "earthquake"
+        ]
+    },
+    {
+        "Name": "Botswana",
+        "Population": "2095201 people",
+        "Continent": "Africa",
+        "Area": "581730 kilometers squared",
+        "GDP": "14389717321 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "Brazil",
+        "Population": "201700544 people",
+        "Continent": "SouthAmerica",
+        "Area": "8514877 kilometers squared",
+        "GDP": "1774724818900 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "flood"
+        ]
+    },
+    {
+        "Name": "British Virgin Islands",
+        "Population": "23786 people",
+        "Continent": "NorthAmerica",
+        "Area": "151 kilometers squared",
+        "GDP": "909189592 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Brunei",
+        "Population": "426570 people",
+        "Continent": "Asia",
+        "Area": "5765 kilometers squared",
+        "GDP": "12930394937 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "flood",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Bulgaria",
+        "Population": "7300838 people",
+        "Continent": "Europe",
+        "Area": "110879 kilometers squared",
+        "GDP": "50199117547 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "landslide"
+        ]
+    },
+    {
+        "Name": "Burkina Faso",
+        "Population": "18556912 people",
+        "Continent": "Africa",
+        "Area": "274200 kilometers squared",
+        "GDP": "10678201939 US dollars per year",
+        "NaturalHazards": [
+            "drought"
+        ]
+    },
+    {
+        "Name": "Burundi",
+        "Population": "9069456 people",
+        "Continent": "Africa",
+        "Area": "27830 kilometers squared",
+        "GDP": "3097324739 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "flood",
+            "landslide"
+        ]
+    },
+    {
+        "Name": "Cambodia",
+        "Population": "14835553 people",
+        "Continent": "Asia",
+        "Area": "181035 kilometers squared",
+        "GDP": "18049954289 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "flood"
+        ]
+    },
+    {
+        "Name": "Cameroon",
+        "Population": "21362945 people",
+        "Continent": "Africa",
+        "Area": "475440 kilometers squared",
+        "GDP": "28415950981 US dollars per year",
+        "NaturalHazards": [
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Canada",
+        "Population": "35309555 people",
+        "Continent": "NorthAmerica",
+        "Area": "9984670 kilometers squared",
+        "GDP": "1550536520141 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Cape Verde",
+        "Population": "515134 people",
+        "Continent": "Africa",
+        "Area": "4033 kilometers squared",
+        "GDP": "1827021562 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "dust storm",
+            "earthquake",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Cayman Islands",
+        "Population": "54914 people",
+        "Continent": "NorthAmerica",
+        "Area": "264 kilometers squared",
+        "GDP": "3207032512 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Central African Republic",
+        "Population": "4759950 people",
+        "Continent": "Africa",
+        "Area": "622984 kilometers squared",
+        "GDP": "1583776759 US dollars per year",
+        "NaturalHazards": [
+            "dust storm",
+            "flood"
+        ]
+    },
+    {
+        "Name": "Chad",
+        "Population": "12458071 people",
+        "Continent": "Africa",
+        "Area": "1284000 kilometers squared",
+        "GDP": "10888798113 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "dust storm",
+            "locust plague"
+        ]
+    },
+    {
+        "Name": "Chile",
+        "Population": "17722868 people",
+        "Continent": "SouthAmerica",
+        "Area": "756102 kilometers squared",
+        "GDP": "240796388428 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "tsunami",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "China",
+        "Population": "1364773138 people",
+        "Continent": "Asia",
+        "Area": "9596960 kilometers squared",
+        "GDP": "11007720594138 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "earthquake",
+            "flood",
+            "landslide",
+            "land subsidence",
+            "tropical cyclone",
+            "tsunami"
+        ]
+    },
+    {
+        "Name": "Christmas Island",
+        "Population": "1513 people",
+        "Continent": "Asia",
+        "Area": "135 kilometers squared",
+        "GDP": "N/A",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Cocos Keeling Islands",
+        "Population": "550 people",
+        "Continent": "Asia",
+        "Area": "14 kilometers squared",
+        "GDP": "N/A",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Colombia",
+        "Population": "48770570 people",
+        "Continent": "SouthAmerica",
+        "Area": "1138910 kilometers squared",
+        "GDP": "292080155633 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "earthquake",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Comoros",
+        "Population": "812608 people",
+        "Continent": "Africa",
+        "Area": "2235 kilometers squared",
+        "GDP": "565689764 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Cook Islands",
+        "Population": "10134 people",
+        "Continent": "Oceania",
+        "Area": "236 kilometers squared",
+        "GDP": "247759558 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Costa Rica",
+        "Population": "4924721 people",
+        "Continent": "NorthAmerica",
+        "Area": "51100 kilometers squared",
+        "GDP": "54136834090 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "flood",
+            "landslide",
+            "tropical cyclone",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Croatia",
+        "Population": "4369961 people",
+        "Continent": "Europe",
+        "Area": "56594 kilometers squared",
+        "GDP": "48732003674 US dollars per year",
+        "NaturalHazards": [
+            "earthquake"
+        ]
+    },
+    {
+        "Name": "Cuba",
+        "Population": "11238373 people",
+        "Continent": "NorthAmerica",
+        "Area": "110860 kilometers squared",
+        "GDP": "77149700000 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Curacao",
+        "Population": "146836 people",
+        "Continent": "NorthAmerica",
+        "Area": "444 kilometers squared",
+        "GDP": "2871000000 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Cyprus",
+        "Population": "1153409 people",
+        "Continent": "Asia",
+        "Area": "9251 kilometers squared",
+        "GDP": "19559942331 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "earthquake"
+        ]
+    },
+    {
+        "Name": "Czech Republic",
+        "Population": "10611300 people",
+        "Continent": "Europe",
+        "Area": "78867 kilometers squared",
+        "GDP": "185156359571 US dollars per year",
+        "NaturalHazards": [
+            "flood"
+        ]
+    },
+    {
+        "Name": "Democratic Republic of the Congo",
+        "Population": "73291196 people",
+        "Continent": "Africa",
+        "Area": "2344858 kilometers squared",
+        "GDP": "35237742278 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "flood",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Denmark",
+        "Population": "5628958 people",
+        "Continent": "Europe",
+        "Area": "43094 kilometers squared",
+        "GDP": "295091333721 US dollars per year",
+        "NaturalHazards": [
+            "flood"
+        ]
+    },
+    {
+        "Name": "Djibouti",
+        "Population": "957625 people",
+        "Continent": "Africa",
+        "Area": "23200 kilometers squared",
+        "GDP": "1727000000 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "earthquake",
+            "flood"
+        ]
+    },
+    {
+        "Name": "Dominica",
+        "Population": "73449 people",
+        "Continent": "NorthAmerica",
+        "Area": "751 kilometers squared",
+        "GDP": "517218962 US dollars per year",
+        "NaturalHazards": [
+            "flood",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Dominican Republic",
+        "Population": "10431820 people",
+        "Continent": "NorthAmerica",
+        "Area": "48670 kilometers squared",
+        "GDP": "68102618092 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "flood",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "East Timor",
+        "Population": "1261910 people",
+        "Continent": "Asia",
+        "Area": "14874 kilometers squared",
+        "GDP": "1441718600 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "flood",
+            "landslide",
+            "tropical cyclone",
+            "tsunami"
+        ]
+    },
+    {
+        "Name": "Ecuador",
+        "Population": "15255149 people",
+        "Continent": "SouthAmerica",
+        "Area": "283561 kilometers squared",
+        "GDP": "100176808000 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "earthquake",
+            "flood",
+            "landslide",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Egypt",
+        "Population": "86787634 people",
+        "Continent": "Africa",
+        "Area": "1001450 kilometers squared",
+        "GDP": "330778550716 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "dust storm",
+            "earthquake",
+            "flood",
+            "landslide"
+        ]
+    },
+    {
+        "Name": "El Salvador",
+        "Population": "6342991 people",
+        "Continent": "NorthAmerica",
+        "Area": "21041 kilometers squared",
+        "GDP": "25850200000 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "tropical cyclone",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Equatorial Guinea",
+        "Population": "781773 people",
+        "Continent": "Africa",
+        "Area": "28051 kilometers squared",
+        "GDP": "12202323684 US dollars per year",
+        "NaturalHazards": [
+            "flood"
+        ]
+    },
+    {
+        "Name": "Eritrea",
+        "Population": "5914510 people",
+        "Continent": "Africa",
+        "Area": "117600 kilometers squared",
+        "GDP": "2607739837 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "locust plague"
+        ]
+    },
+    {
+        "Name": "Estonia",
+        "Population": "1337821 people",
+        "Continent": "Europe",
+        "Area": "45228 kilometers squared",
+        "GDP": "22459443273 US dollars per year",
+        "NaturalHazards": [
+            "flood"
+        ]
+    },
+    {
+        "Name": "Ethiopia",
+        "Population": "90178951 people",
+        "Continent": "Africa",
+        "Area": "1127127 kilometers squared",
+        "GDP": "61539711686 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "earthquake",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Falkland Islands",
+        "Population": "2840 people",
+        "Continent": "SouthAmerica",
+        "Area": "12173 kilometers squared",
+        "GDP": "105100000 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Faroe Islands",
+        "Population": "49709 people",
+        "Continent": "Europe",
+        "Area": "1393 kilometers squared",
+        "GDP": "2613458940 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Fiji",
+        "Population": "889587 people",
+        "Continent": "Oceania",
+        "Area": "18274 kilometers squared",
+        "GDP": "4425503074 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Finland",
+        "Population": "5434241 people",
+        "Continent": "Europe",
+        "Area": "338145 kilometers squared",
+        "GDP": "231949650659 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "France",
+        "Population": "64101308 people",
+        "Continent": "Europe",
+        "Area": "551500 kilometers squared",
+        "GDP": "2418835532882 US dollars per year",
+        "NaturalHazards": [
+            "avalanche",
+            "drought",
+            "flood",
+            "wildfire"
+        ]
+    },
+    {
+        "Name": "French Guiana",
+        "Population": "249408 people",
+        "Continent": "SouthAmerica",
+        "Area": "91000 kilometers squared",
+        "GDP": "1551000000 US dollars per year",
+        "NaturalHazards": [
+            "flood",
+            "thunderstorm"
+        ]
+    },
+    {
+        "Name": "French Polynesia",
+        "Population": "282482 people",
+        "Continent": "Oceania",
+        "Area": "4167 kilometers squared",
+        "GDP": "3447543137 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Gabon",
+        "Population": "1625091 people",
+        "Continent": "Africa",
+        "Area": "267667 kilometers squared",
+        "GDP": "14262032470 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Gambia",
+        "Population": "1924758 people",
+        "Continent": "Africa",
+        "Area": "11295 kilometers squared",
+        "GDP": "938794719 US dollars per year",
+        "NaturalHazards": [
+            "drought"
+        ]
+    },
+    {
+        "Name": "Gaza Strip",
+        "Population": "1763387 people",
+        "Continent": "Asia",
+        "Area": "360 kilometers squared",
+        "GDP": "768000000 US dollars per year",
+        "NaturalHazards": [
+            "drought"
+        ]
+    },
+    {
+        "Name": "Georgia",
+        "Population": "4251727 people",
+        "Continent": "Asia",
+        "Area": "69700 kilometers squared",
+        "GDP": "13965385801 US dollars per year",
+        "NaturalHazards": [
+            "earthquake"
+        ]
+    },
+    {
+        "Name": "Germany",
+        "Population": "81625599 people",
+        "Continent": "Europe",
+        "Area": "357022 kilometers squared",
+        "GDP": "3363446822668 US dollars per year",
+        "NaturalHazards": [
+            "flood"
+        ]
+    },
+    {
+        "Name": "Ghana",
+        "Population": "26721130 people",
+        "Continent": "Africa",
+        "Area": "238533 kilometers squared",
+        "GDP": "37543361203 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "Gibraltar",
+        "Population": "29111 people",
+        "Continent": "Europe",
+        "Area": "6 kilometers squared",
+        "GDP": "1106000000 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Greece",
+        "Population": "11470255 people",
+        "Continent": "Europe",
+        "Area": "131940 kilometers squared",
+        "GDP": "194851319174 US dollars per year",
+        "NaturalHazards": [
+            "earthquake"
+        ]
+    },
+    {
+        "Name": "Greenland",
+        "Population": "57728 people",
+        "Continent": "NorthAmerica",
+        "Area": "2166086 kilometers squared",
+        "GDP": "2441226080 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Grenada",
+        "Population": "106130 people",
+        "Continent": "NorthAmerica",
+        "Area": "344 kilometers squared",
+        "GDP": "984074074 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Guadeloupe",
+        "Population": "467335 people",
+        "Continent": "NorthAmerica",
+        "Area": "1780 kilometers squared",
+        "GDP": "3513000000 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Guam",
+        "Population": "186562 people",
+        "Continent": "Oceania",
+        "Area": "544 kilometers squared",
+        "GDP": "2773000000 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Guatemala",
+        "Population": "15924031 people",
+        "Continent": "NorthAmerica",
+        "Area": "108889 kilometers squared",
+        "GDP": "63794152886 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "tropical cyclone",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Guernsey",
+        "Population": "65605 people",
+        "Continent": "Europe",
+        "Area": "78 kilometers squared",
+        "GDP": "2742000000 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Guinea",
+        "Population": "11034203 people",
+        "Continent": "Africa",
+        "Area": "245857 kilometers squared",
+        "GDP": "6699203543 US dollars per year",
+        "NaturalHazards": [
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "Guinea-Bissau",
+        "Population": "1646870 people",
+        "Continent": "Africa",
+        "Area": "36125 kilometers squared",
+        "GDP": "1056776883 US dollars per year",
+        "NaturalHazards": [
+            "dust storm",
+            "wildfire"
+        ]
+    },
+    {
+        "Name": "Guyana",
+        "Population": "760972 people",
+        "Continent": "SouthAmerica",
+        "Area": "214969 kilometers squared",
+        "GDP": "3166029055 US dollars per year",
+        "NaturalHazards": [
+            "flood"
+        ]
+    },
+    {
+        "Name": "Haiti",
+        "Population": "10521433 people",
+        "Continent": "NorthAmerica",
+        "Area": "27750 kilometers squared",
+        "GDP": "8765329889 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "earthquake",
+            "flood",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Honduras",
+        "Population": "8231762 people",
+        "Continent": "NorthAmerica",
+        "Area": "112090 kilometers squared",
+        "GDP": "20420967148 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "flood",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Hong Kong",
+        "Population": "7352945 people",
+        "Continent": "Asia",
+        "Area": "1104 kilometers squared",
+        "GDP": "309234500374 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Hungary",
+        "Population": "9918377 people",
+        "Continent": "Europe",
+        "Area": "93028 kilometers squared",
+        "GDP": "121715203207 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Iceland",
+        "Population": "335631 people",
+        "Continent": "Europe",
+        "Area": "103000 kilometers squared",
+        "GDP": "16598494830 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "India",
+        "Population": "1291780156 people",
+        "Continent": "Asia",
+        "Area": "3287263 kilometers squared",
+        "GDP": "2095398349095 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "earthquake",
+            "flood",
+            "thunderstorm",
+            "tsunami"
+        ]
+    },
+    {
+        "Name": "Indonesia",
+        "Population": "249563467 people",
+        "Continent": "Asia",
+        "Area": "1904569 kilometers squared",
+        "GDP": "861933968740 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "earthquake",
+            "flood",
+            "tsunami",
+            "volcano",
+            "wildfire"
+        ]
+    },
+    {
+        "Name": "Iran",
+        "Population": "77176386 people",
+        "Continent": "Asia",
+        "Area": "1648000 kilometers squared",
+        "GDP": "425326068422 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "dust storm",
+            "earthquake",
+            "flood"
+        ]
+    },
+    {
+        "Name": "Iraq",
+        "Population": "35870865 people",
+        "Continent": "Asia",
+        "Area": "437072 kilometers squared",
+        "GDP": "180068537409 US dollars per year",
+        "NaturalHazards": [
+            "dust storm",
+            "flood"
+        ]
+    },
+    {
+        "Name": "Ireland",
+        "Population": "4682042 people",
+        "Continent": "Europe",
+        "Area": "70273 kilometers squared",
+        "GDP": "283703217034 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Isle of Man",
+        "Population": "86159 people",
+        "Continent": "Europe",
+        "Area": "572 kilometers squared",
+        "GDP": "7428280401 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Israel",
+        "Population": "7939745 people",
+        "Continent": "Asia",
+        "Area": "20770 kilometers squared",
+        "GDP": "299415714726 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "dust storm",
+            "earthquake"
+        ]
+    },
+    {
+        "Name": "Italy",
+        "Population": "61175248 people",
+        "Continent": "Europe",
+        "Area": "301340 kilometers squared",
+        "GDP": "1821496964400 US dollars per year",
+        "NaturalHazards": [
+            "avalanche",
+            "earthquake",
+            "flood",
+            "landslide",
+            "land subsidence",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Ivory Coast",
+        "Population": "21532811 people",
+        "Continent": "Africa",
+        "Area": "322463 kilometers squared",
+        "GDP": "31759248867 US dollars per year",
+        "NaturalHazards": [
+            "flood"
+        ]
+    },
+    {
+        "Name": "Jamaica",
+        "Population": "2780689 people",
+        "Continent": "NorthAmerica",
+        "Area": "10991 kilometers squared",
+        "GDP": "14262190323 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Japan",
+        "Population": "126225259 people",
+        "Continent": "Asia",
+        "Area": "377835 kilometers squared",
+        "GDP": "4383076298081 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "tropical cyclone",
+            "tsunami",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Jersey",
+        "Population": "95732 people",
+        "Continent": "Europe",
+        "Area": "116 kilometers squared",
+        "GDP": "5100000000 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Jordan",
+        "Population": "6684319 people",
+        "Continent": "Asia",
+        "Area": "89342 kilometers squared",
+        "GDP": "37517410281 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "earthquake"
+        ]
+    },
+    {
+        "Name": "Kazakhstan",
+        "Population": "16718609 people",
+        "Continent": "Asia",
+        "Area": "2724900 kilometers squared",
+        "GDP": "184388432148 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "landslide"
+        ]
+    },
+    {
+        "Name": "Kenya",
+        "Population": "45121040 people",
+        "Continent": "Africa",
+        "Area": "580367 kilometers squared",
+        "GDP": "63398041540 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "flood"
+        ]
+    },
+    {
+        "Name": "Kiribati",
+        "Population": "104488 people",
+        "Continent": "Oceania",
+        "Area": "811 kilometers squared",
+        "GDP": "160121929 US dollars per year",
+        "NaturalHazards": [
+            "tornado",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Kosovo",
+        "Population": "1859203 people",
+        "Continent": "Europe",
+        "Area": "10887 kilometers squared",
+        "GDP": "6400687590 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Kuwait",
+        "Population": "3023402 people",
+        "Continent": "Asia",
+        "Area": "17818 kilometers squared",
+        "GDP": "114041209704 US dollars per year",
+        "NaturalHazards": [
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "Kyrgyzstan",
+        "Population": "5561968 people",
+        "Continent": "Asia",
+        "Area": "199951 kilometers squared",
+        "GDP": "6571853849 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Laos",
+        "Population": "6543484 people",
+        "Continent": "Asia",
+        "Area": "236800 kilometers squared",
+        "GDP": "12369080042 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "flood"
+        ]
+    },
+    {
+        "Name": "Latvia",
+        "Population": "2218123 people",
+        "Continent": "Europe",
+        "Area": "64589 kilometers squared",
+        "GDP": "27002832427 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Lebanon",
+        "Population": "4355504 people",
+        "Continent": "Asia",
+        "Area": "10452 kilometers squared",
+        "GDP": "47084703150 US dollars per year",
+        "NaturalHazards": [
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "Lesotho",
+        "Population": "2263367 people",
+        "Continent": "Africa",
+        "Area": "30355 kilometers squared",
+        "GDP": "2278037785 US dollars per year",
+        "NaturalHazards": [
+            "drought"
+        ]
+    },
+    {
+        "Name": "Liberia",
+        "Population": "4450850 people",
+        "Continent": "Africa",
+        "Area": "111369 kilometers squared",
+        "GDP": "2053000000 US dollars per year",
+        "NaturalHazards": [
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "Libya",
+        "Population": "6547972 people",
+        "Continent": "Africa",
+        "Area": "1759540 kilometers squared",
+        "GDP": "34699395523 US dollars per year",
+        "NaturalHazards": [
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "Liechtenstein",
+        "Population": "37313 people",
+        "Continent": "Europe",
+        "Area": "160 kilometers squared",
+        "GDP": "6663501418 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Lithuania",
+        "Population": "3264812 people",
+        "Continent": "Europe",
+        "Area": "65300 kilometers squared",
+        "GDP": "41170728956 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Luxembourg",
+        "Population": "536427 people",
+        "Continent": "Europe",
+        "Area": "2586 kilometers squared",
+        "GDP": "57793612066 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Macau",
+        "Population": "590061 people",
+        "Continent": "Asia",
+        "Area": "28 kilometers squared",
+        "GDP": "46177532874 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Macedonia",
+        "Population": "2071178 people",
+        "Continent": "Europe",
+        "Area": "25713 kilometers squared",
+        "GDP": "10086021261 US dollars per year",
+        "NaturalHazards": [
+            "earthquake"
+        ]
+    },
+    {
+        "Name": "Madagascar",
+        "Population": "23196155 people",
+        "Continent": "Africa",
+        "Area": "587041 kilometers squared",
+        "GDP": "9738652322 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "locust plague",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Malawi",
+        "Population": "16953614 people",
+        "Continent": "Africa",
+        "Area": "118484 kilometers squared",
+        "GDP": "6403820949 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Malaysia",
+        "Population": "30252089 people",
+        "Continent": "Asia",
+        "Area": "329847 kilometers squared",
+        "GDP": "296283190372 US dollars per year",
+        "NaturalHazards": [
+            "flood",
+            "landslide",
+            "tsunami",
+            "wildfire"
+        ]
+    },
+    {
+        "Name": "Maldives",
+        "Population": "332752 people",
+        "Continent": "Asia",
+        "Area": "298 kilometers squared",
+        "GDP": "3435244658 US dollars per year",
+        "NaturalHazards": [
+            "tsunami"
+        ]
+    },
+    {
+        "Name": "Mali",
+        "Population": "17308179 people",
+        "Continent": "Africa",
+        "Area": "1240192 kilometers squared",
+        "GDP": "12746688961 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "dust storm",
+            "flood"
+        ]
+    },
+    {
+        "Name": "Malta",
+        "Population": "421844 people",
+        "Continent": "Europe",
+        "Area": "316 kilometers squared",
+        "GDP": "9746478873 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Marshall Islands",
+        "Population": "70983 people",
+        "Continent": "Oceania",
+        "Area": "181 kilometers squared",
+        "GDP": "179432573 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Martinique",
+        "Population": "409366 people",
+        "Continent": "NorthAmerica",
+        "Area": "1100 kilometers squared",
+        "GDP": "6117000000 US dollars per year",
+        "NaturalHazards": [
+            "flood",
+            "tropical cyclone",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Mauritania",
+        "Population": "3786430 people",
+        "Continent": "Africa",
+        "Area": "1030700 kilometers squared",
+        "GDP": "5442297174 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "Mauritius",
+        "Population": "1327488 people",
+        "Continent": "Africa",
+        "Area": "2040 kilometers squared",
+        "GDP": "11681761261 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Mayotte",
+        "Population": "223907 people",
+        "Continent": "Africa",
+        "Area": "374 kilometers squared",
+        "GDP": "466800000 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Mexico",
+        "Population": "118783265 people",
+        "Continent": "NorthAmerica",
+        "Area": "1964375 kilometers squared",
+        "GDP": "1143793184190 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "tropical cyclone",
+            "tsunami",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Micronesia",
+        "Population": "113415 people",
+        "Continent": "Oceania",
+        "Area": "702 kilometers squared",
+        "GDP": "314971100 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Moldova",
+        "Population": "3473640 people",
+        "Continent": "Europe",
+        "Area": "33851 kilometers squared",
+        "GDP": "6568288861 US dollars per year",
+        "NaturalHazards": [
+            "landslide"
+        ]
+    },
+    {
+        "Name": "Monaco",
+        "Population": "30508 people",
+        "Continent": "Europe",
+        "Area": "2 kilometers squared",
+        "GDP": "6074884388 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Mongolia",
+        "Population": "2931566 people",
+        "Continent": "Asia",
+        "Area": "1564116 kilometers squared",
+        "GDP": "11741338841 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "dust storm",
+            "wildfire"
+        ]
+    },
+    {
+        "Name": "Montenegro",
+        "Population": "633506 people",
+        "Continent": "Europe",
+        "Area": "13812 kilometers squared",
+        "GDP": "3987061627 US dollars per year",
+        "NaturalHazards": [
+            "earthquake"
+        ]
+    },
+    {
+        "Name": "Montserrat",
+        "Population": "5215 people",
+        "Continent": "NorthAmerica",
+        "Area": "102 kilometers squared",
+        "GDP": "55439779 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Morocco",
+        "Population": "33250406 people",
+        "Continent": "Africa",
+        "Area": "446550 kilometers squared",
+        "GDP": "100593283696 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "earthquake"
+        ]
+    },
+    {
+        "Name": "Mozambique",
+        "Population": "25590335 people",
+        "Continent": "Africa",
+        "Area": "799380 kilometers squared",
+        "GDP": "14807075727 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "flood",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Myanmar",
+        "Population": "49514208 people",
+        "Continent": "Asia",
+        "Area": "676578 kilometers squared",
+        "GDP": "62600906116 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "earthquake",
+            "flood",
+            "landslide",
+            "tropical cyclone",
+            "tsunami"
+        ]
+    },
+    {
+        "Name": "Namibia",
+        "Population": "2444050 people",
+        "Continent": "Africa",
+        "Area": "824292 kilometers squared",
+        "GDP": "11491507355 US dollars per year",
+        "NaturalHazards": [
+            "drought"
+        ]
+    },
+    {
+        "Name": "Nauru",
+        "Population": "9488 people",
+        "Continent": "Oceania",
+        "Area": "21 kilometers squared",
+        "GDP": "63479305 US dollars per year",
+        "NaturalHazards": [
+            "drought"
+        ]
+    },
+    {
+        "Name": "Nepal",
+        "Population": "32058733 people",
+        "Continent": "Asia",
+        "Area": "147181 kilometers squared",
+        "GDP": "21194888047 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "flood",
+            "landslide",
+            "thunderstorm"
+        ]
+    },
+    {
+        "Name": "Netherlands",
+        "Population": "16806723 people",
+        "Continent": "Europe",
+        "Area": "41543 kilometers squared",
+        "GDP": "750283908173 US dollars per year",
+        "NaturalHazards": [
+            "flood"
+        ]
+    },
+    {
+        "Name": "New Caledonia",
+        "Population": "266398 people",
+        "Continent": "Oceania",
+        "Area": "18575 kilometers squared",
+        "GDP": "2682347064 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "New Zealand",
+        "Population": "4554858 people",
+        "Continent": "Oceania",
+        "Area": "268680 kilometers squared",
+        "GDP": "173754075210 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Nicaragua",
+        "Population": "6128318 people",
+        "Continent": "NorthAmerica",
+        "Area": "130370 kilometers squared",
+        "GDP": "12692562187 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "landslide",
+            "tropical cyclone",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Niger",
+        "Population": "17857866 people",
+        "Continent": "Africa",
+        "Area": "1267000 kilometers squared",
+        "GDP": "7142951342 US dollars per year",
+        "NaturalHazards": [
+            "drought"
+        ]
+    },
+    {
+        "Name": "Nigeria",
+        "Population": "175288238 people",
+        "Continent": "Africa",
+        "Area": "923768 kilometers squared",
+        "GDP": "481066152870 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "flood"
+        ]
+    },
+    {
+        "Name": "Niue",
+        "Population": "1611 people",
+        "Continent": "Oceania",
+        "Area": "260 kilometers squared",
+        "GDP": "10010000 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Norfolk Island",
+        "Population": "2196 people",
+        "Continent": "Oceania",
+        "Area": "36 kilometers squared",
+        "GDP": "N/A",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Northern Mariana Islands",
+        "Population": "88000 people",
+        "Continent": "Oceania",
+        "Area": "464 kilometers squared",
+        "GDP": "633400000 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "North Korea",
+        "Population": "24754262 people",
+        "Continent": "Asia",
+        "Area": "120538 kilometers squared",
+        "GDP": "12278165833 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "flood",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Norway",
+        "Population": "5022555 people",
+        "Continent": "Europe",
+        "Area": "323802 kilometers squared",
+        "GDP": "386578443732 US dollars per year",
+        "NaturalHazards": [
+            "avalanche",
+            "landslide"
+        ]
+    },
+    {
+        "Name": "Oman",
+        "Population": "3008301 people",
+        "Continent": "Asia",
+        "Area": "309500 kilometers squared",
+        "GDP": "69830949284 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "Pakistan",
+        "Population": "186428686 people",
+        "Continent": "Asia",
+        "Area": "796095 kilometers squared",
+        "GDP": "271049886672 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "flood"
+        ]
+    },
+    {
+        "Name": "Palau",
+        "Population": "21186 people",
+        "Continent": "Oceania",
+        "Area": "459 kilometers squared",
+        "GDP": "287400000 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Panama",
+        "Population": "3731059 people",
+        "Continent": "NorthAmerica",
+        "Area": "75420 kilometers squared",
+        "GDP": "52132289747 US dollars per year",
+        "NaturalHazards": [
+            "wildfire"
+        ]
+    },
+    {
+        "Name": "Papua New Guinea",
+        "Population": "7485612 people",
+        "Continent": "Oceania",
+        "Area": "462840 kilometers squared",
+        "GDP": "16928680397 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "landslide",
+            "tsunami",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Paraguay",
+        "Population": "6913774 people",
+        "Continent": "SouthAmerica",
+        "Area": "406752 kilometers squared",
+        "GDP": "27093938619 US dollars per year",
+        "NaturalHazards": [
+            "flood"
+        ]
+    },
+    {
+        "Name": "Peru",
+        "Population": "30418591 people",
+        "Continent": "SouthAmerica",
+        "Area": "1285216 kilometers squared",
+        "GDP": "189111139010 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "flood",
+            "landslide",
+            "tsunami",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Philippines",
+        "Population": "99765288 people",
+        "Continent": "Asia",
+        "Area": "300000 kilometers squared",
+        "GDP": "292451392606 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "landslide",
+            "tropical cyclone",
+            "tsunami",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Pitcairn Islands",
+        "Population": "56 people",
+        "Continent": "Oceania",
+        "Area": "47 kilometers squared",
+        "GDP": "N/A",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Poland",
+        "Population": "38344752 people",
+        "Continent": "Europe",
+        "Area": "312685 kilometers squared",
+        "GDP": "477066454436 US dollars per year",
+        "NaturalHazards": [
+            "flood"
+        ]
+    },
+    {
+        "Name": "Portugal",
+        "Population": "10705265 people",
+        "Continent": "Europe",
+        "Area": "92090 kilometers squared",
+        "GDP": "198923264943 US dollars per year",
+        "NaturalHazards": [
+            "earthquake"
+        ]
+    },
+    {
+        "Name": "Puerto Rico",
+        "Population": "3742016 people",
+        "Continent": "NorthAmerica",
+        "Area": "9045 kilometers squared",
+        "GDP": "103134778000 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Qatar",
+        "Population": "2003449 people",
+        "Continent": "Asia",
+        "Area": "11586 kilometers squared",
+        "GDP": "164641483516 US dollars per year",
+        "NaturalHazards": [
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "Republic of the Congo",
+        "Population": "4415338 people",
+        "Continent": "Africa",
+        "Area": "342000 kilometers squared",
+        "GDP": "8553154505 US dollars per year",
+        "NaturalHazards": [
+            "flood"
+        ]
+    },
+    {
+        "Name": "Réunion",
+        "Population": "874944 people",
+        "Continent": "Africa",
+        "Area": "2517 kilometers squared",
+        "GDP": "10900000000 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Romania",
+        "Population": "21289792 people",
+        "Continent": "Europe",
+        "Area": "238391 kilometers squared",
+        "GDP": "177954489851 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "landslide"
+        ]
+    },
+    {
+        "Name": "Russia",
+        "Population": "142400066 people",
+        "Continent": "Asia",
+        "Area": "17098242 kilometers squared",
+        "GDP": "1331207745853 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "flood",
+            "volcano",
+            "wildfire"
+        ]
+    },
+    {
+        "Name": "Rwanda",
+        "Population": "11950332 people",
+        "Continent": "Africa",
+        "Area": "26338 kilometers squared",
+        "GDP": "8095980013 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Saint Helena, Ascension and Tristan da Cunha",
+        "Population": "7670 people",
+        "Continent": "Africa",
+        "Area": "413 kilometers squared",
+        "GDP": "18000000 US dollars per year",
+        "NaturalHazards": [
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Saint Kitts and Nevis",
+        "Population": "51538 people",
+        "Continent": "NorthAmerica",
+        "Area": "261 kilometers squared",
+        "GDP": "876478555 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Saint Lucia",
+        "Population": "181202 people",
+        "Continent": "NorthAmerica",
+        "Area": "616 kilometers squared",
+        "GDP": "1431135703 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Saint Pierre and Miquelon",
+        "Population": "5774 people",
+        "Continent": "NorthAmerica",
+        "Area": "242 kilometers squared",
+        "GDP": "48300000 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Saint Vincent and the Grenadines",
+        "Population": "109344 people",
+        "Continent": "NorthAmerica",
+        "Area": "389 kilometers squared",
+        "GDP": "737683555 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Samoa",
+        "Population": "186674 people",
+        "Continent": "Oceania",
+        "Area": "2831 kilometers squared",
+        "GDP": "761037916 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "San Marino",
+        "Population": "32742 people",
+        "Continent": "Europe",
+        "Area": "61 kilometers squared",
+        "GDP": "1899879955 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "São Tomé and Príncipe",
+        "Population": "178941 people",
+        "Continent": "Africa",
+        "Area": "964 kilometers squared",
+        "GDP": "317696178 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Saudi Arabia",
+        "Population": "29929474 people",
+        "Continent": "Asia",
+        "Area": "1960582 kilometers squared",
+        "GDP": "646001866666 US dollars per year",
+        "NaturalHazards": [
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "Senegal",
+        "Population": "13805433 people",
+        "Continent": "Africa",
+        "Area": "196722 kilometers squared",
+        "GDP": "13609989582 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "flood"
+        ]
+    },
+    {
+        "Name": "Serbia",
+        "Population": "7164132 people",
+        "Continent": "Europe",
+        "Area": "77474 kilometers squared",
+        "GDP": "37160332465 US dollars per year",
+        "NaturalHazards": [
+            "earthquake"
+        ]
+    },
+    {
+        "Name": "Seychelles",
+        "Population": "91650 people",
+        "Continent": "Africa",
+        "Area": "455 kilometers squared",
+        "GDP": "1437722206 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Sierra Leone",
+        "Population": "6384066 people",
+        "Continent": "Africa",
+        "Area": "71740 kilometers squared",
+        "GDP": "4214779784 US dollars per year",
+        "NaturalHazards": [
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "Singapore",
+        "Population": "5336859 people",
+        "Continent": "Asia",
+        "Area": "697 kilometers squared",
+        "GDP": "292739307535 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Sint Maarten",
+        "Population": "39689 people",
+        "Continent": "NorthAmerica",
+        "Area": "34 kilometers squared",
+        "GDP": "793400000 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Slovakia",
+        "Population": "5497156 people",
+        "Continent": "Europe",
+        "Area": "49035 kilometers squared",
+        "GDP": "87263622047 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Slovenia",
+        "Population": "2049112 people",
+        "Continent": "Europe",
+        "Area": "20273 kilometers squared",
+        "GDP": "42774769768 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "flood"
+        ]
+    },
+    {
+        "Name": "Solomon Islands",
+        "Population": "595210 people",
+        "Continent": "Oceania",
+        "Area": "28896 kilometers squared",
+        "GDP": "1129164718 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone",
+            "volcano",
+            "tsunami"
+        ]
+    },
+    {
+        "Name": "Somalia",
+        "Population": "10322712 people",
+        "Continent": "Africa",
+        "Area": "637657 kilometers squared",
+        "GDP": "5925000000 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "dust storm",
+            "flood",
+            "tsunami"
+        ]
+    },
+    {
+        "Name": "South Africa",
+        "Population": "51207132 people",
+        "Continent": "Africa",
+        "Area": "1219090 kilometers squared",
+        "GDP": "314571945857 US dollars per year",
+        "NaturalHazards": [
+            "drought"
+        ]
+    },
+    {
+        "Name": "South Korea",
+        "Population": "48951680 people",
+        "Continent": "Asia",
+        "Area": "98480 kilometers squared",
+        "GDP": "1377873107856 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "flood",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "South Sudan",
+        "Population": "11090104 people",
+        "Continent": "Africa",
+        "Area": "644329 kilometers squared",
+        "GDP": "9015221096 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Spain",
+        "Population": "47290504 people",
+        "Continent": "Europe",
+        "Area": "505370 kilometers squared",
+        "GDP": "1199057336142 US dollars per year",
+        "NaturalHazards": [
+            "drought"
+        ]
+    },
+    {
+        "Name": "Sri Lanka",
+        "Population": "21555851 people",
+        "Continent": "Asia",
+        "Area": "65610 kilometers squared",
+        "GDP": "82316172384 US dollars per year",
+        "NaturalHazards": [
+            "flood",
+            "landslide",
+            "tropical cyclone",
+            "tsunami"
+        ]
+    },
+    {
+        "Name": "Sudan",
+        "Population": "47938728 people",
+        "Continent": "Africa",
+        "Area": "1886068 kilometers squared",
+        "GDP": "97156119150 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "Suriname",
+        "Population": "543497 people",
+        "Continent": "SouthAmerica",
+        "Area": "163820 kilometers squared",
+        "GDP": "5150291216 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Svalbard",
+        "Population": "2637 people",
+        "Continent": "Europe",
+        "Area": "62045 kilometers squared",
+        "GDP": "N/A",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Swaziland",
+        "Population": "1253525 people",
+        "Continent": "Africa",
+        "Area": "17364 kilometers squared",
+        "GDP": "4118488059 US dollars per year",
+        "NaturalHazards": [
+            "drought"
+        ]
+    },
+    {
+        "Name": "Sweden",
+        "Population": "9595619 people",
+        "Continent": "Europe",
+        "Area": "450295 kilometers squared",
+        "GDP": "495623697305 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Switzerland",
+        "Population": "7788196 people",
+        "Continent": "Europe",
+        "Area": "41277 kilometers squared",
+        "GDP": "670789928809 US dollars per year",
+        "NaturalHazards": [
+            "avalanche",
+            "flood",
+            "landslide"
+        ]
+    },
+    {
+        "Name": "Syria",
+        "Population": "21823405 people",
+        "Continent": "Asia",
+        "Area": "185180 kilometers squared",
+        "GDP": "40405006007 US dollars per year",
+        "NaturalHazards": [
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "Taiwan",
+        "Population": "23359928 people",
+        "Continent": "Asia",
+        "Area": "35980 kilometers squared",
+        "GDP": "427000000000 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Tajikistan",
+        "Population": "7290752 people",
+        "Continent": "Asia",
+        "Area": "143100 kilometers squared",
+        "GDP": "7853450374 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "flood"
+        ]
+    },
+    {
+        "Name": "Tanzania",
+        "Population": "50705390 people",
+        "Continent": "Africa",
+        "Area": "947300 kilometers squared",
+        "GDP": "45628247290 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "flood"
+        ]
+    },
+    {
+        "Name": "Thailand",
+        "Population": "70571185 people",
+        "Continent": "Asia",
+        "Area": "513120 kilometers squared",
+        "GDP": "395168025882 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "landslide",
+            "tsunami"
+        ]
+    },
+    {
+        "Name": "Togo",
+        "Population": "6543071 people",
+        "Continent": "Africa",
+        "Area": "56785 kilometers squared",
+        "GDP": "4087903912 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "Tokelau",
+        "Population": "1353 people",
+        "Continent": "Oceania",
+        "Area": "12 kilometers squared",
+        "GDP": "1500000 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Tonga",
+        "Population": "105714 people",
+        "Continent": "Oceania",
+        "Area": "747 kilometers squared",
+        "GDP": "435142408 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "tropical cyclone",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Trinidad and Tobago",
+        "Population": "1359308 people",
+        "Continent": "NorthAmerica",
+        "Area": "5128 kilometers squared",
+        "GDP": "23559287483 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Tunisia",
+        "Population": "10920693 people",
+        "Continent": "Africa",
+        "Area": "163610 kilometers squared",
+        "GDP": "43015089722 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Turkey",
+        "Population": "76190381 people",
+        "Continent": "Asia",
+        "Area": "783562 kilometers squared",
+        "GDP": "717879788566 US dollars per year",
+        "NaturalHazards": [
+            "earthquake"
+        ]
+    },
+    {
+        "Name": "Turkmenistan",
+        "Population": "5299717 people",
+        "Continent": "Asia",
+        "Area": "488100 kilometers squared",
+        "GDP": "35854571428 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Turks and Caicos Islands",
+        "Population": "49070 people",
+        "Continent": "NorthAmerica",
+        "Area": "948 kilometers squared",
+        "GDP": "1380737177 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Tuvalu",
+        "Population": "10782 people",
+        "Continent": "Oceania",
+        "Area": "26 kilometers squared",
+        "GDP": "32673277 US dollars per year",
+        "NaturalHazards": [
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Uganda",
+        "Population": "37923329 people",
+        "Continent": "Africa",
+        "Area": "236040 kilometers squared",
+        "GDP": "27529249701 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Ukraine",
+        "Population": "44457736 people",
+        "Continent": "Europe",
+        "Area": "603550 kilometers squared",
+        "GDP": "90615023323 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "United Arab Emirates",
+        "Population": "8277632 people",
+        "Continent": "Asia",
+        "Area": "83600 kilometers squared",
+        "GDP": "370296255956 US dollars per year",
+        "NaturalHazards": [
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "United Kingdom",
+        "Population": "63556184 people",
+        "Continent": "Europe",
+        "Area": "243610 kilometers squared",
+        "GDP": "2858003087965 US dollars per year",
+        "NaturalHazards": [
+            "flood"
+        ]
+    },
+    {
+        "Name": "United States",
+        "Population": "322422965 people",
+        "Continent": "NorthAmerica",
+        "Area": "9631420 kilometers squared",
+        "GDP": "18036648000000 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "flood",
+            "landslide",
+            "tornado",
+            "tropical cyclone",
+            "tsunami",
+            "volcano",
+            "wildfire"
+        ]
+    },
+    {
+        "Name": "United States Virgin Islands",
+        "Population": "108300 people",
+        "Continent": "NorthAmerica",
+        "Area": "349 kilometers squared",
+        "GDP": "1996000000 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "earthquake",
+            "flood",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Uruguay",
+        "Population": "3415252 people",
+        "Continent": "SouthAmerica",
+        "Area": "176215 kilometers squared",
+        "GDP": "53442697568 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "flood"
+        ]
+    },
+    {
+        "Name": "Uzbekistan",
+        "Population": "28725263 people",
+        "Continent": "Asia",
+        "Area": "447400 kilometers squared",
+        "GDP": "66732736498 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Vanuatu",
+        "Population": "264026 people",
+        "Continent": "Oceania",
+        "Area": "12189 kilometers squared",
+        "GDP": "742432131 US dollars per year",
+        "NaturalHazards": [
+            "earthquake",
+            "tropical cyclone",
+            "tsunami",
+            "volcano"
+        ]
+    },
+    {
+        "Name": "Vatican City",
+        "Population": "839 people",
+        "Continent": "Europe",
+        "Area": "0 kilometers squared",
+        "GDP": "N/A",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "Venezuela",
+        "Population": "30786062 people",
+        "Continent": "SouthAmerica",
+        "Area": "912050 kilometers squared",
+        "GDP": "371336634589 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "flood",
+            "landslide"
+        ]
+    },
+    {
+        "Name": "Vietnam",
+        "Population": "91562821 people",
+        "Continent": "Asia",
+        "Area": "329560 kilometers squared",
+        "GDP": "193599379094 US dollars per year",
+        "NaturalHazards": [
+            "flood",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Wallis and Futuna Islands",
+        "Population": "15507 people",
+        "Continent": "Oceania",
+        "Area": "142 kilometers squared",
+        "GDP": "60000000 US dollars per year",
+        "NaturalHazards": []
+    },
+    {
+        "Name": "West Bank",
+        "Population": "2731052 people",
+        "Continent": "Asia",
+        "Area": "5860 kilometers squared",
+        "GDP": "12677399994 US dollars per year",
+        "NaturalHazards": [
+            "drought"
+        ]
+    },
+    {
+        "Name": "Western Sahara",
+        "Population": "585270 people",
+        "Continent": "Africa",
+        "Area": "266000 kilometers squared",
+        "GDP": "N/A",
+        "NaturalHazards": [
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "Yemen",
+        "Population": "27162547 people",
+        "Continent": "Asia",
+        "Area": "527968 kilometers squared",
+        "GDP": "37733919936 US dollars per year",
+        "NaturalHazards": [
+            "dust storm"
+        ]
+    },
+    {
+        "Name": "Zambia",
+        "Population": "14767550 people",
+        "Continent": "Africa",
+        "Area": "752618 kilometers squared",
+        "GDP": "21154394545 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "tropical cyclone"
+        ]
+    },
+    {
+        "Name": "Zimbabwe",
+        "Population": "13665123 people",
+        "Continent": "Africa",
+        "Area": "390757 kilometers squared",
+        "GDP": "14419185900 US dollars per year",
+        "NaturalHazards": [
+            "drought",
+            "flood"
+        ]
+    }
+]
