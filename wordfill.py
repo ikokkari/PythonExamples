@@ -31,16 +31,16 @@ def wordfill(n, i, horiz, vert, wordlist, vv, babbage = False):
 if __name__ == "__main__":
     import itertools
     
-    n = 4   # Size of each individual word square.
+    n = 5   # Size of each individual word square.
     
-    with open('words.txt', encoding="utf-8") as f:
+    with open('words_alpha.txt', encoding="utf-8") as f:
         wordlist = [x.strip() for x in f if x.islower()]
     print(f"Read in a word list of {len(wordlist)} words.")
     wordlist = sorted([x for x in wordlist if len(x) == n])
     print(f"There remain {len(wordlist)} words of length {n}.")
           
     wordset = set(wordlist)
-    rows, cols = 4, 7
+    rows, cols = 3, 4
     result = []
     while len(result) < rows * cols:
         # The first word on the first row.

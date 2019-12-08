@@ -65,7 +65,7 @@ def decode_morse(message):
 
 if __name__ == "__main__":
     from random import sample
-    with open('words.txt', encoding="utf-8") as f:
+    with open('words_alpha.txt', encoding="utf-8") as f:
         wordlist = [word.strip().lower() for word in f if len(word) < 8]
     print(f"Read a list of {len(wordlist)} words.")
 

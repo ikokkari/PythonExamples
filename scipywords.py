@@ -7,8 +7,8 @@ import random
 
 # First, read in the wordlist and extract all 5-letter words.
 
-n = 6
-with open('words.txt', encoding="utf-8") as f:
+n = 5
+with open('words_alpha.txt', encoding="utf-8") as f:
     wordlist = [x.strip() for x in f if x.islower()]
 print(f"Read in a word list of {len(wordlist)} words.")
 wordlist = sorted([x for x in wordlist if len(x) == n])

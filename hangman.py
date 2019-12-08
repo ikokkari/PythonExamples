@@ -35,7 +35,7 @@ def only_letters(word):
     return True
 
 if __name__ == "__main__":
-    with open('words.txt', encoding="utf-8") as f:
+    with open('words_alpha.txt', encoding="utf-8") as f:
         wordlist = [x.strip() for x in f]
     print(f"Read a word list of {len(wordlist)} words." )
     wordlist = [x for x in wordlist if only_letters(x)]

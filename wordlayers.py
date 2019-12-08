@@ -46,7 +46,7 @@ if __name__ == "__main__":
     from random import sample
     # The length of the words that we consider.
     n = 5
-    with open('words.txt', encoding="utf-8") as f:
+    with open('words_alpha.txt', encoding="utf-8") as f:
         wordlist = [x.strip() for x in f if x.islower()]
     print(f"Read in a word list of {len(wordlist)} lowercase words.")
     wordlist = sorted([x for x in wordlist if len(x) == n])
