@@ -94,9 +94,22 @@ from fractions import Fraction
 
 f1 = Fraction(-2, 7)  # a fraction from two integers
 f2 = Fraction('5/9')  # a fraction from a string
-print(f1 * f2)        # -10/63
+f3 = f1 * f2
+print(f"The product of {f1} and {f2} equals {f3}.") # -10/63
 
-# Remember that numbers and integers are not the same thing, even as they
+# Joe and Moe are peeling potatoes. Working by himself, Joe could peel
+# the entire pile in three hours, whereas Moe could peel the same pile
+# in five hours. How long will it take for these two men to peel the
+# potatoes if they work together? (No, the answer is not four hours,
+# the average of three and five.)
+
+joe = Fraction(1, 3)
+moe = Fraction(1, 5)
+together = joe + moe
+time = 1 / together
+print(f"Working together, Joe and Moe peel the potatoes in {time} hours.")
+
+# Remember that strings and integers are not the same thing, even as they
 # can be trivially converted to one another.
 
 a = 22 + 22
