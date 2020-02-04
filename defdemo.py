@@ -103,9 +103,9 @@ def leading_digit_list(n):
     prod = 1 # The current factorial
     digits = [0] * 10 # Create a list full of zeros
     for i in range(2, n+1):
-        lead = ord(str(prod)[0]) - ord('0') # Compute first digit
+        lead = int(str(prod)[0]) # Extract the highest order digit
         digits[lead] += 1
-        prod = prod * i # The next factorial from the current one
+        prod = prod * i # The next factorial, from the current one
     return digits
 
 from math import log
@@ -170,12 +170,12 @@ def roll_dice(rolls, faces = 6):
     """
     total = 0
     for x in range(rolls):
-        total += random.randrange(1, faces+1)
+        total += random.randint(1, faces)
     return total
 
-print("Rolling a 12-sided die 10 times gave a total of %d" % roll_dice(10, 12))
+print(f"Rolling a 12-sided die 10 times gave a total of {roll_dice(10, 12)}.")
 # With a default parameter, we don't need to give its value
-print("Rolling a 6-sided die 10 times gave a total of %d" % roll_dice(10))
+print(f"Rolling a 6-sided die 10 times gave a total of {roll_dice(10)}.")
 
 # Note that default parameter values are computed only once at the
 # function declaration.
@@ -186,7 +186,7 @@ def foo(x = val):
 val = 99
 def bar(x = val):
     return x
-print("foo() equals %d, bar() equals %d" % ( foo(), bar() )) # 42 99
+print(f"foo() equals {foo()}, bar() equals {bar()}") # 42 99
 
 # Fizzbuzz is a game where you try to list the numbers from start to end
 # but so that if a number is divisible by 3, you say "fizz", and if a
