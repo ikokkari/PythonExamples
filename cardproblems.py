@@ -1,10 +1,10 @@
 # Define the suits and ranks that a deck of playing cards is made of.
 
 suits = ['clubs', 'diamonds', 'hearts', 'spades']
-ranks = {'deuce' : 2, 'trey' : 3 , 'four' : 4, 'five' : 5,
-         'six' : 6, 'seven' : 7, 'eight' : 8, 'nine' : 9,
-         'ten' : 10, 'jack' : 11, 'queen' : 12, 'king' : 13,
-         'ace' : 14 }
+ranks = {'deuce' : 2, 'two': 2, 'trey' : 3 , 'three': 3,
+         'four' : 4, 'five' : 5, 'six' : 6, 'seven' : 7,
+         'eight' : 8, 'nine' : 9, 'ten' : 10, 'jack' : 11,
+         'queen' : 12, 'king' : 13, 'ace' : 14 }
 
 deck = [ (rank, suit) for suit in suits for rank in ranks ]
 
@@ -154,8 +154,7 @@ def evaluate_all_poker_hands():
             if f(hand):
                 counters[i] += 1
                 break # No point looking for more for this hand
-    return list(zip(funcs, counters))
-    #return [(f.__name__, counters[i]) for (i, f) in enumerate(funcs)]
+    return [(f.__name__, counters[i]) for (i, f) in enumerate(funcs)]
 
 if __name__ == "__main__":
     print(evaluate_all_poker_hands())

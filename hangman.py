@@ -1,10 +1,9 @@
 import random
 
 def hangman(wordlist, sep = '*'):
-    misses = 0
-    guesses = []    
+    misses, guesses = 0, []    
     word = random.choice(wordlist)
-    letters = [ sep for x in range(len(word)) ]
+    letters = [ sep ] * len(word)
     print("Let us play a game of Hangman.")
     while sep in letters:
         print(f"Current word is {'-'.join(letters)}.")
@@ -28,18 +27,10 @@ def hangman(wordlist, sep = '*'):
     print(f"You guessed {word!r} with {misses} misses.\n")
     return misses
 
-def only_letters(word):
-    for x in word:
-        if x not in "abcdefghijklmnopqrstuvwxyz":
-            return False
-    return True
-
 if __name__ == "__main__":
     with open('words_alpha.txt', encoding="utf-8") as f:
-        wordlist = [x.strip() for x in f]
+        wordlist = [word.strip() for word in f]
     print(f"Read a word list of {len(wordlist)} words." )
-    wordlist = [x for x in wordlist if only_letters(x)]
-    print(f"After cleanup, the list has {len(wordlist)} words.")
     while True:
         if hangman(wordlist) == -1:
             print("See you around!")
