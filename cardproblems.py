@@ -46,22 +46,17 @@ def blackjack_count_value(hand):
     for (rank, suit) in hand:
         v = ranks[rank]
         if v == 14: # Treat every ace as 11 to begin with
-            total += 11
-            soft += 1
+            total, soft = total + 11, soft + 1
         else:
             total += min(10, v) # All face cards are treated as tens
         if total > 21:
             if soft > 0: # Saved by the soft ace
-                soft -= 1
-                total -= 10
+                soft, total = soft - 1, total - 10                
             else:
                 return "bust"
     if total == 21 and len(hand) == 2:
         return "blackjack"
-    if soft > 0:
-        return "soft " + str(total)
-    else:
-        return "hard " + str(total)            
+    return f"{'soft' if soft > 0 else 'hard'} {total}"
 
 # Determine if the five card poker hand has a flush, that is, all five
 # cards have the same suit.
