@@ -31,6 +31,9 @@ print("\nHere are top thirty countries sorted by their tallest mountains:")
 countries = sorted(countries,
                    key = (lambda c: tallest.get(c['Name'], smallest)),
                    reverse = True)
+
+# itertools.islice is a handy way to impose cutoff on the sequence length.
+
 for (i, c) in it.islice(enumerate(countries), 30):
     (te, tn) = tallest[c['Name']]
     print(f'{i+1:2}. {c["Name"]} with {tn}, elevation {te} m.')
@@ -45,10 +48,11 @@ for (i, c) in it.islice(enumerate(countries), 100):
     print(f'{i+1:2}. {c["Name"]} has {len(mic[c["Name"]])} named mountains.')
 
 # https://en.wikipedia.org/wiki/Benford%27s_law
-print("\nLet's see how well Benford's law applies to mountain heights.")
+print("\nLet's see how well mountain heights follow Benford's law.\n")
 
-# meters, feet, yards
-muls = (1, 0.3048, 0.9144)
+# meters, feet, yards, inches, points, fathoms
+muls = (1, 0.3048, 0.9144, 1 / 0.0254, 1 / 0.003528, 0.5468)
+# Build a separate counter dictionary for each unit.
 leading = [ {} for m in muls ]
 
 count = 0
@@ -67,7 +71,10 @@ for mountain in mountains:
 from math import log
 benford = [100 * (log(d+1, 10) - log(d, 10)) for d in range(1, 10)]
 
-print("Digit   Meters  Feet    Yards   Benford")
+print("Digit   Meters  Feet    Yards   Inches  Points  Fathoms Benford")
 for d in range(1, 10):
-    print(f"{d:4}{100 * leading[0].get(d,0) / count:8.1f}{100 * leading[1].get(d,0) / count:8.1f}"
-          +f"{100 * leading[2].get(d,0) / count:8.1f}{benford[d-1]:8.1f}")
+    line = f"{d:4}"
+    for lead in leading:
+        line += f"{100 * lead.get(d, 0) / count:8.1f}"
+    line += f"{benford[d-1]:8.1f}"
+    print(line)

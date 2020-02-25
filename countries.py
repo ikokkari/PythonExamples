@@ -14,7 +14,9 @@ for country in countries:
     total_pop += pop
 
 print("\nThe total population in each continent:")
-for continent in sorted(continental_pops.keys()):
+for continent in sorted(continental_pops.keys(),
+                        key = lambda c: continental_pops[c],
+                        reverse = True):
     print(f"{continent} has a total of {continental_pops[continent]} people.")
 print(f"That gives a total of {total_pop} people on Earth.")
 
@@ -25,6 +27,7 @@ for country in countries:
         hazard_table[hazard] = hazard_table.get(hazard, 0) + 1
 
 print("\nHere are the hazards found around the world:")
-for hazard in sorted(hazard_table, key=(lambda haz: hazard_table[haz]),
+for hazard in sorted(hazard_table,
+                     key = lambda haz: hazard_table[haz],
                      reverse = True):
     print(f"{hazard[0].upper() + hazard[1:]} is a hazard in {hazard_table[hazard]} countries.")

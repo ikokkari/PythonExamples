@@ -207,9 +207,8 @@ def all_anagrams(words):
 
 
 if __name__ == "__main__":
-    with open('words.txt', encoding="utf-8") as f:
-        words = [x.strip() for x in f if x.islower()]
-    words = limited_alphabet(words, "abcdefghijklmnopqrstuvwxyz")
+    with open('words_alpha.txt', encoding="utf-8") as f:
+        words = [x.strip() for x in f]    
     print(f"Read in {len(words)} words.")
     
     # Binary search can quickly find all words with given prefix.
