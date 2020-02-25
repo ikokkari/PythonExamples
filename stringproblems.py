@@ -179,7 +179,7 @@ def tutnese(sentence):
 
 # Convert an integer into its English language name.
 
-# http://www.isthe.com/chongo/tech/math/number/tenpower.html
+# http://lcn2.github.io/mersenne-english-name/tenpower/tenpower.html
 __pows = (("thousand", 3), ("million", 6), ("billion", 9),
           ("trillion", 12), ("quadrillion", 15), ("quintillion", 18),
           ("sextillion", 21), ("septillion", 24), ("octillion", 27),
@@ -187,51 +187,71 @@ __pows = (("thousand", 3), ("million", 6), ("billion", 9),
           ("duodecillion", 39), ("tredecillion", 42),
           ("quattuordecillion", 45), ("quindecillion", 48),
           ("sexdecillion", 51), ("eptendecillion", 54),
-          ("octadecillion", 57), ("novemdecillion", 61),
-          ("vigintillion", 64))
+          ("octadecillion", 57), ("novemdecillion", 60),
+          ("vigintillion", 63), ("unvigintillion", 66),
+          ("duovigintillion", 69), ("trevigintillion", 72),
+          ("quattuorvigintillion", 75), ("quinvigintillion", 78),
+          ("sexvigintillion", 81), ("septenvigintillion", 84),
+          ("octavigintillion", 87), ("novemvigintillion", 90),
+          ("trigintillion", 93), ("untrigintillion", 96),
+          ("duotrigintillion", 99)
+          )
 
-def int_to_english(n, idx = None):
-    if n < 0: # Negative numbers
-        return "minus " + int_to_english(-n)
+# Dictionary comprehension, analogous to list comprehension.
+__pows = { p:n for (n, p) in __pows }
+
+# Return the English name of a three-digit integer.
+def __int_to_eng(n):
     if n < 20: # Numbers 0 to 19 with a simple lookup table.
-        return ["zero", "one", "two", "three", "four", "five",
+        return ["ERROR", "one", "two", "three", "four", "five",
                 "six", "seven", "eight", "nine", "ten", "eleven",
                 "twelve", "thirteen", "fourteen", "fifteen",
                 "sixteen", "seventeen", "eighteen", "nineteen"][n]
-    if n < 100: # Numbers 20 to 99, tens handled with a lookup table.
-        tens = ["twenty", "thirty", "forty", "fifty", "sixty",
-                "seventy", "eighty", "ninety"][n // 10 - 2]
+    elif n < 100: # Numbers 20 to 99, tens again with a lookup table.
+        tens = ["", "", "twenty", "thirty", "forty", "fifty", 
+                "sixty", "seventy", "eighty", "ninety"][n // 10]
         if n % 10 != 0:
-            return tens + "-" + int_to_english(n % 10)
+            return f"{tens}-{__int_to_eng(n % 10)}"            
         else:
             return tens
-    if n < 1000: # Numbers 100 to 999
+    else: # Numbers 100 to 999
         if n % 100 == 0:
-            return int_to_english(n // 100) + " hundred"
+            return f"{__int_to_eng(n // 100)} hundred"            
         else:
-            return int_to_english(n // 100) + " hundred and " +\
-               int_to_english(n % 100)
-    
-    # Numbers with four or more digits.
-    ns = str(n)
-    # Where to start looking for the power in the __pows list.
-    if idx == None:
-        idx = len(__pows) - 1
-    while True:
-        (name, digs) = __pows[idx]
-        if len(ns) > digs:
-            first = int_to_english(int(ns[:-digs]))
-            second = int_to_english(int(ns[-digs:]), idx - 1)
-            if second == "zero":
-                return first + " " + name
+            return f"{__int_to_eng(n // 100)} hundred and {__int_to_eng(n % 100)}"            
+               
+__googol = 10 ** 100
+
+# Construct the English name of any integer.
+def int_to_english(n):
+    if n < 0: # Negative numbers
+        return "minus " + int_to_english(-n)
+    if n == 0: # Zero as a special case
+        return "zero"
+    if n >= __googol: # huge numbers
+        first = int_to_english(n // __googol)
+        rest = int_to_english(n % __googol)
+        if rest == "zero":
+            return f"{first} googol"
+        else:
+            return f"{first} googol and {rest}"
+    result, p = [], 0
+    while n > 0:
+        trip = n % 1000
+        n = n // 1000
+        if trip > 0:
+            if p == 0:
+                result.append(__int_to_eng(trip))
             else:
-                return first + " " + name + " " + second
-        idx -= 1
+                result.append(__int_to_eng(trip) + " " + __pows[p])
+        p += 3
+    return " ".join(reversed(result))
+
                     
 if __name__ == "__main__":
     text = "Ilkka Kokkarinen"
     print(f"Unique chars of {text} are {unique_chars(text)}.")
-    for x in [42, 3**7, 6**20, 2**100, 10**128]:
+    for x in [42, 3**7, 6**20, -(2**100), 9**200, 10**500]:
         print(f"{x} written in English is {int_to_english(x)}.")
     print("Here are integers 0-100 sorted in alphabetical order:")
     print(sorted(range(0, 101), key = int_to_english))
