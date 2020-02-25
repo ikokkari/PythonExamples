@@ -1,5 +1,5 @@
 from fractions import Fraction
-from decimal import *
+from decimal import Decimal, getcontext
 from math import fsum
 
 def demonstrate_imprecision():
@@ -27,7 +27,7 @@ def demonstrate_imprecision():
     # Better.
     print(fsum([3e30, 1, -3e30])) # 1.0
 
-def decimal_precision():
+def decimal_precision_demo():
     a = Decimal("0.2")
     b = Decimal("0.3")
     print(a * b)    # 0.06
@@ -71,7 +71,7 @@ def estimate_pi(n):
 
 if __name__ == "__main__":
     demonstrate_imprecision()
-    decimal_precision()
+    decimal_precision_demo()
     infinity_and_nan_demo()
     pi = estimate_pi(1000)
     getcontext().prec = 10
