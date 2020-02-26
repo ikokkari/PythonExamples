@@ -1,11 +1,13 @@
-# A generator is a function that, unlike a regular function that always
-# forgets what it has done and starts from beginning each time it is called,
-# a generator remembers where it left off and continues from there at the
-# next call. In Python, generators are an easy way to define iterators.
+# A generator is a function that, unlike a regular function that
+# always forgets what it has done and starts from beginning each
+# time it is called, a generator remembers where it left off and
+# continues from there at the next call. In Python, generators
+# are an easy way to define iterators.
 
-# First, a sneak preview of the last lecture about defining your own data
-# types as classes. Here is an iterator defined as a proper class with
-# certain "magic" methods to implement the iterator behaviour.
+# First, a sneak preview of the last lecture about defining your
+# own data types as classes. Here is an iterator defined as a
+# proper class with certain "dunder" methods to implement the
+# iterator behaviour.
 
 class Squares:
     def __init__(self, start, end):
@@ -25,9 +27,10 @@ class Squares:
     def __repr__(self): # Expression to generate this object
         return "Squares(" + self.start + ", " + self.end + ")"
 
-# Iterators are much easier to define as generators. Simply using the
-# keyword yield instead of return makes Python convert that function to a
-# generator type with all the iteration methods loaded in.
+# Iterators are much easier to define as generators. Simply using
+# the keyword yield instead of return makes Python convert that
+# function to a generator type with the iterator methods loaded in.
+# To start with, here is a generator of squares.
 
 def squares(start, end):
     curr = start
@@ -43,14 +46,14 @@ for x in squares(1, 10):
     print(x, end = ' ')
 print('\n')
 
-# So far, both examples generated a finite sequence. But there is nothing in
-# the laws of nature or man that says that a sequence couldn't be infinite.
+# So far, both examples generated a finite sequence. But there is
+# nothing in the laws of nature or man that says that a sequence
+# could not just as well be infinite.
 
 def fibonacci():
     yield 1
     yield 1
-    curr = 2
-    prev = 1
+    curr, prev = 2, 1    
     while True:
         yield curr
         curr, prev = curr + prev, curr
@@ -76,7 +79,7 @@ def collatz(start):
             start = 3 * start + 1
 
 # John von Neumann's failed idea for pseudorandom number generation.
-# Even the greatest of giants stumble sometimes.
+# Even the greatest giants sometimes stumble.
 
 def middle_square(n, k):
     n = str(n).rjust(k, '0')
@@ -104,10 +107,10 @@ def primes():
                 break
         current += 2
 
-# Since a generator can take parameters, we can write a iterator decorator
-# that can be used to modify the result of any existing iterator. We don't
-# have to care how that iterator was originally defined, as long at it
-# somehow produces new values.
+# Since a generator can take parameters, we can write a iterator
+# decorator that modifies the result of any existing iterator. We
+# don't have to care how that iterator was originally defined, as
+# long at it somehow produces new values.
 
 # Let through every k:th element and discard the rest.
 def every_kth(it, k):
@@ -215,8 +218,7 @@ def tabu_generator(n, len_, recent = None):
 # Count how many permutations occur for different values of recent.
 
 for recent in range(0, 6):
-    itemgen = (random.randint(0, 7) for i in tabu_generator(8, 10**5, recent))
-    total = 0
+    itemgen, total = tabu_generator(8, 10**5, recent), 0    
     for perm in unique_permutations(itemgen, 8):
         total += 1
     print(f"Using tabu length {recent}, found {total} unique permutations.")
@@ -224,29 +226,6 @@ for recent in range(0, 6):
 # Constructing the shortest possible sequence that contains all
 # permutations of {0, ..., n-1} is an unsolved mathematical problem.
 # Google "greg egan haruhi superpermutation" for an interesting story.
-
-def vertical_print(*its, start="", end="", sep=" "):
-    its = list(map(iter, its))
-    term = len(its)
-    while term > 0:
-        result = start
-        for idx in range(len(its)):
-            if its[idx]:
-                try:
-                    val = str(next(its[idx]))
-                except StopIteration:
-                    its[idx] = None
-                    val = " "
-                    term -= 1
-            else: val = " "
-            result += val + sep                
-        result += end
-        if term > 0: yield result
-
-for line in vertical_print("Hello", "there", "how", "are", "yeh?",
-                           "supercalifragilisticexpialidocious",
-                           start = "[", end="]"):
-    print(line)
 
 # Sieve of Erathostenes is a classic but inefficient way to generate
 # prime numbers. Recursive generators make it a more interesting here

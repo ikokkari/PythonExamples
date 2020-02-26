@@ -55,11 +55,9 @@ def final_digit(n):
 def heron_root(x):
     if x < 0:
         raise ValueError("Square roots of negative numbers not allowed")
-    guess = x / 2
-    prev = 0
+    guess, prev = x / 2, 0    
     while guess != prev: # This will converge in float precision.
-        prev = guess
-        guess = (guess + x / guess) / 2
+        prev, guess = guess, (guess + x / guess) / 2        
     return guess
 
 # Converting Roman numerals and positional integers back and forth makes
@@ -88,21 +86,18 @@ symbols_decode = {
 }
 
 def roman_decode(s):
-    result = 0
-    prev = 0
+    result, prev = 0, 0    
     for c in reversed(s): # Loop through symbols from right to left
         v = symbols_decode[c]
-        if prev > v:
-            result -= v
-        else:
-            result += v
+        # One-liner version of if-else to choose between two values.
+        result += v if prev <= v else -v
         prev = v
     return result        
 
 # Whenever you have two functions that are each other's inverses, it is
-# quite easy to test them by looping through some large number of possible
-# inputs to first, and verifying that both functions really invert the
-# result produced by the other.
+# easy to test them by looping through some large number of possible
+# inputs and verifying that both functions really invert the result
+# produced by the other.
 
 def test_roman():
     for n in range(1, 5000):
@@ -125,14 +120,15 @@ def secant_method(f, x0 = 0, x1 = 1, tol = 0.000000001, verbose = False):
     return (x0 + x1) / 2
 
 if __name__ == "__main__":
-    print("Greatest common divisor of 123456 and 654321, visualized:")
-    euclid_gcd(123456, 654321, verbose = True)
+    a, b = 2*3*3*13*17*49, 3*5*5*7*33*19    
+    print(f"Greatest common divisor of {a} and {b}, visualized:")
+    euclid_gcd(a, b, verbose = True)
     print(f"Roman numbers conversion works? {test_roman()}")
-    print(roman_decode(roman_encode(1234)))
     print(f"Heron square root of 2 equals {heron_root(2)}.")
 
     # How many numbers are longer written in Arabic than in Roman?
-    shorter = [str(x) for x in range(1, 5000) if len(str(x)) > len(roman_encode(x))]
+    shorter = [x for x in range(1, 5000) if len(str(x)) > len(roman_encode(x))]
+    shorter = [f"{x} ({roman_encode(x)})" for x in shorter]
     print(f"Numbers longer written in Arabic than in Roman are: {', '.join(shorter)}")
 
     # Random sampling is often a good way to estimate the behaviour of

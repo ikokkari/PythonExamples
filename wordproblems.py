@@ -37,13 +37,13 @@ def rotodromes(words):
 # one letter is tactically removed.
 
 def almost_palindromes(words):    
-    def _almost(word):
+    def almost(word):
         for i in range(len(word) - 1):
             w2 = word[:i] + word[i+1:]
             if w2 == w2[::-1]:
                 return True
         return False
-    return [x for x in words if len(x) > 2 and _almost(x)]
+    return [x for x in words if len(x) > 2 and almost(x)]
 
 # Rotate the consonants of the text cyclically, keeping the rest of
 # the characters as they are, and maintaining the capitalization of
@@ -54,22 +54,22 @@ __cons += __cons.upper()
 
 def rotate_consonants(text, off = 1):
     # Find the positions of all consonants in text.
-    cons_pos = [i for i in range(len(text)) if text[i] in __cons]
+    cons_pos = [i for (i, c) in enumerate(text) if c in __cons]
     # Process the text one character at the time.
-    result, pos = "", 0    
-    for i in range(len(text)):
-        if text[i] in __cons:
+    result, pos = '', 0    
+    for (i, c) in enumerate(text):
+        if c in __cons:
             # Location of the next consonant in the consonant list.
             succ = (pos + off) % len(cons_pos)
             # Maintain the capitalization.
-            if text[i].isupper():
+            if c.isupper():
                 result += text[cons_pos[succ]].upper()
             else:
                 result += text[cons_pos[succ]].lower()
             pos = (pos + 1) % len(cons_pos)
         else:
             # Take the character into result as is.
-            result += text[i]
+            result += c
     return result
 
 # Stolen from "Think Python: How To Think Like a Computer Scientist"
@@ -104,8 +104,7 @@ def longest_substring_with_k_chars(text, k = 2):
     # position index of where they occurred.
     last_seen = {}
     len_, max_, maxpos = 0, 0, 0
-    for i in range(len(text)):
-        c = text[i]
+    for (i, c) in enumerate(text):        
         # If no conflict, update the last_seen dictionary.
         if len(last_seen) < k or c in last_seen:
             last_seen[c] = i
@@ -171,8 +170,7 @@ def remain_words(words):
     result = [ [], [x for x in words if len(x) == 1] ]
     wl = 2
     while True:
-        nextlevel = { }
-        hasWords = False
+        nextlevel, hasWords = { }, False        
         for w in (x for x in words if len(x) == wl):
             shorter = []
             for i in range(0, wl - 1):
@@ -328,6 +326,6 @@ if __name__ == "__main__":
     print("\nLet us compute all anagrams for the six letter words.")
     words6 = [word for word in words if len(word) == 6]
     anagrams = all_anagrams(words6)
-    print("The anagram groups with five or more members are:")
-    for li in (x for x in anagrams if len(anagrams[x]) > 4):
+    print("The anagram groups with eight or more members are:")
+    for li in (x for x in anagrams if len(anagrams[x]) >= 8):
         print(", ".join(anagrams[li]))

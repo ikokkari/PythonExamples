@@ -1,7 +1,7 @@
 # Convert the words in the text to title case. (Not same as uppercase.)
 
 def title_words(text):
-    prev, result = ' ', ""
+    prev, result = ' ', ''
     for c in text:
         if prev.isspace() and not c.isspace():
             result += c.title()
@@ -150,19 +150,19 @@ def tutnese(sentence):
                 "y": ["yub", "yuck"],
                 "z": ["zub", "zug"] }
     def trans(word):
-        result = ""
-        skip = False
-        for idx in range(len(word)):
+        result, skip = '', False        
+        for (idx, c) in enumerate(word):
             if skip:
                 skip = False
                 continue
-            c = word[idx].lower()
+            c = c.lower()
             if idx < len(word) - 1 and c == word[idx + 1].lower():
                 if c in "aeiouy":
                     dup = "squat"
                 else:
                     dup = "squa"
-                if word[idx].isupper: dup = dup[0].upper() + dup[1:]
+                if word[idx].isupper():
+                    dup = dup[0].upper() + dup[1:]
                 result += dup + c
                 skip = True # skip the duplicated letter after this one
             else:
@@ -174,8 +174,7 @@ def tutnese(sentence):
                 else:
                     result += word[idx]
         return result
-    result = translate_words(sentence, trans)
-    return result
+    return translate_words(sentence, trans)    
 
 # Convert an integer into its English language name.
 

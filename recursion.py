@@ -143,6 +143,8 @@ def knight_tour(n = 8, sx = 1, sy = 1):
 # decent theory of computability courses. And not even then.
 # http://en.wikipedia.org/wiki/Ackermann_function
 
+from fractions import Fraction
+
 def ackermann(m, n):
     if m == 0:
         return n+1
@@ -165,5 +167,11 @@ if __name__ == "__main__":
     print(f"Ackermann(3, 4) = {ackermann(3, 4)}.")
     # print(f"Ackermann(4, 4) = {ackermann(4, 4)}.") # recursion limit exceeded
     print(f"Using binary power, 2**10001 = {binary_power(2, 10001)}.")
+    assert 2**10001 == binary_power(2, 10001)
+    # Python functions are polymorphic in that they don't care about
+    # the actual type of their argument, as long as the arguments have
+    # the capabilities expected from them.
+    b = Fraction(3, 7)
+    print(f"{b} raised to 100th power equals {binary_power(b, 100)}.")    
     v = 123456789
     print(f"{v} reversed is {reverse_digits(v)}.")

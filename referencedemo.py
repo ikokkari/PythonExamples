@@ -36,7 +36,7 @@ print("Results for integer value 5:")
 
 print(f"a == b: {a==b}\na is b: {a is b}") 
 
-# There is an upper limit to such caching, though. A googol should do it.
+# There is an upper limit to such caching, though.
 
 a = 10**100
 b = 10**100

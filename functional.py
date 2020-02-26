@@ -36,10 +36,9 @@ print(f"Rising power of 10 to 3 equals {rising_power(10, 3)}.")
 
 # Determine whether the sequence x, f(x), f(f(f(x))), ... becomes
 # periodic after some point. A computer science classic without
-# needing any extra memory to store intermediate results.
+# needing more than O(1) extra memory.
 def is_eventually_periodic(f, x, giveup = 1000):
-    tortoise = x
-    hare = f(x)
+    tortoise, hare = x, f(x)    
     while tortoise != hare and giveup > 0:
         tortoise = f(tortoise)
         hare = f(f(hare))
