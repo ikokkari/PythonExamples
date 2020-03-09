@@ -77,8 +77,8 @@ def flatten(li):
 
 # The subset sum problem asks if it is possible to choose a subset of
 # given items (all assumed to be integers) that together add up to goal.
-# If there is no solution, the function returns None, otherwise it returns
-# the list of items that together add up to the goal.
+# If there is no solution, the function returns None, otherwise it
+# returns the list of items that together add up to the goal.
 # http://en.wikipedia.org/wiki/Subset_sum_problem
 
 def subset_sum(items, goal):

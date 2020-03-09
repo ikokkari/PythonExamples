@@ -97,10 +97,11 @@ def memoize(f):
         return res
     # Alias the local variable so that it can be seen from outside.
     lookup_f.results = results
+    # Result is a function that can be called same as original.
     return lookup_f
 
-# The famous Fibonacci series. Trust me that this stupid implementation
-# would take nearly forever if called for n in largish double digits.
+# The famous Fibonacci series. This naive implementation would take
+# nearly forever if called for n in largish double digits.
 
 def fib(n):
     if n < 2:
@@ -127,9 +128,8 @@ hof_q = memoize(hof_q)
 print(f"HofQ(100) = {hof_q(100)}.")
 
 # We can also perform the memoization explicitly. Since the function
-# arguments are assumed to be nonnegative integers, the computed results
-# can be stored in a list. Otherwise, some kind of dictionary would have
-# to be used.
+# arguments are nonnegative integers, the computed results can be
+# stored in a list. Otherwise, some kind of dictionary would be used.
 
 Q = [ 0, 1, 1 ]
 def hof_qt(n):
@@ -140,6 +140,35 @@ def hof_qt(n):
 
 print(f"HofQt(1000000) = {hof_qt(1000000)}.")
 print(f"HofQt table contains {len(Q)} cached entries.")
+
+# An interesting problem from "Concrete Mathematics". A row of aging
+# barrels is filled with wine at year 0. After each year, a portion
+# of the aged wine from each barrel is poured in the next barrel from
+# end to beginning. The wine taken from last barrel is bottled for
+# sale, and the first barrel is refilled with new wine. What is the
+# composition of the given barrel after the number of years?
+
+from fractions import Fraction
+
+@memoize
+def wine(barrel, age, year, pour = Fraction(1, 2)):
+    # Imaginary "zero" barrel to represent incoming flow of new wine.
+    if barrel == 0:
+        return 1 if age == 0 else 0
+    # In the initial state, all barrels consist of new wine.
+    elif year == 0:
+        return 1 if age == 0 else 0
+    # Recursive formula for proportion of wine of age a.
+    else:
+        return (1 - pour) * wine(barrel, age - 1, year - 1) +\
+               pour * wine(barrel - 1, age - 1, year - 1)
+
+year = 10
+print(f"After year {year}, the barrel compositions are:")
+for b in range(1, 6):
+    comp = [str(wine(b, a, year)) for a in range(1, year + 1)]
+    print(f"Barrel {b} contains: {', '.join(comp)}.")
+    
 
 # Wouldn't it be "groovy" to memoize the memoize function itself, so that
 # if some function has already been memoized, the same function won't be
