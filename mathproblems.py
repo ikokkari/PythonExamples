@@ -5,7 +5,7 @@ def euclid_gcd(a, b, verbose = False):
     while b > 0:
         a, b = b, a % b
         if verbose:
-            print(f"a is {a}, b is {b}")
+            print(f"a={a}, b={b}")
     return a
 
 # Generate the Collatz series from the given starting value.
@@ -24,27 +24,35 @@ def collatz(start):
     result.append(1)
     return result
 
-# Given the previous ability to generate the Collatz series starting
-# from the given number, determine which number from start to end - 1
-# produces the longest Collatz series, and return that number.
+# Continued fractions are an alternative way to represent integer
+# fractions as a sequence of integers. If a/b is a rational number,
+# the resulting continued fraction is finite. For irrational numbers
+# the resulting sequence is infinite, but for some numbers such as
+# the golden ratio have simple continued fraction form that can be
+# used to approximate the irrational number to any precision.
+# https://en.wikipedia.org/wiki/Continued_fraction    
 
-def longest_collatz(start, end):
-    best = start
-    best_len = len(collatz(start))
-    for x in range(start + 1, end):
-        curr_len = len(collatz(x))
-        if curr_len > best_len:
-            best_len = curr_len
-            best = x
-    return best
+def f_to_cf(a, b, verbose = False):
+    result = []
+    while a > 0 and b > 1:
+        # As we see, the core operation is same as in euclid_gcd.
+        if verbose:
+            print(f"a={a}, b={b}")
+        q, r = b // a, b % a        
+        result.append(q) # This time we store the quotient info
+        a, b = r, a
+    return result
 
-# If you add up the sum of digits of a positive integer until only
-# a single digit remains, what is digit do you end up with?
+from fractions import Fraction
 
-def final_digit(n):
-    while n > 9:
-        n = sum([int(d) for d in str(n)])
-    return n
+def cf_to_f(items):
+    result = None
+    for e in reversed(items):
+        if result == None:
+            result = e
+        else:
+            result = e + Fraction(1, result)
+    return result
 
 # Another algorithm from the ancient world, Heron's square root method
 # to numerically iterate the guess for the square root of the positive
@@ -105,19 +113,6 @@ def test_roman():
             return False
     return True
 
-# Another famous numerical method to find the root of the function f within
-# the given tolerance, looking for solution from real interval [x0, x1].
-
-def secant_method(f, x0 = 0, x1 = 1, tol = 0.000000001, verbose = False):
-    fx0 = f(x0)
-    fx1 = f(x1)
-    while abs(x1 - x0) > tol:
-        x2 = x1 - fx1 * (x1 - x0) / (fx1 - fx0)
-        fx2 = f(x2)
-        x0, x1, fx0, fx1 = x1, x2, fx1, fx2
-        if verbose:
-            print(f"x = {x0:.15f}, diff = {abs(x1-x0):.15f}")
-    return (x0 + x1) / 2
 
 if __name__ == "__main__":
     a, b = 2*3*3*13*17*49, 3*5*5*7*33*19    
@@ -126,22 +121,22 @@ if __name__ == "__main__":
     print(f"Roman numbers conversion works? {test_roman()}")
     print(f"Heron square root of 2 equals {heron_root(2)}.")
 
+    print(f"Continued fraction for {a}/{b} is {f_to_cf(a, b, True)}.")
+
     # How many numbers are longer written in Arabic than in Roman?
     shorter = [x for x in range(1, 5000) if len(str(x)) > len(roman_encode(x))]
     shorter = [f"{x} ({roman_encode(x)})" for x in shorter]
     print(f"Numbers longer written in Arabic than in Roman are: {', '.join(shorter)}")
-
-    # Random sampling is often a good way to estimate the behaviour of
-    # some process for which we don't know the analytical solution.
-    from random import randint    
-    digits = [final_digit(randint(2, 1000) ** randint(2, 1000)) for i in range(3000)]    
-    print("For random integer powers, the final digit counts are:")
-    counts = [(i, digits.count(i)) for i in range(1, 10)]
-    # Strange result. Why does that happen?
-    print(", ".join([f"{i}->{c}" for (i, c) in counts]))
-        
-    def testfunc(x):
-        return 4 * x**4 - 17 * x**3 + 10 * x**2 + 8
-    print("Let us test out the secant method.")
-    r = secant_method(testfunc, -1, 3, verbose = True)
-    print(f"Found root at {r:.6} where testfunc gives {testfunc(r):.6}")
+    
+    # Let us approximate the Golden Ratio using the first 150 terms
+    # from its infinitely long continued fraction representation.
+    # https://en.wikipedia.org/wiki/Golden_ratio
+    grf = cf_to_f([1] * 150) # Handy trick for a list of identical items
+    from decimal import getcontext, Decimal
+    getcontext().prec = 50
+    a, b = grf.numerator, grf.denominator
+    grd = Decimal(a) / Decimal(b)
+    print("In 50 decimal places, the golden ratio is approximately:")
+    print(f"{grd}")
+    # Correct answer copied from Wolfram Alpha:
+    #print("1.6180339887498948482045868343656381177203091798058")
