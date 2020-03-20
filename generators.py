@@ -44,7 +44,7 @@ for x in Squares(1, 10):
 print("\nPrinting the squares with generator:")
 for x in squares(1, 10):
     print(x, end = ' ')
-print('\n')
+print('')
 
 # So far, both examples generated a finite sequence. But there is
 # nothing in the laws of nature or man that says that a sequence
@@ -106,6 +106,25 @@ def primes():
                 yield current
                 break
         current += 2
+
+# This general idea comes handy sometimes. How to iterate through all
+# pairs of the form (a, b) where a and b are nonnegative integers?
+        
+def all_pairs():
+    s = 0
+    # In each antidiagonal of the infinite 2D grid, a + b == s.
+    while True:
+        for a in range(0, s + 1):
+            yield(a, s - a)
+        s += 1
+        
+print("Here are the first 21 (a, b) integer pairs:")
+count, seq = 0, all_pairs()
+while count < 21:
+    (a, b) = next(seq)
+    print(f"({a},{b}) ", end = "")
+    count += 1
+print(" ...")
 
 # Since a generator can take parameters, we can write a iterator
 # decorator that modifies the result of any existing iterator. We
@@ -179,8 +198,9 @@ def unique_permutations(it, n):
         elif counts[v] == 2:
             ones -= 1                   
 
+# Every_kth and stutter are cancel each other out.
 print("Collatz sequence starting from 12345 is:")
-print(list(every_kth(stutter(collatz(12345), 3),3)))
+print(list(every_kth(stutter(collatz(12345), 3) ,3)))
 
 print("The string split into three consecutive words, overlapping:")
 print(list(ngrams("Hello world, how are you today?".split(" "), 3)))
@@ -227,18 +247,6 @@ for recent in range(0, 6):
 # permutations of {0, ..., n-1} is an unsolved mathematical problem.
 # Google "greg egan haruhi superpermutation" for an interesting story.
 
-# Sieve of Erathostenes is a classic but inefficient way to generate
-# prime numbers. Recursive generators make it a more interesting here
-# for the purposes of our discussion.
-
-def sieve_of_erathostenes(m, div):
-    if div == 2:
-        yield from range(3, m, 2)
-    else:
-        for i in sieve_of_erathostenes(m, div - 2 if div > 3 else 2):
-            if i == div or i % div != 0:
-                yield i
-
 # The itertools module defines tons of handy functions to perform
 # computations on existing iterators, to be combined arbitrarily.
 
@@ -253,15 +261,12 @@ print(list(it.islice(middle_square(540, 4), 12)))
 # Python's built in function enumerate is handy if you need the position
 # of each iterated element.
 
-print ("Here are the first 5 prime numbers that contain their index:")
+print ("Here are the first 5 prime numbers that contain their own index:")
 print(list(it.islice(((i, p) for (i, p) in enumerate(primes()) if str(i) in str(p)), 5)))
 
 # Take primes until they become greater than thousand
 print ("Here is every seventh prime number up to one thousand:")
 print (list(it.takewhile( (lambda x: x <= 1000), every_kth(primes(), 7))))
-
-print("Here are the prime numbers under 10000 filtered with the sieve:")
-print(list(sieve_of_erathostenes(10000, 101)))
 
 # Iterators can be turned into various combinatorial possibilities.
 # Again, even though there are exponentially many solutions, these

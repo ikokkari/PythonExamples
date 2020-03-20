@@ -25,12 +25,16 @@ def collatz(start):
     return result
 
 # Continued fractions are an alternative way to represent integer
-# fractions as a sequence of integers. If a/b is a rational number,
+# fractions as a sequence of smallish integers. If a/b is rational,
 # the resulting continued fraction is finite. For irrational numbers
-# the resulting sequence is infinite, but for some numbers such as
-# the golden ratio have simple continued fraction form that can be
-# used to approximate the irrational number to any precision.
+# the continued fraction is infinite, but for some numbers such as
+# the golden ratio have a nice continued fraction form that can be
+# used to approximate that irrational number to any precision.
 # https://en.wikipedia.org/wiki/Continued_fraction    
+
+# This assumes that 0 < a < b. To work for all rational numbers,
+# the whole integer part must be encoded separately, and the
+# actual continued fraction merely handles the fractional part.
 
 def f_to_cf(a, b, verbose = False):
     result = []
@@ -42,6 +46,10 @@ def f_to_cf(a, b, verbose = False):
         result.append(q) # This time we store the quotient info
         a, b = r, a
     return result
+
+# Converting a continued fraction into an ordinary fraction is
+# best done "inside out", a principle that works for many other
+# problems also. It is how expressions are evaluated, after all.
 
 from fractions import Fraction
 
@@ -68,8 +76,9 @@ def heron_root(x):
         prev, guess = guess, (guess + x / guess) / 2        
     return guess
 
-# Converting Roman numerals and positional integers back and forth makes
-# for interesting and education excample of loops, lists and dictionaries.
+# Converting Roman numerals and positional integers back and forth
+# makes for interesting and educational excample of loops, lists
+# and dictionaries.
 
 symbols_encode = [
     (1000, 'M'), (900, 'CM'), (500, 'D'), (400, 'CD'), (100, 'C'),
@@ -87,7 +96,7 @@ def roman_encode(n):
             n -= v
     return result
 
-# Dictionaries are handy to map symbols into the values that they encode.
+# Dictionaries map symbols into the values that they encode.
 
 symbols_decode = {
     'M':1000, 'D':500, 'C':100, 'L':50, 'X':10, 'V':5, 'I':1
@@ -98,7 +107,7 @@ def roman_decode(s):
     for c in reversed(s): # Loop through symbols from right to left
         v = symbols_decode[c]
         # One-liner version of if-else to choose between two values.
-        result += v if prev <= v else -v
+        result += (v if prev <= v else -v)
         prev = v
     return result        
 
@@ -131,11 +140,10 @@ if __name__ == "__main__":
     # Let us approximate the Golden Ratio using the first 150 terms
     # from its infinitely long continued fraction representation.
     # https://en.wikipedia.org/wiki/Golden_ratio
-    grf = cf_to_f([1] * 150) # Handy trick for a list of identical items
+    grf = cf_to_f([1] * 150) # Handy to create a list of identical items
     from decimal import getcontext, Decimal
-    getcontext().prec = 50
-    a, b = grf.numerator, grf.denominator
-    grd = Decimal(a) / Decimal(b)
+    getcontext().prec = 50   # Number of decimal places used in Decimal   
+    grd = Decimal(grf.numerator) / Decimal(grf.denominator)
     print("In 50 decimal places, the golden ratio is approximately:")
     print(f"{grd}")
     # Correct answer copied from Wolfram Alpha:
