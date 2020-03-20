@@ -6,16 +6,12 @@
 # to be neighbours if their Hamming distance equals one.
 
 def hamming_distance(w1, w2):
-    d = 0
-    for i in range(len(w1)):
-        if w1[i] != w2[i]:
-            d += 1
-    return d
+    return sum(int(c1 != c2) for (c1, c2) in zip(w1, w2))
 
 # Compute the word layers from the given starting word using the
 # breadth first search algorithm.
 
-def word_layers(start, neighbours, maxd = 99):
+def word_layers(start, neighbours):
     # The zeroth layer contains only the starting word.
     result = [[start]]
     # All words that have been discovered so far.
@@ -25,7 +21,7 @@ def word_layers(start, neighbours, maxd = 99):
     discovered.add(start)
     # Generate all word layers up to maxd level, or as long
     # as the current layer has even one word in it.
-    while maxd > 0 and len(frontier) > 0:
+    while len(frontier) > 0:
         # The next layer that we build up this round.
         nextl = []
         # The next layer contains all undiscovered neighbours
@@ -39,36 +35,29 @@ def word_layers(start, neighbours, maxd = 99):
         result.append(nextl)
         # This layer becomes the frontier for the next round.
         frontier = nextl
-        maxd -= 1
     return result
 
 if __name__ == "__main__":
     from random import sample
+    from itertools import combinations
     # The length of the words that we consider.
-    n = 5
+    n = 4
     with open('words_alpha.txt', encoding="utf-8") as f:
-        wordlist = [x.strip() for x in f if x.islower()]
+        wordlist = [x.strip() for x in f]
     print(f"Read in a word list of {len(wordlist)} lowercase words.")
-    wordlist = sorted([x for x in wordlist if len(x) == n])
+    wordlist = [x for x in wordlist if len(x) == n]
     print(f"There remain {len(wordlist)} words of length {n}.")
     
-    print("Building the word neighbourhood graph...", end="")
+    print("Building the neighbourhood graph, please wait...", flush = True)
     # Dictionary that maps each word to list of its neighbours.
     neighbours = { w:[] for w in wordlist }
-    # Loop through all positions of the wordlist...
-    for i1 in range(len(wordlist)):
-        w1 = wordlist[i1]
-        # Because this is a bit slow, print something to tell the
-        # human user that something is happening in the program.
-        if i1 % 500 == 0:
-            print(".", end="", flush=True)
-        # Compare each word to remaining words of the wordlist.
-        for i2 in range(i1 + 1, len(wordlist)):
-            w2 = wordlist[i2]
-            if hamming_distance(w1, w2) == 1:                
-                neighbours[w1] = neighbours[w1] + [w2]
-                neighbours[w2] = neighbours[w2] + [w1]
-    print("\nThe neighbour word graph is now fully constructed.")
+    # Loop through all pairs of words, looking for neighbours.
+    # This will take a while.
+    for (w1, w2) in combinations(wordlist, 2):
+        if hamming_distance(w1, w2) == 1:                
+            neighbours[w1] = neighbours[w1] + [w2]
+            neighbours[w2] = neighbours[w2] + [w1]
+    print("Thank you for waiting. Graph is now fully constructed.")
     
     singletons = [x for x in wordlist if neighbours[x] == []]
     print(f"There are {len(singletons)} singleton words in the dictionary:")
@@ -81,8 +70,7 @@ if __name__ == "__main__":
     for word in wordlist:
         total += len(neighbours[word])
         if len(neighbours[word]) > mw:
-            mw = len(neighbours[word])
-            mword = word
+            mw, mword = len(neighbours[word]), word            
     print(f"Average number of neighbours is {total / len(wordlist):.2f}.")
     print(f"The word with largest number of neighbours is {mword!r}.")
     print(f"It is directly connected to {', '.join(neighbours[mword])}.")
