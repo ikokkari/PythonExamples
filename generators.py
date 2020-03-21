@@ -122,10 +122,33 @@ print("Here are the first 21 (a, b) integer pairs:")
 count, seq = 0, all_pairs()
 while count < 21:
     (a, b) = next(seq)
-    print(f"({a},{b}) ", end = "")
+    print(f"({a}, {b}) ", end = "")
     count += 1
 print(" ...")
 
+# One more infinite generator, the Kolakoski sequence whose
+# elements describe the run-length encoding of the sequence.
+# https://en.wikipedia.org/wiki/Kolakoski_sequence
+
+# The "double-ended queue" or "deque" allows efficient push
+# and pop operations from both ends of the queue, whereas a
+# Python list only allows efficient operations in one end.
+from collections import deque
+
+def kolakoski(n = 2):
+    yield 1
+    yield 2
+    # The queue q contains the part of the sequence that has
+    # been computed but not yet yielded.
+    q, prev = deque([2]), 2
+    while True:
+        v = q.popleft()
+        yield v
+        prev = prev + 1 if prev < n else 1
+        for i in range(v):
+            q.append(prev)
+        
+    
 # Since a generator can take parameters, we can write a iterator
 # decorator that modifies the result of any existing iterator. We
 # don't have to care how that iterator was originally defined, as
@@ -261,12 +284,19 @@ print(list(it.islice(middle_square(540, 4), 12)))
 # Python's built in function enumerate is handy if you need the position
 # of each iterated element.
 
-print ("Here are the first 5 prime numbers that contain their own index:")
+print("Here are the first 5 prime numbers that contain their own index:")
 print(list(it.islice(((i, p) for (i, p) in enumerate(primes()) if str(i) in str(p)), 5)))
 
 # Take primes until they become greater than thousand
-print ("Here is every seventh prime number up to one thousand:")
-print (list(it.takewhile( (lambda x: x <= 1000), every_kth(primes(), 7))))
+print("Here is every seventh prime number up to one thousand:")
+print(list(it.takewhile( (lambda x: x <= 1000), every_kth(primes(), 7))))
+
+print("Here are the first 1000 elements of Kolakoski(2):")
+print("".join((str(x) for x in it.islice(kolakoski(2), 1000))))
+
+print("Here are the first 1000 elements of Kolakoski(3]):")
+
+print("".join((str(x) for x in it.islice(kolakoski(3), 1000))))
 
 # Iterators can be turned into various combinatorial possibilities.
 # Again, even though there are exponentially many solutions, these
