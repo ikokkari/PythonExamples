@@ -6,7 +6,7 @@ All computer science instructors are free to use and adapt these examples for th
 
 The Python example programs are distributed under [GNU General Public License, Version 3](https://www.gnu.org/licenses/gpl-3.0.txt). 
 
-Wordlist `words_alpha.txt` taken from [dwyl/english-words](https://github.com/dwyl/english-words).
+Wordlist `words_sorted.txt` adapted from [dwyl/english-words](https://github.com/dwyl/english-words).
 
 Text of `warandpeace.txt` taken from [Project Gutenberg](http://www.gutenberg.org/ebooks/2600).
 
