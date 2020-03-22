@@ -42,7 +42,7 @@ if __name__ == "__main__":
     from itertools import combinations
     # The length of the words that we consider.
     n = 4
-    with open('words_alpha.txt', encoding="utf-8") as f:
+    with open('words_sorted.txt', encoding="utf-8") as f:
         wordlist = [x.strip() for x in f]
     print(f"Read in a word list of {len(wordlist)} lowercase words.")
     wordlist = [x for x in wordlist if len(x) == n]

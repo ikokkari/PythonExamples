@@ -205,7 +205,7 @@ def all_anagrams(words):
 
 
 if __name__ == "__main__":
-    with open('words_alpha.txt', encoding="utf-8") as f:
+    with open('words_sorted.txt', encoding="utf-8") as f:
         words = [x.strip() for x in f]    
     print(f"Read in {len(words)} words.")
     

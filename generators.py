@@ -294,8 +294,7 @@ print(list(it.takewhile( (lambda x: x <= 1000), every_kth(primes(), 7))))
 print("Here are the first 1000 elements of Kolakoski(2):")
 print("".join((str(x) for x in it.islice(kolakoski(2), 1000))))
 
-print("Here are the first 1000 elements of Kolakoski(3]):")
-
+print("Here are the first 1000 elements of Kolakoski(3):")
 print("".join((str(x) for x in it.islice(kolakoski(3), 1000))))
 
 # Iterators can be turned into various combinatorial possibilities.

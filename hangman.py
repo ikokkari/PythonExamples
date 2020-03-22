@@ -28,7 +28,7 @@ def hangman(wordlist, sep = '*'):
     return misses
 
 if __name__ == "__main__":
-    with open('words_alpha.txt', encoding="utf-8") as f:
+    with open('words_sorted.txt', encoding="utf-8") as f:
         wordlist = [word.strip() for word in f]
     print(f"Read a word list of {len(wordlist)} words." )
     while True:

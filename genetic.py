@@ -47,7 +47,7 @@ if __name__ == "__main__":
     # the seed value to get a different random pattern.
     random.seed(8765)
     # Read in the wordlist.
-    with open('words_alpha.txt', encoding="utf-8") as f:
+    with open('words_sorted.txt', encoding="utf-8") as f:
         wordlist = [x.strip() for x in f if x.islower()]
     
     # We shall look for words of five letters.
