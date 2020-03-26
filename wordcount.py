@@ -25,12 +25,6 @@ replacements = (
 
 word_separators = re.compile("[^a-z]+")
 
-# \\s turns to \s, which means any whitespace character
-# + repetition one or more times
-# | means or
-# [0-9] any digit character
-# [] character class, any one of the characters inside
-
 # The dictionary of words that we shall build up as we see them.
 
 words = {}
@@ -46,7 +40,7 @@ with open('warandpeace.txt', encoding="utf-8") as wap:
         # Remove the contractions (see above).
         for (orig, repl) in replacements:
             line = line.replace(orig, repl)
-        # Remove whatever other possessives might remain.
+        # Remove whatever other contractions might remain.
         line = re.sub(r"'s\b", "", line) # Raw strings are handy for regexes.
         line = re.sub(r"'ll\b", " will", line)
         # Process the individual words in the line.
