@@ -15,59 +15,8 @@ def two_summers(items, goal, i = None, j = None):
             j -= 1
     return False
 
-# Given two lists s1 and s2, zip them together into one list.
-# (Python function zip produces pairs of elements.)
-
-def zip_together(s1, s2):
-    i, result = 0, []
-    while i < len(s1) and i < len(s2):
-        result.append(s1[i])
-        result.append(s2[i])
-        i += 1
-    while i < len(s1):
-        result.append(s1[i])
-        i += 1
-    while i < len(s2):
-        result.append(s2[i])
-        i += 1
-    return result
-
-# Given two sorted lists, create a new list that contains the elements
-# of both lists sorted, constructing the new list in one pass.
-
-def merge_sorted(s1, s2):
-    i1, i2, result = 0, 0, []
-    while i1 < len(s1) and i2 < len(s2):
-        if s1[i1] <= s2[i2]:
-            result.append(s1[i1])
-            i1 += 1
-        else:
-            result.append(s2[i2])
-            i2 += 1
-    while i1 < len(s1):
-        result.append(s1[i1])
-        i1 += 1
-    while i2 < len(s2):
-        result.append(s2[i2])
-        i2 += 1
-    return result
-
-# Given two sorted lists, create and return a new list that contains
-# the elements that are in both lists. If the lists are sorted, this
-# operation can be done in linear time in one pass through both lists.
-
-def intersection_sorted(s1, s2):
-    i1, i2, result = 0, 0, []
-    while i1 < len(s1) and i2 < len(s2):
-        if s1[i1] < s2[i2]:
-            i1 += 1
-        elif s1[i1] > s2[i2]:
-            i2 += 1
-        else:
-            result.append(s1[i1])
-            i1 += 1
-            i2 += 1
-    return result
+# In the graded labs, solve the classic problem of three_summers
+# in which you need to find three elements that add up to the goal.
 
 # Modify the list s in place so that all elements for which the
 # given predicate pred is true are in the front in some order,
@@ -84,12 +33,14 @@ def partition(s, pred):
             # Otherwise, swap it to the end
             (s[i1], s[i2]) = (s[i2], s[i1])          
             i2 -= 1
+    # Note that for list of n elements, pred is called exactly
+    # n-1 times. This can be valuable if pred is expensive.
     return s
 
 # List comprehensions make this easier and stable, but at the cost
 # of calling pred twice for each element in the list. This version
 # maintains the mutual ordering of elements inside the left and
-# right partitions, though.
+# right partitions, though, thanks to list comprehensions.
 
 def stable_partition(s, pred):
     return [x for x in s if pred(x)] + [x for x in s if not(pred(x))]
@@ -155,14 +106,10 @@ def apportion_congress_seats(seats, pop, verbose = False):
     return result
 
 if __name__ == "__main__":    
-    print("Partitioning numbers from 1 to 10:")
+    print("Partitioning integers from 1 to 10, unstable:")
     print(partition(list(range(1, 11)), lambda x: x % 2 == 0))
-    print("\nZipping together:")
-    print(zip_together([1, 2, 3, 4, 5], [99, 44, -55]))
-    print("\nMerging two sorted lists:")
-    print(merge_sorted([-4, 2, 5, 9, 10], [-2, -1, 0, 6]))
-    print("\nComputing the intersection:")
-    print(intersection_sorted([-4, -2, 10, 12], [-2, 0, 6, 10, 11]))
+    print("Partitioning integers from 1 to 10, stable:")
+    print(stable_partition(list(range(1, 11)), lambda x: x % 2 == 0))
 
     from random import randint    
     kinds = ['yule', 'dice', 'sokal-sneath', 'jaccard', 'matching', 'rogers-tanimoto']
