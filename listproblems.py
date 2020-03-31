@@ -81,11 +81,14 @@ def dissimilarity(first, second, kind='yule'):
 
 # Let us calculate how the congressional seats are divided over states
 # whose populations (in millions) are given in the parameter list pop.
+# The classic Huntington-Hill algorithm creates the fairest possible
+# allocation under the constraint that every state gets some integer
+# number of seats.
 
 from math import sqrt
 import heapq
 
-def apportion_congress_seats(seats, pop, verbose = False):
+def apportion_congress_seats(seats, pop):
     # List of seats assigned to each state, initially one per state.
     result = [1 for p in pop]
     # List of states and their current priorities.
@@ -127,13 +130,13 @@ if __name__ == "__main__":
         o2 = "".join([str(x) for x in v2])
         print(f"{o1} {o2} {res}")
         
-    # Let's make up a small pretend nation with five states and 16 seats.
-    print("\nApportioning congressional seats:")
+    # Let's make up a small pretend nation with five states and 100 seats.
     pops = [32, 22, 14, 8, 5]
-    print(f"Seats are given as {apportion_congress_seats(16, pops, True)}.")
-    # The Huntington-Hill algorithm can also be used to compute
-    # rounded percentages without any rounding error.
-    print(f"\nHere are the rounded percentages of {pops}:")
-    pct = apportion_congress_seats(1000, pops, False)
+    seats = apportion_congress_seats(100, pops)
+    print(f"\nCongressonal seats for {pops} are given as {seats}.")
+    # The Huntington-Hill algorithm can also be used to compute optimal
+    # rounded percentages so that the percentages add up to exactly 100.
+    print(f"\nFor comparison, rounded percentages of {pops}:")
+    pct = apportion_congress_seats(1000, pops)
     # These rounded percentages will add up to exactly 100.
-    print([f"{p/10:.1f}" for p in pct])
+    print(", ".join([f"{p/10:.1f}" for p in pct]))
