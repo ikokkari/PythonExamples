@@ -70,7 +70,7 @@ def int_to_english(n):
         p += 3
     return " ".join(reversed(result))
 
-def autogram_finder(text, rng):
+def autogram_finder(text, rng, verbose=True):
     letters = "abcdefghijklmnopqrstuvwxyz"
     count, best = [rng.randint(2, 50) for i in range(26)], 0
     
@@ -87,11 +87,12 @@ def autogram_finder(text, rng):
         # Replace previous best solution, if this one is better.
         if len(same) > best:
             best = len(same)
-            print(f"\n{filled}")
-            print(f"Actual: {', '.join([f'{l}:{c}' for (l, c) in zip(letters, count)])}")
-            print(f"Same: {same} {len(same)}")
+            if verbose:
+                print(f"\n{filled}")
+                print(f"Actual: {', '.join([f'{l}:{c}' for (l, c) in zip(letters, count)])}")
+                print(f"Same: {same} {len(same)}")
             if best == 26:
-                return
+                return filled
         count = actual
         # Perturb some incorrect count a little to get the system
         # out of some local loop that it has got itself stuck inside.
@@ -109,7 +110,9 @@ contains $a a's, $b b's, $c c's, $d d's, $e e's, $f f's, $g g's,
 $h h's, $i i's, $j j's, $k k's, $l l's, $m m's, $n n's, $o o's,
 $p p's, $q q's, $r r's, $s s's, $t t's, $u u's, $v v's, $w w's,
 $x x's, $y y's and finally, as amazing as it may seem, $z z's."""
-    
+text = text.replace("\n", " ")
+text = text.replace("\t", " ")
+
 if __name__ == '__main__':
     for x in [42, 3**7, 6**20, -(2**100), 9**200, 10**500]:
         print(f"{x} written in English is {int_to_english(x)}.")
@@ -119,7 +122,4 @@ if __name__ == '__main__':
     print(sorted(range(0, 101), key = lambda x: (len(int_to_english(x)), x)))
     print("The numbers that do not contain the letter 'o':")
     print([x for x in range(1000) if 'o' not in int_to_english(x)])
-    
-    text = text.replace("\n", " ")
-    text = text.replace("\t", " ")
-    autogram_finder(text, Random(1234))
+    autogram_finder(text, Random(999))
