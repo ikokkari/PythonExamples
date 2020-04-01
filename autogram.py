@@ -33,10 +33,7 @@ def __int_to_eng(n):
     elif n < 100: # Numbers 20 to 99, tens again with a lookup table.
         tens = ["", "", "twenty", "thirty", "forty", "fifty", 
                 "sixty", "seventy", "eighty", "ninety"][n // 10]
-        if n % 10 != 0:
-            return f"{tens}-{__int_to_eng(n % 10)}"            
-        else:
-            return tens
+        return tens if n % 10 == 0 else f"{tens}-{__int_to_eng(n % 10)}" 
     else: # Numbers 100 to 999
         if n % 100 == 0:
             return f"{__int_to_eng(n // 100)} hundred"            
@@ -54,14 +51,11 @@ def int_to_english(n):
     if n >= __googol: # huge numbers
         first = int_to_english(n // __googol)
         rest = int_to_english(n % __googol)
-        if rest == "zero":
-            return f"{first} googol"
-        else:
-            return f"{first} googol and {rest}"
+        return f"{first} googol" if rest == "zero" else f"{first} googol and {rest}"
+    # Otherwise, break the number into blocks of three and convert.
     result, p = [], 0
     while n > 0:
-        trip = n % 1000
-        n = n // 1000
+        trip, n = n % 1000, n // 1000        
         if trip > 0:
             if p == 0:
                 result.append(__int_to_eng(trip))
@@ -145,4 +139,6 @@ if __name__ == '__main__':
     print("The numbers that do not contain the letter 'o':")
     print([x for x in range(1000) if 'o' not in int_to_english(x)])
    
+    # When using a randomized algorithm, it is good to used a fixed
+    # seed to make the results repeatable.
     autogram_finder(text, Random(9999), perturb = 0)
