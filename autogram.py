@@ -78,7 +78,7 @@ def autogram_finder(text, rng, verbose=True):
         # Fill in text placeholders with names for each number.
         filled = text
         for i, c in enumerate(letters):
-            filled = filled.replace(f"${c}", int_to_english(count[i]))       
+            filled = filled.replace(f"${c}", int_to_english(count[i]))          
         # Count the actual counts of letters.
         lfill = filled.lower()
         actual = [lfill.count(c) for c in letters]
@@ -109,9 +109,21 @@ Ilkka Kokkarinen to serve as an example for this course, and it
 contains $a a's, $b b's, $c c's, $d d's, $e e's, $f f's, $g g's,
 $h h's, $i i's, $j j's, $k k's, $l l's, $m m's, $n n's, $o o's,
 $p p's, $q q's, $r r's, $s s's, $t t's, $u u's, $v v's, $w w's,
-$x x's, $y y's and finally, as amazing as it may seem, $z z's."""
+$x x's, $y y's and finally, to top it all off, $z z's."""
 text = text.replace("\n", " ")
 text = text.replace("\t", " ")
+
+# This zesty, bookish and joyful quip was composed by Ilkka
+# Kokkarinen to serve as an example for this course, and it
+# contains thirteen a's, three b's, four c's, five d's,
+# forty-seven e's, thirteen f's, one g's, eleven h's, twenty
+# i's, two j's, seven k's, twelve l's, three m's, twenty-five
+# n's, twenty-three o's, five p's, two q's, sixteen r's,
+# forty-one s's, thirty-three t's, six u's, eleven v's, nine
+# w's, four x's, eleven y's and finally, to top it all off,
+# two z's.
+
+# (Yeah, seriously.)
 
 if __name__ == '__main__':
     for x in [42, 3**7, 6**20, -(2**100), 9**200, 10**500]:
