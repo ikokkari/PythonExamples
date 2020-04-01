@@ -70,39 +70,50 @@ def int_to_english(n):
         p += 3
     return " ".join(reversed(result))
 
-def autogram_finder(text, rng, verbose=True):
-    letters = "abcdefghijklmnopqrstuvwxyz"
-    count, best = [rng.randint(2, 50) for i in range(26)], 0
+# Find an autogram, a text that describes in English how many times
+# each letter appears inside it. As with many of the 109 lab problems, 
+# this example was inspired by the works of the late great Martin
+# Gardner and his collected columns on recreational mathematics in
+# the Scientific American magazine.
+    
+def autogram_finder(text, rng, verbose=True, perturb = 20):
+    letters, rounds = "abcdefghijklmnopqrstuvwxyz", 0
+    count, best = [rng.randint(2, 50) for c in letters], 0
     
     while True:
+        rounds += 1
         # Fill in text placeholders with names for each number.
         filled = text
-        for i, c in enumerate(letters):
-            filled = filled.replace(f"${c}", int_to_english(count[i]))          
+        for n, c in zip(count, letters):
+            filled = filled.replace(f"${c}", int_to_english(n))
+        filled = filled.replace("$$", int_to_english(sum(count)))
         # Count the actual counts of letters.
         lfill = filled.lower()
         actual = [lfill.count(c) for c in letters]
         # Find the letters whose counts are correct.
         same = "".join([c for (i, c) in enumerate(letters) if count[i] == actual[i]])
-        # Replace previous best solution, if this one is better.
+        # Replace the previous best solution, if this one is better.
         if len(same) > best:
             best = len(same)
             if verbose:
                 print(f"\n{filled}")
-                print(f"Actual: {', '.join([f'{l}:{c}' for (l, c) in zip(letters, count)])}")
-                print(f"Same: {same} {len(same)}")
+                print(f"Actual: {', '.join([f'{l}:{c}' for (l, c) in zip(letters, actual)])}")
+                print(f"Matched {len(same)} letters '{same}' in {rounds} rounds.")
             if best == 26:
                 return filled
         count = actual
         # Perturb some incorrect count a little to get the system
         # out of some local loop that it has got itself stuck inside.
-        idx = rng.randint(0, 25)
-        if chr(ord('a') + idx) not in same:
+        idx = rng.randint(0, len(letters) - 1)
+        if letters[idx] not in same or rng.randint(0, 99) < perturb:
             count[idx] += rng.randint(1, 10)
 
-# Replace this sentence with something else, and have the
+# Replace this text with something else, and then have the
 # above autogram finder run overnight in hopes of finding
-# the right numbers to substitute to make the sentence work.
+# the right numbers to make the sentence work. Inside text,
+# $c is the count for the character c, and $$ is the total
+# number of letters in the text. (That one makes the search
+# far more difficult.)
     
 text = """This zesty, bookish and joyful quip was composed by
 Ilkka Kokkarinen to serve as an example for this course, and it
@@ -123,7 +134,6 @@ text = text.replace("\t", " ")
 # w's, four x's, eleven y's and finally, to top it all off,
 # two z's.
 
-# (Yeah, seriously.)
 
 if __name__ == '__main__':
     for x in [42, 3**7, 6**20, -(2**100), 9**200, 10**500]:
@@ -134,4 +144,5 @@ if __name__ == '__main__':
     print(sorted(range(0, 101), key = lambda x: (len(int_to_english(x)), x)))
     print("The numbers that do not contain the letter 'o':")
     print([x for x in range(1000) if 'o' not in int_to_english(x)])
-    autogram_finder(text, Random(999))
+   
+    autogram_finder(text, Random(9999), perturb = 0)
