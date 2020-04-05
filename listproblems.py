@@ -4,7 +4,7 @@
 
 def two_summers(items, goal, i = None, j = None):
     i = i if i else 0
-    j = j if j else 0
+    j = j if j else len(items) - 1
     while i < j:
         x = items[i] + items[j]
         if x == goal:
