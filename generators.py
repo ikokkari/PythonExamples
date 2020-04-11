@@ -2,63 +2,29 @@
 # always forgets what it has done and starts from beginning each
 # time it is called, a generator remembers where it left off and
 # continues from there at the next call. In Python, generators
-# are an easy way to define iterators.
+# are an easy way to define lazy sequences that produce their
+# elements one element at the time, only doing any work when
+# actually asked to do so.
 
-# First, a sneak preview of the last lecture about defining your
-# own data types as classes. Here is an iterator defined as a
-# proper class with certain "dunder" methods to implement the
-# iterator behaviour.
+# There is nothing in the laws of nature or man that says that
+# a lazy sequence could not just as well be infinite. The users
+# of that sequence can always decorate it with itertools.islice
+# to extract the finite prefix.
 
-class Squares:
-    def __init__(self, start, end):
-        self.start = start
-        self.end = end
-    def __next__(self):
-        if self.start > self.end:
-            raise StopIteration
-        else:
-            result = self.start ** 2
-            self.start = self.start + 1
-            return result
-    def __iter__(self):
-        return self
-    def __str__(self): # Human readable
-        return "Range iterator from " + self.start + " to " + self.end
-    def __repr__(self): # Expression to generate this object
-        return "Squares(" + self.start + ", " + self.end + ")"
-
-# Iterators are much easier to define as generators. Simply using
-# the keyword yield instead of return makes Python convert that
-# function to a generator type with the iterator methods loaded in.
-# To start with, here is a generator of squares.
-
-def squares(start, end):
-    curr = start
-    while curr < end:
-        yield curr * curr
-        curr += 1
-
-print("Printing the squares with Squares class:")
-for x in Squares(1, 10):
-    print(x, end = ' ')
-print("\nPrinting the squares with generator:")
-for x in squares(1, 10):
-    print(x, end = ' ')
-print('')
-
-# So far, both examples generated a finite sequence. But there is
-# nothing in the laws of nature or man that says that a sequence
-# could not just as well be infinite.
+# To get started, the classic chestnut of Fibonacci numbers.
 
 def fibonacci():
     yield 1
     yield 1
     curr, prev = 2, 1    
-    while True:
-        yield curr
+    while True: # Infinite loop for infinite sequence...
+        yield curr # Good thing execution automatically pauses here.
         curr, prev = curr + prev, curr
 
 # One one, two twos, three threes, four fours, five fives, ...
+# Nested loops come often handy here, although since our goal is
+# to replace loops with lazy sequences, this function could be
+# written in a more pretty form with itertools functions.
 
 def pyramid_series():
     v = 1
@@ -68,6 +34,9 @@ def pyramid_series():
         v += 1
 
 # Finite for all values of start, or infinite for some? Nobody knows!
+# In general, no algorithm can exist that could analyze the given
+# generator source code and determine whether the sequence that it
+# produces is finite.
 
 def collatz(start):
     while True:
@@ -78,16 +47,27 @@ def collatz(start):
         else:
             start = 3 * start + 1
 
-# John von Neumann's failed idea for pseudorandom number generation.
-# Even the greatest giants sometimes stumble.
-
-def middle_square(n, k):
-    n = str(n).rjust(k, '0')
+# A generator that produces random integers with an ever increasing
+# scale. Handy for generating random test cases in tester.py that
+# produce test cases from all scales so that the first test cases
+# are guaranteed to be small. The scale determines how wide range
+# the random increase from the previous element is taken. After
+# every skip elements, the scale gets multiplied by its original value.
+# Everything is again nice and tight integer arithmetic. (Well, I
+# guess that inside a computer, everything is integer arithmetic
+# anyway...)
+            
+def scale_random(seed, scale, skip):
+    # The seed value determines the future random sequence.
+    rng = random.Random(seed)
+    curr, count, orig = 1, 0, scale
     while True:
-        start = (len(n) - k) // 2
-        v = int(n[start:start+k])
-        yield v
-        n = str(v * v).rjust(2 * k, '0')
+        curr += rng.randint(1, scale)
+        yield curr
+        count += 1
+        if count == skip:
+            scale = scale * orig
+            count = 0          
 
 # Prime numbers, remembering all the prime numbers generated so far. To
 # test whether a number is prime, it is sufficient to test divisibility
@@ -107,8 +87,9 @@ def primes():
                 break
         current += 2
 
-# This general idea comes handy sometimes. How to iterate through all
-# pairs of the form (a, b) where a and b are nonnegative integers?
+# The next technique comes handy sometimes. Iterate through all
+# pairs of the form (a, b) where a and b are nonnegative integers
+# so that every such pair is visited exactly once.
         
 def all_pairs():
     s = 0
@@ -118,16 +99,16 @@ def all_pairs():
             yield(a, s - a)
         s += 1
         
-print("Here are the first 21 (a, b) integer pairs:")
-count, seq = 0, all_pairs()
-while count < 21:
-    (a, b) = next(seq)
-    print(f"({a}, {b}) ", end = "")
-    count += 1
-print(" ...")
+# That one is handy when you need to loop through the infinite
+# grid of pairs (x, y) where x and y are natural numbers, and
+# you need to find some pair (x, y) that satisfies the thing
+# that your code is looking for. Use the all_pairs generator
+# to systematically sweep through this infinite plane until
+# you find the (x, y) that is closest to origin (0, 0).
 
 # One more infinite generator, the Kolakoski sequence whose
-# elements describe the run-length encoding of the sequence.
+# elements describe the run-length encoding of that sequence.
+# That is, the sequence describes its own structure.
 # https://en.wikipedia.org/wiki/Kolakoski_sequence
 
 # The "double-ended queue" or "deque" allows efficient push
@@ -152,7 +133,8 @@ def kolakoski(n = 2):
 # Since a generator can take parameters, we can write a iterator
 # decorator that modifies the result of any existing iterator. We
 # don't have to care how that iterator was originally defined, as
-# long at it somehow produces new values.
+# long at it somehow produces new values. This gives our decorators
+# a maximally general nature.
 
 # Let through every k:th element and discard the rest.
 def every_kth(it, k):
@@ -177,11 +159,6 @@ def ngrams(it, n):
         if len(result) >= n:
             yield result
             result = result[1:]
-
-# Clip the values produced by the iterator to range [lower, upper].
-def clip(it, lower, upper):
-    for v in it:
-        yield max(min(v, upper), lower)
 
 # Extract all unique permutations of 0, ..., n-1 from the sequence,
 # assuming that sequence contains only values in 0, ..., n-1.
@@ -221,18 +198,13 @@ def unique_permutations(it, n):
         elif counts[v] == 2:
             ones -= 1                   
 
-# Every_kth and stutter are cancel each other out.
+# Functions every_kth and stutter cancel each other out.
 print("Collatz sequence starting from 12345 is:")
 print(list(every_kth(stutter(collatz(12345), 3) ,3)))
 
-print("The string split into three consecutive words, overlapping:")
-print(list(ngrams("Hello world, how are you today?".split(" "), 3)))
-
-# Print each sequence in the corresponding column, each column as far
-# down as there are elements in it.
-
-print("Clipping the values between 5 and 10:")
-print(list(clip(range(0, 20), 5, 10)))
+msg = "Hello world, how are you today?"
+print("A string split into three consecutive words, overlapping:")
+print(list(ngrams(msg.split(" "), 3)))
 
 # Extract the unique permutations from the list.
 items = [0, 2, 1, 0, 1, 2, 0, 0, 2, 2, 0, 1]
@@ -275,19 +247,16 @@ for recent in range(0, 6):
 
 import itertools as it
 
-print("Middle square 10-digit random numbers from 1234567890:")
-print(list(it.islice(middle_square(1234567890, 10), 50)))
-
-print("4-digit random numbers from 540 fall into a cycle right away:")
-print(list(it.islice(middle_square(540, 4), 12)))
-
-# Python's built in function enumerate is handy if you need the position
-# of each iterated element.
+# Python's built in function enumerate is handy if you also need
+# the position of each iterated element. The hand decorator
+# itertools.islice achieves the same end as the square bracket
+# slicing opreator applied to eager sequences, and its common
+# use is to turn an infinite sequence into a finite one.
 
 print("Here are the first 5 prime numbers that contain their own index:")
 print(list(it.islice(((i, p) for (i, p) in enumerate(primes()) if str(i) in str(p)), 5)))
 
-# Take primes until they become greater than thousand
+# Take primes until they become greater than thousand.
 print("Here is every seventh prime number up to one thousand:")
 print(list(it.takewhile( (lambda x: x <= 1000), every_kth(primes(), 7))))
 
@@ -297,9 +266,19 @@ print("".join((str(x) for x in it.islice(kolakoski(2), 1000))))
 print("Here are the first 1000 elements of Kolakoski(3):")
 print("".join((str(x) for x in it.islice(kolakoski(3), 1000))))
 
-# Iterators can be turned into various combinatorial possibilities.
-# Again, even though there are exponentially many solutions, these
-# are generated lazily one at the time as needed by the computation.
+print("Here are 100 random numbers from increasing scale:")
+print(", ".join((str(x) for x in it.islice(scale_random(123, 10, 5), 100))))
+
+print("Here are 100 random numbers from different scale:")
+print(", ".join((str(x) for x in it.islice(scale_random(123, 5, 10), 100))))
+
+# Iterators can be combined into various combinatorial possibilities.
+# Again, even though there are exponentially many elements produced,
+# these elements are generated lazily one at the time as needed. We
+# could iterate through trillions of combinations without running out
+# of memory, assuming we had the patience to wait out the answer.
+
+# For small n, these combinations are still pretty tolerable.
 
 print("Here are all possible permutations of [1, 2, 3, 4].")
 print(list(it.permutations(range(1, 5))))
