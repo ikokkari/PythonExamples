@@ -278,16 +278,20 @@ print(", ".join((str(x) for x in it.islice(scale_random(123, 5, 10), 100))))
 # could iterate through trillions of combinations without running out
 # of memory, assuming we had the patience to wait out the answer.
 
-# For small n, these combinations are still pretty tolerable.
+# For small n, these combinations are still pretty tolerable. You can
+# try the effect of increasing n (just by little!) to see how the
+# sequences grow exponentially.
 
-print("Here are all possible permutations of [1, 2, 3, 4].")
-print(list(it.permutations(range(1, 5))))
+n = 4   # Try 5 or 6.
 
-print("Here are all possible 3-combinations of [1, 2, 3, 4].")
-print(list(it.combinations(range(1, 5), 3)))
+print(f"Here are all possible permutations of {list(range(1, n+1))}.")
+print(list(it.permutations(range(1, n + 1))))
 
-print("Here are all possible replacement combinations of [1, 2, 3, 4].")
-print(list(it.combinations_with_replacement(range(1, 5), 3)))
+print(f"Here are all possible 3-combinations of {list(range(1, n+1))}.")
+print(list(it.combinations(range(1, n + 1), 3)))
+
+print(f"Here are all possible replacement combinations of {list(range(1, n+1))}.")
+print(list(it.combinations_with_replacement(range(1, n + 1), 3)))
 
 # For more examples of iterators and generators, see the itertools
 # recipes section in Python documentation.
