@@ -179,10 +179,10 @@ if __name__ == "__main__":
         s = integer_root(n)
         print(f"Integer square root of {n} equals {s}.")
     # Humongous number.
-    n = 10 ** 10000
+    n = 1234**5678
     s = str(integer_root(n))
-    print(f"For 10**10000, the square root has {len(s)} digits.")
-    print(f"First five are {s[:5]}, and last five are {s[-10:]}.")
+    print(f"For 1234**5678, the square root has {len(s)} digits.")
+    print(f"First five are {s[:5]}, and last five are {s[-5:]}.")
 
     # How many numbers are longer written in Arabic than in Roman?
     shorter = [x for x in range(1, 5000) if len(str(x)) > len(roman_encode(x))]
