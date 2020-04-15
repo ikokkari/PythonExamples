@@ -62,6 +62,48 @@ def cf_to_f(items):
             result = e + Fraction(1, result)
     return result
 
+# Whenever a problem is stated in terms of integers, you should aim
+# to solve it with integer arithmetic, and use floating point values
+# only if absolutely necessary. Even in that case, never ever compare
+# two computed floating point values for equality! Since floating point
+# values are approximations, it just never makes sense to compare them
+# with the operator ==. The most commonly seen Python constructs that
+# tend to produce floating point numbers would be ordinary division /
+# and sqrt, pow and basically any functions in the math module.
+    
+# As an example of how to do things with integers, here is the integer
+# root function that finds the largest a so that a**k <= n. Note how
+# the logic of this function does not depend on the fact that the
+# function is specifically the integer root, but can be adjusted to
+# produce the solution of any other monotonically ascending function.
+
+def integer_root(n, k=2):
+    # Find a and b so that a <= x <= b for the real answer x.
+    a, b = 0, 2
+    # Find some big enough b. More sophisticated schemes also exist
+    # to quickly find some b > x that does not overshoot too much.
+    # As long as b > x, the rest of the algorithm works, but it is
+    # always better to keep these numbers and the count of operations
+    # as small as possible.
+    while b**k < n:
+        b = b * 10
+    # Pinpoint the actual integer root with repeated halving.
+    while a < b:
+        m = (a + b) // 2  # Careful to use // instead of / here.
+        # Also, be careful with the asymmetry a <= m < b. This
+        # has caught many a programmer unaware. When a + 1 == b,
+        # also m == a then, and assigning a = m would do nothing!
+        if (m+1)**k > n: 
+            b = m # Since m < b, this advances for sure.
+        else:
+            a = m + 1 # Since a <= m < m+1, this advances for sure.
+        # Either way, the interval from a to b is cut in half.
+        # When a and b are integers, they will eventually meet.
+        # When a and b are fractions or such, stop once b - a is
+        # less than some small epsilon tolerance that you accept
+        # as being "Close enough for the government work!"
+    return a
+
 # Another algorithm from the ancient world, Heron's square root method
 # to numerically iterate the guess for the square root of the positive
 # real number x. (This algorithm generalizes to arbitrary roots, and in
@@ -132,6 +174,16 @@ if __name__ == "__main__":
 
     print(f"Continued fraction for {a}/{b} is {f_to_cf(a, b, True)}.")
 
+    print("Next, some integer square roots.")
+    for n in [49, 50, 1234567, 10**10]:
+        s = integer_root(n)
+        print(f"Integer square root of {n} equals {s}.")
+    # Humongous number.
+    n = 10 ** 10000
+    s = str(integer_root(n))
+    print(f"For 10**10000, the square root has {len(s)} digits.")
+    print(f"First five are {s[:5]}, and last five are {s[-10:]}.")
+
     # How many numbers are longer written in Arabic than in Roman?
     shorter = [x for x in range(1, 5000) if len(str(x)) > len(roman_encode(x))]
     shorter = [f"{x} ({roman_encode(x)})" for x in shorter]
@@ -144,7 +196,7 @@ if __name__ == "__main__":
     from decimal import getcontext, Decimal
     getcontext().prec = 50   # Number of decimal places used in Decimal   
     grd = Decimal(grf.numerator) / Decimal(grf.denominator)
-    print("In 50 decimal places, the golden ratio is approximately:")
+    print("The Golden ratio to 50 decimal places equals:")
     print(f"{grd}")
-    # Correct answer copied from Wolfram Alpha:
+    # Correct answer copied from Wolfram Alpha as gold standard:
     #print("1.6180339887498948482045868343656381177203091798058")
