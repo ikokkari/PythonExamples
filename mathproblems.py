@@ -79,14 +79,14 @@ def cf_to_f(items):
 
 def integer_root(n, k=2):
     # Find a and b so that a <= x <= b for the real answer x.
-    a, b = 0, 2
+    a, b = 0, 1
     # Find some big enough b. More sophisticated schemes also exist
     # to quickly find some b > x that does not overshoot too much.
     # As long as b > x, the rest of the algorithm works, but it is
     # always better to keep these numbers and the count of operations
     # as small as possible.
     while b**k < n:
-        b = b * 10
+        a, b = b, b * 10  # Exponential growth for b
     # Pinpoint the actual integer root with repeated halving.
     while a < b:
         m = (a + b) // 2  # Careful to use // instead of / here.
@@ -156,7 +156,9 @@ def roman_decode(s):
 # Whenever you have two functions that are each other's inverses, it is
 # easy to test them by looping through some large number of possible
 # inputs and verifying that both functions really invert the result
-# produced by the other.
+# produced by the other. This does not guarantee that the functions
+# are correct, though, just that if they are wrong, they both are
+# wrong the same way.
 
 def test_roman():
     for n in range(1, 5000):
