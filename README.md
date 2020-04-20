@@ -2,9 +2,11 @@
 
 Example programs from the course CCPS 109 Computer Science I, as taught by [Ilkka Kokkarinen](http://www.scs.ryerson.ca/~ikokkari/) for the Chang School of Continuing Education, Ryerson University, Toronto, Canada.
 
+The outline for the course is in [CCPS 109 Modules.pdf](https://github.com/ikokkari/PythonExamples/blob/master/CCPS%20109%20Modules.pdf).
+
 The YouTube playlist [CCPS 109 Computer Science I, Python](https://www.youtube.com/playlist?list=PLm1Sd7Iw1hHsZia9LEy5XJjvyDEbX1X9A) collects the author's recorded lectures of this material.
 
-All computer science instructors are free to use and adapt these examples for their purposes, with proper attribution to the original. The author welcomes feedback by email at ilkka.kokkarinen@gmail.com from all such instructors.
+All computer science instructors are free to use and adapt these examples for their needs and purposes, with proper attribution to the original. The author welcomes feedback by email at ilkka.kokkarinen@gmail.com from all such instructors.
 
 The Python example programs are distributed under [GNU General Public License, Version 3](https://www.gnu.org/licenses/gpl-3.0.txt). 
 
