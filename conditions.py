@@ -57,7 +57,7 @@ def is_leap_year_with_logic(y):
     return y % 4 == 0 and (y % 100 != 0 or y % 400 == 0)
 
 def test_leap_year():
-    for y in range(2525, 9511):
+    for y in range(2525, 9596):
         a1 = is_leap_year(y)
         a2 = is_leap_year_another_way(y)
         a3 = is_leap_year_with_logic(y)
