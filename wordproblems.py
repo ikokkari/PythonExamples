@@ -210,7 +210,7 @@ if __name__ == "__main__":
     print(f"Read in {len(words)} words.")
     
     # Binary search can quickly find all words with given prefix.
-    for prefix in ["aor", "jim", "propo"]:
+    for prefix in ["aor", "jims", "propo"]:
         result = []
         idx = bisect_left(words, prefix)
         while idx < len(words) and words[idx].startswith(prefix):

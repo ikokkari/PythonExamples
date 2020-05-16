@@ -151,5 +151,46 @@ def evaluate_all_poker_hands():
                 break # No point looking for more for this hand
     return [(f.__name__, counters[i]) for (i, f) in enumerate(funcs)]
 
+
+# Compute the resulting score of a made contract in the game
+# of contract bridge.
+def bridge_score(suit, level, vul, dbl, made):
+    mul = {'X':2, 'XX':4 }.get(dbl, 1)
+    score, bonus = 0, 0
+    
+    # Add up the values of individual tricks.
+    for trick in range(1, made + 1):
+        # Raw points for this trick.
+        if suit == 'clubs' or suit == 'diamonds':
+            pts = 20
+        elif suit == 'hearts' or suit == 'spades':
+            pts = 30
+        else:
+            pts = 40 if trick == 1 else 30
+        
+        if trick <= level: # Part of contract
+            score += mul * pts
+        elif mul == 1: # Undoubled overtrick
+            bonus += mul * pts
+        elif mul == 2: # Doubled overtrick
+            bonus += 200 if vul else 100
+        else: # Redoubled overtrick
+            bonus += 400 if vul else 200
+    if score >= 100: # Game bonus
+        bonus += 500 if vul else 300
+    else: # Partscore bonus
+        bonus += 50
+    if level == 6: # Small slam bonus
+        bonus += 750 if vul else 500
+    if level == 7: # Grand slam bonus
+        bonus += 1500 if vul else 1000
+    score += bonus
+    if mul == 2: # Insult bonus for making a (re)doubled contract
+        score += 50
+    elif mul == 4:
+        score += 100
+    return score
+
+
 if __name__ == "__main__":
     print(evaluate_all_poker_hands())
