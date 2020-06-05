@@ -66,6 +66,10 @@ def line_segment_intersect(p0, p1, p2, p3):
     # The turns (p0:p1:p2) and (p0:p1:p3) must have opposite signs.
     s1 = __sign(cross(p0, p1, p2))
     s2 = __sign(cross(p0, p1, p3))
+    if s1 < 0 and s2 < 0 or s1 > 0 and s2 > 0:
+        return False
+    s1 = __sign(cross(p2, p3, p0))
+    s2 = __sign(cross(p2, p3, p1))
     return (s1 >= 0 and s2 <= 0) or (s1 <= 0 and s2 >= 0)
 
 # To check whether the given polygon is convex, check that on the
