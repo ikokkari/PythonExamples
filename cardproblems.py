@@ -1,9 +1,8 @@
 # Define the suits and ranks that a deck of playing cards is made of.
 
 suits = ['clubs', 'diamonds', 'hearts', 'spades']
-ranks = {'deuce' : 2, 'two': 2, 'trey' : 3 , 'three': 3,
-         'four' : 4, 'five' : 5, 'six' : 6, 'seven' : 7,
-         'eight' : 8, 'nine' : 9, 'ten' : 10, 'jack' : 11,
+ranks = {'two': 2, 'three': 3, 'four' : 4, 'five' : 5, 'six' : 6,
+         'seven' : 7, 'eight' : 8, 'nine' : 9, 'ten' : 10, 'jack' : 11,
          'queen' : 12, 'king' : 13, 'ace' : 14 }
 
 deck = [ (rank, suit) for suit in suits for rank in ranks ]
