@@ -87,6 +87,22 @@ def primes():
                 break
         current += 2
 
+# Theon's Ladder, devised by Theon of Smyrna (ca. 140 B.C), is a series
+# of rational numbers that converge to square root of two. After over
+# two millenia, Shaun Giberson and Thomas J. Osler proved in 2013 that
+# the method generalizes for the square roots of any integer c. Since
+# outside mathematics courses it is pretty rare to need any mathematics
+# that was not fully known to mathematicians of the 19th century, we
+# should latch onto the chance to examine something that was missed
+# for so long. This generator produces two-tuples (a, b) that denote
+# the numerator and denominator of that fraction.
+        
+def theons_ladder(c, a = 1, b = 1):
+    while True:
+        yield (a, b)
+        # Original Theon's ladder was just c = 2.
+        a, b = a + c * b, a + b
+
 # The next technique comes handy sometimes. Iterate through all
 # pairs of the form (a, b) where a and b are nonnegative integers
 # so that every such pair is visited exactly once.
@@ -266,11 +282,36 @@ print("".join((str(x) for x in it.islice(kolakoski(2), 1000))))
 print("Here are the first 1000 elements of Kolakoski(3):")
 print("".join((str(x) for x in it.islice(kolakoski(3), 1000))))
 
-print("Here are 100 random numbers from increasing scale:")
+print("Here are 100 random numbers from increasing scales:")
 print(", ".join((str(x) for x in it.islice(scale_random(123, 10, 5), 100))))
 
-print("Here are 100 random numbers from different scale:")
+print("Here are 100 random numbers from another scale:")
 print(", ".join((str(x) for x in it.islice(scale_random(123, 5, 10), 100))))
+
+from fractions import Fraction
+
+print("Let us examine Theon's ladder for square root of 7.")
+for i, (a, b) in enumerate(it.islice(theons_ladder(7), 30)):
+    f = Fraction(a, b)
+    f = f * f
+    print(f"{i}: a = {a}, b = {b} error = {float(7 - f):.11}")
+    
+print("For c = 2, terms in even positions of Theon's ladder give")
+print("us Pythagorean triples whose legs differ by exactly one:")
+for (a, b) in it.islice(theons_ladder(2), 0, 40, 2):
+    h, s, e = b, 1, b
+    while s < e:
+        m = (s + e) // 2
+        v = m**2 + (m+1)**2
+        if v < h * h:
+            s = m + 1
+        else:
+            e = m
+    print(f"({s}, {s+1}, {h}) ", end = "")
+print()
+
+# What other mysteries of number theory are hiding inside this
+# ladder for various other starting values of a, b and c?
 
 # Iterators can be combined into various combinatorial possibilities.
 # Again, even though there are exponentially many elements produced,
@@ -290,7 +331,7 @@ print(list(it.permutations(range(1, n + 1))))
 print(f"Here are all possible 3-combinations of {list(range(1, n+1))}.")
 print(list(it.combinations(range(1, n + 1), 3)))
 
-print(f"Here are all possible replacement combinations of {list(range(1, n+1))}.")
+print(f"Here are all possible 3-multicombinations of {list(range(1, n+1))}.")
 print(list(it.combinations_with_replacement(range(1, n + 1), 3)))
 
 # For more examples of iterators and generators, see the itertools
