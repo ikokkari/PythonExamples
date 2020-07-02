@@ -7,7 +7,7 @@ def sign(a):
         return 0
     
 def median(a, b, c):
-    if a <= b <= c or c <= b <= a:
+    if a < b <= c or c <= b <= a:
         return b
     elif b <= a <= c or c <= a <= b:
         return a
@@ -26,19 +26,15 @@ def days_in_month(m, leap_year = False):
     if m < 1 or m > 12:
         return 0
     elif m == 2:
-        if leap_year:
-            return 29
-        else:
-            return 28
-    elif m in (4, 6, 9, 11):
-        return 30
+        return 29 if leap_year else 28
     else:
-        return 31
+        return 30 if (m in (4, 6, 9, 11)) else 31
+
     
 def is_leap_year(y):
     if y % 4 != 0:
         return False
-    if y % 100 != 0:
+    elif y % 100 != 0:
         return True
     return y % 400 == 0
 
@@ -61,6 +57,6 @@ def test_leap_year():
         a1 = is_leap_year(y)
         a2 = is_leap_year_another_way(y)
         a3 = is_leap_year_with_logic(y)
-        if a1 != a2 or a2 != a3:
+        if not (a1 == a2 and a2 == a3): #a1 != a2 or a2 != a3:
             return False # Tear it down and start again.
-    return True     # I am pleased where man has been.
+    return True          # I am pleased where man has been.

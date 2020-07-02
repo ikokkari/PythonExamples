@@ -8,10 +8,12 @@
 
 # There is nothing in the laws of nature or man that says that
 # a lazy sequence could not just as well be infinite. The users
-# of that sequence can always decorate it with itertools.islice
-# to extract the finite prefix.
+# of that sequence can (and always should) decorate it with
+# itertools.islice to extract the finite prefix instead of
+# using more low-level old-timey and non-Pythonic techniques.
 
 # To get started, the classic chestnut of Fibonacci numbers.
+# It's like that one is a law of some sorts for CS instructors.
 
 def fibonacci():
     yield 1
@@ -36,7 +38,7 @@ def pyramid_series():
 # Finite for all values of start, or infinite for some? Nobody knows!
 # In general, no algorithm can exist that could analyze the given
 # generator source code and determine whether the sequence that it
-# produces is finite.
+# produces is finite or infinite.
 
 def collatz(start):
     while True:
@@ -91,13 +93,13 @@ def primes():
 # of rational numbers that converge to square root of two. After over
 # two millenia, Shaun Giberson and Thomas J. Osler proved in 2013 that
 # the method generalizes for the square roots of any integer c. Since
-# outside mathematics courses it is pretty rare to need any mathematics
-# that was not fully known to mathematicians of the 19th century, we
-# should latch onto the chance to examine something that was missed
+# outside actual math courses it is pretty rare to need any mathematics
+# that was not old news to the mathematicians in the 19th century, we
+# should latch onto this rare chance to examine something that was missed
 # for so long. This generator produces two-tuples (a, b) that denote
 # the numerator and denominator of that fraction.
         
-def theons_ladder(c, a = 1, b = 1):
+def theons_ladder(c = 2, a = 1, b = 1):
     while True:
         yield (a, b)
         # Original Theon's ladder was just c = 2.
@@ -116,15 +118,16 @@ def all_pairs():
         s += 1
         
 # That one is handy when you need to loop through the infinite
-# grid of pairs (x, y) where x and y are natural numbers, and
-# you need to find some pair (x, y) that satisfies the thing
+# quadrant of pairs (a, b) where a and b are natural numbers,
+# and you need to find some pair (a, b) that satisfies the thing
 # that your code is looking for. Use the all_pairs generator
 # to systematically sweep through this infinite plane until
-# you find the (x, y) that is closest to origin (0, 0).
+# you find the (a, b) that is closest to origin (0, 0).
 
 # One more infinite generator, the Kolakoski sequence whose
 # elements describe the run-length encoding of that sequence.
-# That is, the sequence describes its own structure.
+# That is, this self-referential sequence describes its own
+# structure. (Keanu says whoa.)
 # https://en.wikipedia.org/wiki/Kolakoski_sequence
 
 # The "double-ended queue" or "deque" allows efficient push
