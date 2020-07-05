@@ -34,8 +34,8 @@ def collatz(start):
     
 def four_diff(items, verbose = False):
     count = 0
-    while not (items[0] == items[1] == items[2] == items[3]):
-        new, prev = [], items[3]
+    while not all(e == items[0] for e in items):
+        new, prev = [], items[-1]
         for e in items:
             new.append(abs(e - prev))
             prev = e
@@ -199,6 +199,7 @@ if __name__ == "__main__":
     print(f"Continued fraction for {a}/{b} is {f_to_cf(a, b, True)}.")
 
     print("Here are the convergences of some four-lists:")
+    random.seed(12345) # Fixed seed always generates same random numbers
     for i in range(50):
         items = [random.randint(1, 10 + 10 * i) for j in range(4)]
         (n, c) = four_diff(items, False)
@@ -211,7 +212,7 @@ if __name__ == "__main__":
     # Humongous number.
     n = 1234**5678
     s = str(integer_root(n))
-    print(f"For 1234**5678, the square root has {len(s)} digits.")
+    print(f"Integer square root of 1234**5678 has {len(s)} digits.")
     print(f"First five are {s[:5]}, and last five are {s[-5:]}.")
 
     # How many numbers are longer written in Arabic than in Roman?
