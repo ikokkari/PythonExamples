@@ -24,6 +24,27 @@ def collatz(start):
     result.append(1)
     return result
 
+# A fun little one from one of the old books of Ross Honsberger.
+# Given a list of four natural numbers, repeatedly replace each
+# number with the absolute difference between that number and
+# its cyclic predecessor. This will eventually converge to all
+# four numbers being equal to some final number n. The function
+# returns a tuple (n, c) where c is the count of how many steps
+# were needed to reach the goal.
+    
+def four_diff(items, verbose = False):
+    count = 0
+    while not (items[0] == items[1] == items[2] == items[3]):
+        new, prev = [], items[3]
+        for e in items:
+            new.append(abs(e - prev))
+            prev = e
+        items = new
+        if verbose:
+            print(items, end = " ")
+        count += 1
+    return (items[0], count)
+    
 # Continued fractions are an alternative way to represent integer
 # fractions as a sequence of smallish integers. If a/b is rational,
 # the resulting continued fraction is finite. For irrational numbers
@@ -166,6 +187,7 @@ def test_roman():
             return False
     return True
 
+import random
 
 if __name__ == "__main__":
     a, b = 2*3*3*13*17*49, 3*5*5*7*33*19    
@@ -176,6 +198,12 @@ if __name__ == "__main__":
 
     print(f"Continued fraction for {a}/{b} is {f_to_cf(a, b, True)}.")
 
+    print("Here are the convergences of some four-lists:")
+    for i in range(50):
+        items = [random.randint(1, 10 + 10 * i) for j in range(4)]
+        (n, c) = four_diff(items, False)
+        print(f"{items} converges to {n} in {c} steps.")
+        
     print("Next, some integer square roots.")
     for n in [49, 50, 1234567, 10**10]:
         s = integer_root(n)
