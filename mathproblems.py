@@ -24,7 +24,7 @@ def collatz(start):
     result.append(1)
     return result
 
-# A fun little one from one of the old books of Ross Honsberger.
+# A fun little gem from one of the books of Ross Honsberger.
 # Given a list of four natural numbers, repeatedly replace each
 # number with the absolute difference between that number and
 # its cyclic predecessor. This will eventually converge to all
@@ -32,7 +32,7 @@ def collatz(start):
 # returns a tuple (n, c) where c is the count of how many steps
 # were needed to reach the goal.
     
-def four_diff(items, verbose = False):
+def iterate_diff(items, verbose = False):
     count = 0
     while not all(e == items[0] for e in items):
         new, prev = [], items[-1]
@@ -41,10 +41,17 @@ def four_diff(items, verbose = False):
             prev = e
         items = new
         if verbose:
-            print(items, end = " ")
+            print(items, end = " -> ")
         count += 1
+    print("\n" if verbose else "", end = "")
     return (items[0], count)
     
+# What is the relationship between the final value and the four
+# original values? What happens if items contains some other
+# number of elements than only four? Would the convergence of
+# this system still be guaranteed? Curious students might want
+# to investigate this phenomenon.
+
 # Continued fractions are an alternative way to represent integer
 # fractions as a sequence of smallish integers. If a/b is rational,
 # the resulting continued fraction is finite. For irrational numbers
@@ -202,14 +209,15 @@ if __name__ == "__main__":
     random.seed(12345) # Fixed seed always generates same random numbers
     for i in range(50):
         items = [random.randint(1, 10 + 10 * i) for j in range(4)]
-        (n, c) = four_diff(items, False)
+        (n, c) = iterate_diff(items, False)
         print(f"{items} converges to {n} in {c} steps.")
         
     print("Next, some integer square roots.")
     for n in [49, 50, 1234567, 10**10]:
         s = integer_root(n)
         print(f"Integer square root of {n} equals {s}.")
-    # Humongous number.
+    
+    # Here is a humongous number and its integer square root.
     n = 1234**5678
     s = str(integer_root(n))
     print(f"Integer square root of 1234**5678 has {len(s)} digits.")
@@ -220,14 +228,14 @@ if __name__ == "__main__":
     shorter = [f"{x} ({roman_encode(x)})" for x in shorter]
     print(f"Numbers longer written in Arabic than in Roman are: {', '.join(shorter)}")
     
-    # Let us approximate the Golden Ratio using the first 150 terms
+    # Let us approximate the Golden Ratio using the first 50 terms
     # from its infinitely long continued fraction representation.
     # https://en.wikipedia.org/wiki/Golden_ratio
     grf = cf_to_f([1] * 150) # Handy to create a list of identical items
     from decimal import getcontext, Decimal
     getcontext().prec = 50   # Number of decimal places used in Decimal   
     grd = Decimal(grf.numerator) / Decimal(grf.denominator)
-    print("The Golden ratio to 50 decimal places equals:")
+    print("The Golden Ratio to 50 decimal places equals:")
     print(f"{grd}")
-    # Correct answer copied from Wolfram Alpha as gold standard:
+    # Correct answer copied from Wolfram Alpha as the gold standard:
     #print("1.6180339887498948482045868343656381177203091798058")

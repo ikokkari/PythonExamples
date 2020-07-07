@@ -5,7 +5,7 @@ class Card:
     # to start its name. They can still access it, but at least they
     # know that they are doing something that they are not supposed
     # to be doing.
-    __values = { 'ace': 1, 'deuce': 2, 'trey': 3, 'four': 4, 'five': 5,
+    __values = { 'ace': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5,
                  'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10,
                  'jack': 11, 'queen': 12, 'king': 13 }
 
@@ -57,7 +57,7 @@ class Card:
 c1 = Card('eight', 'hearts')
 c2 = Card('ace', 'clubs')
 c3 = Card('queen', 'hearts')
-c4 = Card('deuce', 'diamonds')
+c4 = Card('two', 'diamonds')
 print(f"Our cards are {c1}, {c2}, {c3} and {c4}.")
 
 # Let's ask these objects exactly who they think they are.
@@ -84,7 +84,7 @@ print(f"Does {c1} outrank {c3} in notrump? {c1.outranks(c3)}")
 print(f"Does {c3} outrank {c1} in notrump? {c3.outranks(c1)}")
 
 # Watch how much easier thinking about computations becomes once the
-# concepts are of sufficiently high level. One from your graded labs:
+# concepts are sufficiently high level. One from your graded labs:
 
 def winning_card(cards, trump = None, winner_so_far = None):    
     for card in cards:
