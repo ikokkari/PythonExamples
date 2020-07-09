@@ -10,17 +10,17 @@ def hangman(wordlist, sep = '*'):
         print(f"Letters guessed so far: {''.join(guesses)}")
         guess = input("Please enter a letter, or 'quit' to quit: ")
         if guess == 'quit':
-            return -1
+            return None
         if guess not in guesses:
             guesses.append(guess)
             guesses.sort()
         hit = 0
-        for i in range(len(word)):
-            if letters[i] == sep and word[i] == guess:
+        for (i, (l, w)) in enumerate(zip(letters, word)):
+            if l == sep and w == guess:
                 letters[i] = guess
                 hit += 1
         if hit > 0:
-            print(f"That one hit {hit} times!")
+            print(f"That one hit {hit} time{'s' if hit > 1 else ''}!")
         else:
             print("That one was a miss.")
             misses += 1            
@@ -32,6 +32,6 @@ if __name__ == "__main__":
         wordlist = [word.strip() for word in f]
     print(f"Read a word list of {len(wordlist)} words." )
     while True:
-        if hangman(wordlist) == -1:
+        if hangman(wordlist) == None:
             print("See you around!")
             break
