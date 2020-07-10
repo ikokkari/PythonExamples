@@ -2,8 +2,8 @@
 
 suits = ['clubs', 'diamonds', 'hearts', 'spades']
 ranks = {'two': 2, 'three': 3, 'four' : 4, 'five' : 5, 'six' : 6,
-         'seven' : 7, 'eight' : 8, 'nine' : 9, 'ten' : 10, 'jack' : 11,
-         'queen' : 12, 'king' : 13, 'ace' : 14 }
+         'seven' : 7, 'eight' : 8, 'nine' : 9, 'ten' : 10,
+         'jack' : 11, 'queen' : 12, 'king' : 13, 'ace' : 14 }
 
 deck = [ (rank, suit) for suit in suits for rank in ranks ]
 
@@ -52,9 +52,9 @@ def blackjack_count_value(hand):
             if soft > 0: # Saved by the soft ace
                 soft, total = soft - 1, total - 10                
             else:
-                return "bust"
+                return 'bust'
     if total == 21 and len(hand) == 2:
-        return "blackjack"
+        return 'blackjack'
     return f"{'soft' if soft > 0 else 'hard'} {total}"
 
 # Determine if the five card poker hand has a flush, that is, all five
@@ -101,13 +101,14 @@ def poker_one_pair(hand):
 
 # Of the possible poker ranks, straight is the trickiest to check when
 # the hand is unsorted. Also, ace can work either as highest or lowest
-# card inside a straight. 
+# card inside a straight.
 
 def poker_has_straight(hand):
     # If a hand has any pairs, it is not a straight.
-    if count_rank_pairs(hand) > 0: return False
+    if count_rank_pairs(hand) > 0:
+        return False
     # We know now that the hand has no pairs.
-    hand_ranks = [ranks[rank] for (rank, suit) in hand]
+    hand_ranks = [ranks[rank] for (rank, _) in hand]
     min_rank = min(hand_ranks)
     max_rank = max(hand_ranks)
     if max_rank == 14: # Special cases for ace straights
@@ -139,9 +140,9 @@ def poker_high_card(hand):
 # https://en.wikipedia.org/wiki/List_of_poker_hands 
 
 def evaluate_all_poker_hands():
-    funcs = [poker_high_card, poker_one_pair, poker_two_pair, 
-             poker_three_of_kind, poker_straight, poker_flush,
-             poker_full_house, poker_four_of_kind, poker_straight_flush]
+    funcs = [poker_one_pair, poker_two_pair, poker_three_of_kind,
+             poker_straight, poker_flush, poker_full_house,
+             poker_four_of_kind, poker_straight_flush, poker_high_card]
     counters = [0] * len(funcs)
     for hand in combinations(deck, 5):
         for (i, f) in enumerate(funcs):
@@ -166,7 +167,7 @@ def bridge_score(suit, level, vul, dbl, made):
             pts = 30
         else:
             pts = 40 if trick == 1 else 30
-        
+        # Score from the raw points.
         if trick <= level: # Part of contract
             score += mul * pts
         elif mul == 1: # Undoubled overtrick

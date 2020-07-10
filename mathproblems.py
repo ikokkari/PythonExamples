@@ -1,5 +1,5 @@
-# The oldest algorithm in recorded history, Euclid's algorithm to find
-# the greatest common divisor of two nonnegative integers.
+# The oldest algorithm in recorded history, Euclid's algorithm
+# finds the greatest common divisor of two nonnegative integers.
 
 def euclid_gcd(a, b, verbose = False):
     while b > 0:
@@ -7,6 +7,10 @@ def euclid_gcd(a, b, verbose = False):
         if verbose:
             print(f"a={a}, b={b}")
     return a
+
+# This algorithm can be extended to find two numbers x and y
+# that satisfy ax + by = gcd(a, b), which will be useful in
+# various mathematical algorithms.
 
 # Generate the Collatz series from the given starting value.
 # https://en.wikipedia.org/wiki/Collatz_conjecture
@@ -17,14 +21,11 @@ def collatz(start):
         return []
     while curr > 1:
         result.append(curr)
-        if curr % 2 == 0:
-            curr = curr // 2
-        else:
-            curr = 3 * curr + 1
+        curr = curr // 2 if curr % 2 == 0 else 3 * curr + 1
     result.append(1)
     return result
 
-# A fun little gem from one of the books of Ross Honsberger.
+# A fun little "gem" from one of the books of Ross Honsberger.
 # Given a list of four natural numbers, repeatedly replace each
 # number with the absolute difference between that number and
 # its cyclic predecessor. This will eventually converge to all

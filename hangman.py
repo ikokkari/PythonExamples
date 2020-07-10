@@ -1,11 +1,11 @@
 import random
 
-def hangman(wordlist, sep = '*'):
+def hangman(wordlist, blank = '*'):
     misses, guesses = 0, []    
     word = random.choice(wordlist)
-    letters = [ sep ] * len(word)
+    letters = [ blank ] * len(word)
     print("Let us play a game of Hangman.")
-    while sep in letters:
+    while blank in letters:
         print(f"Current word is {'-'.join(letters)}.")
         print(f"Letters guessed so far: {''.join(guesses)}")
         guess = input("Please enter a letter, or 'quit' to quit: ")
@@ -16,7 +16,7 @@ def hangman(wordlist, sep = '*'):
             guesses.sort()
         hit = 0
         for (i, (l, w)) in enumerate(zip(letters, word)):
-            if l == sep and w == guess:
+            if l == blank and w == guess:
                 letters[i] = guess
                 hit += 1
         if hit > 0:
