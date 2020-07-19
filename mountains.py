@@ -1,5 +1,6 @@
 import json
 import itertools as it
+from math import log
 
 with open('mountains.json', encoding="utf-8") as data_file:
     mountains = json.load(data_file)
@@ -13,7 +14,7 @@ with open('countries.json', encoding="utf-8") as data_file:
 print(f"Read {len(countries)} countries from the JSON file.")
 
 mic, tallest = {}, {}
-smallest = (0, 'Molehill') # Made-up placeholder
+smallest = (0, 'Molehill')  # Made-up placeholder
 
 for mountain in mountains:
     for country in mountain['Countries']:
@@ -29,8 +30,8 @@ for mountain in mountains:
 print("\nHere are top thirty countries sorted by their tallest mountains:")
 
 countries = sorted(countries,
-                   key = (lambda c: tallest.get(c['Name'], smallest)),
-                   reverse = True)
+                   key=lambda c: tallest.get(c['Name'], smallest),
+                   reverse=True)
 
 # itertools.islice is a handy way to impose cutoff on the sequence length.
 
@@ -41,8 +42,8 @@ for (i, c) in it.islice(enumerate(countries), 30):
 print("\nHere are the top hundred countries sorted by named mountains:")
 
 countries = sorted(countries,
-                   key = (lambda c: (len(mic.get(c['Name'], [])), c['Name'])),
-                   reverse = True)
+                   key=lambda c: (len(mic.get(c['Name'], [])), c['Name']),
+                   reverse=True)
 
 for (i, c) in it.islice(enumerate(countries), 100):
     print(f'{i+1:2}. {c["Name"]} has {len(mic[c["Name"]])} named mountains.')
@@ -53,7 +54,7 @@ print("\nLet's see how well mountain heights follow Benford's law.\n")
 # meters, feet, yards, inches, points, fathoms
 muls = (1, 0.3048, 0.9144, 1 / 0.0254, 1 / 0.003528, 0.5468)
 # Build a separate counter dictionary for each unit.
-leading = [ {} for m in muls ]
+leading = [{} for m in muls]
 
 count = 0
 for mountain in mountains:
@@ -62,13 +63,12 @@ for mountain in mountains:
         m = int(mountain['Elevation'].split(' ')[0])
         # Convert to various units and update the leading digit counter.
         for (dic, mul) in zip(leading, muls):
-            h = int(str(mul * m)[0]) # Leading digit in the current units
+            h = int(str(mul * m)[0])  # Leading digit of integer
             dic[h] = dic.get(h, 0) + 1
         count += 1
     except ValueError:
         pass
-    
-from math import log
+
 benford = [100 * (log(d+1, 10) - log(d, 10)) for d in range(1, 10)]
 
 print("Digit   Meters  Feet    Yards   Inches  Points  Fathoms Benford")

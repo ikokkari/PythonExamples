@@ -1,3 +1,17 @@
+import random
+from fractions import Fraction
+
+# The itertools module defines tons of handy functions to perform
+# computations on existing iterators, to be combined arbitrarily.
+
+import itertools as it
+
+# The "double-ended queue" or "deque" allows efficient push
+# and pop operations from both ends of the queue, whereas a
+# Python list only allows efficient operations in one end.
+
+from collections import deque
+
 # A generator is a function that, unlike a regular function that
 # always forgets what it has done and starts from beginning each
 # time it is called, a generator remembers where it left off and
@@ -15,13 +29,15 @@
 # To get started, the classic chestnut of Fibonacci numbers.
 # It's like that one is a law of some sorts for CS instructors.
 
+
 def fibonacci():
     yield 1
     yield 1
-    curr, prev = 2, 1    
-    while True: # Infinite loop for infinite sequence...
-        yield curr # Good thing execution automatically pauses here.
+    curr, prev = 2, 1
+    while True:  # Infinite loop for infinite sequence...
+        yield curr  # Pause to give out this element.
         curr, prev = curr + prev, curr
+
 
 # One one, two twos, three threes, four fours, five fives, ...
 # Nested loops come often handy here, although since our goal is
@@ -35,6 +51,7 @@ def pyramid_series():
             yield v
         v += 1
 
+
 # Finite for all values of start, or infinite for some? Nobody knows!
 # In general, no algorithm can exist that could analyze the given
 # generator source code and determine whether the sequence that it
@@ -43,11 +60,13 @@ def pyramid_series():
 def collatz(start):
     while True:
         yield start
-        if start == 1: break
+        if start == 1:
+            break
         elif start % 2 == 0:
             start = start // 2
         else:
             start = 3 * start + 1
+
 
 # A generator that produces random integers with an ever increasing
 # scale. Handy for generating random test cases in tester.py that
@@ -58,7 +77,7 @@ def collatz(start):
 # Everything is again nice and tight integer arithmetic. (Well, I
 # guess that inside a computer, everything is integer arithmetic
 # anyway...)
-            
+
 def scale_random(seed, scale, skip):
     # The seed value determines the future random sequence.
     rng = random.Random(seed)
@@ -69,7 +88,8 @@ def scale_random(seed, scale, skip):
         count += 1
         if count == skip:
             scale = scale * orig
-            count = 0          
+            count = 0
+
 
 # Prime numbers, remembering all the prime numbers generated so far. To
 # test whether a number is prime, it is sufficient to test divisibility
@@ -77,38 +97,41 @@ def scale_random(seed, scale, skip):
 
 def primes():
     primes = [2, 3, 5, 7, 11]
-    yield from primes # Handy syntactic sugar for yield inside for-loop
-    current = 13
-    while True:        
+    # Handy syntactic sugar for yield inside for-loop
+    yield from primes
+    curr = 13
+    while True:
         for divisor in primes:
-            if current % divisor == 0:
+            if curr % divisor == 0:
                 break
-            if divisor * divisor > current:
-                primes.append(current)
-                yield current
+            if divisor * divisor > curr:
+                primes.append(curr)
+                yield curr
                 break
-        current += 2
+        curr += 2
+
 
 # Theon's Ladder, devised by Theon of Smyrna (ca. 140 B.C), is a series
-# of rational numbers that converge to square root of two. After over
+# of rational numbers that converge to square root of two. Then after
 # two millenia, Shaun Giberson and Thomas J. Osler proved in 2013 that
 # the method generalizes for the square roots of any integer c. Since
 # outside actual math courses it is pretty rare to need any mathematics
 # that was not old news to the mathematicians in the 19th century, we
-# should latch onto this rare chance to examine something that was missed
-# for so long. This generator produces two-tuples (a, b) that denote
-# the numerator and denominator of that fraction.
-        
-def theons_ladder(c = 2, a = 1, b = 1):
+# should latch onto this rare chance to examine something that was
+# missed for so long. This generator produces two-tuples (a, b) that
+# denote the numerator and denominator of that fraction.
+
+def theons_ladder(c=2, a=1, b=1):
     while True:
-        yield (a, b)
+        yield a, b
         # Original Theon's ladder was just c = 2.
         a, b = a + c * b, a + b
+
 
 # The next technique comes handy sometimes. Iterate through all
 # pairs of the form (a, b) where a and b are nonnegative integers
 # so that every such pair is visited exactly once.
-        
+
 def all_pairs():
     s = 0
     # In each antidiagonal of the infinite 2D grid, a + b == s.
@@ -116,7 +139,7 @@ def all_pairs():
         for a in range(0, s + 1):
             yield(a, s - a)
         s += 1
-        
+
 # That one is handy when you need to loop through the infinite
 # quadrant of pairs (a, b) where a and b are natural numbers,
 # and you need to find some pair (a, b) that satisfies the thing
@@ -124,18 +147,14 @@ def all_pairs():
 # to systematically sweep through this infinite plane until
 # you find the (a, b) that is closest to origin (0, 0).
 
+
 # One more infinite generator, the Kolakoski sequence whose
 # elements describe the run-length encoding of that sequence.
 # That is, this self-referential sequence describes its own
 # structure. (Keanu says whoa.)
 # https://en.wikipedia.org/wiki/Kolakoski_sequence
 
-# The "double-ended queue" or "deque" allows efficient push
-# and pop operations from both ends of the queue, whereas a
-# Python list only allows efficient operations in one end.
-from collections import deque
-
-def kolakoski(n = 2):
+def kolakoski(n=2):
     yield 1
     yield 2
     # The queue q contains the part of the sequence that has
@@ -147,8 +166,8 @@ def kolakoski(n = 2):
         prev = prev + 1 if prev < n else 1
         for i in range(v):
             q.append(prev)
-        
-    
+
+
 # Since a generator can take parameters, we can write a iterator
 # decorator that modifies the result of any existing iterator. We
 # don't have to care how that iterator was originally defined, as
@@ -156,21 +175,26 @@ def kolakoski(n = 2):
 # a maximally general nature.
 
 # Let through every k:th element and discard the rest.
-def every_kth(it, k):
+
+def every_kth(seq, k):
     count = k
-    for x in it:
+    for x in seq:
         count -= 1
-        if count == 0:            
+        if count == 0:
             yield x
             count = k
 
+
 # Duplicate each element k times.
-def stutter(it, k):
-    for x in it:
+
+def stutter(seq, k):
+    for x in seq:
         for i in range(k):
             yield x
 
+
 # Extract all n-element sublists of the sequence from iterator.
+
 def ngrams(it, n):
     result = []
     for v in it:
@@ -179,24 +203,25 @@ def ngrams(it, n):
             yield result
             result = result[1:]
 
-# Extract all unique permutations of 0, ..., n-1 from the sequence,
+
+# Extract all unique permutations of 0, ..., n-1 from sequence,
 # assuming that sequence contains only values in 0, ..., n-1.
 
 def unique_permutations(it, n):
     # Set of permutations that we have already seen before.
-    seen = set()    
+    seen = set()
     # Current sublist of n most recent elements.
-    curr = []    
+    curr = []
     # Counts of how many times each value occurs in current sublist.
     counts = [0 for i in range(n)]
     # How many of those counts are ones, for quick lookup.
     ones = 0
     # Iterate through the values produced by the iterator.
     for v in it:
-        curr.append(v)        
+        curr.append(v)
         # If sublist is too long, shorten it from the front.
         if len(curr) > n:
-            out = curr[0] # Note the outgoing element
+            out = curr[0]  # Make note of the outgoing element.
             curr = curr[1:]
             # Update the count for the outgoing element out.
             counts[out] -= 1
@@ -206,7 +231,7 @@ def unique_permutations(it, n):
                 ones -= 1
         # Update the count for the current element.
         counts[v] += 1
-        if counts[v] == 1:            
+        if counts[v] == 1:
             ones += 1
             # If each value occurs exactly once, this is a permutation.
             if ones == n:
@@ -215,11 +240,12 @@ def unique_permutations(it, n):
                     seen.add(currt)
                     yield currt
         elif counts[v] == 2:
-            ones -= 1                   
+            ones -= 1
+
 
 # Functions every_kth and stutter cancel each other out.
 print("Collatz sequence starting from 12345 is:")
-print(list(every_kth(stutter(collatz(12345), 3) ,3)))
+print(list(every_kth(stutter(collatz(12345), 3), 3)))
 
 msg = "Hello world, how are you today?"
 print("A string split into three consecutive words, overlapping:")
@@ -230,14 +256,14 @@ items = [0, 2, 1, 0, 1, 2, 0, 0, 2, 2, 0, 1]
 print(f"Unique 3-permutations of {items} are:")
 print(list(unique_permutations(items, 3)))
 
+
 # Since the iterator produces values one at the time, we could
 # analyze sequences too long to fit in memory all at once. First,
 # generator that produces random numbers in 0, ..., n - 1 so that
 # a number that was seen recently cannot be emitted this round.
 
-import random
-def tabu_generator(n, len_, recent = None):
-    if recent == None:
+def tabu_generator(n, len_, recent=None):
+    if recent is None:
         recent = n // 2
     tabu = []
     while len_ > 0:
@@ -246,38 +272,25 @@ def tabu_generator(n, len_, recent = None):
             yield v
             tabu.append(v)
             if len(tabu) > recent:
-                tabu = tabu[1:]            
-            len_ -= 1        
+                tabu = tabu[1:]
+            len_ -= 1
+
 
 # Count how many permutations occur for different values of recent.
 
 for recent in range(0, 6):
-    itemgen, total = tabu_generator(8, 10**5, recent), 0    
+    itemgen, total = tabu_generator(8, 10**5, recent), 0
     for perm in unique_permutations(itemgen, 8):
         total += 1
-    print(f"Using tabu length {recent}, found {total} unique permutations.")
+    print(f"With tabu length {recent}, {total} unique permutations.")
 
 # Constructing the shortest possible sequence that contains all
 # permutations of {0, ..., n-1} is an unsolved mathematical problem.
 # Google "greg egan haruhi superpermutation" for an interesting story.
 
-# The itertools module defines tons of handy functions to perform
-# computations on existing iterators, to be combined arbitrarily.
-
-import itertools as it
-
-# Python's built in function enumerate is handy if you also need
-# the position of each iterated element. The hand decorator
-# itertools.islice achieves the same end as the square bracket
-# slicing opreator applied to eager sequences, and its common
-# use is to turn an infinite sequence into a finite one.
-
-print("Here are the first 5 prime numbers that contain their own index:")
-print(list(it.islice(((i, p) for (i, p) in enumerate(primes()) if str(i) in str(p)), 5)))
-
 # Take primes until they become greater than thousand.
 print("Here is every seventh prime number up to one thousand:")
-print(list(it.takewhile( (lambda x: x <= 1000), every_kth(primes(), 7))))
+print(list(it.takewhile((lambda x: x <= 1000), every_kth(primes(), 7))))
 
 print("Here are the first 1000 elements of Kolakoski(2):")
 print("".join((str(x) for x in it.islice(kolakoski(2), 1000))))
@@ -291,14 +304,13 @@ print(", ".join((str(x) for x in it.islice(scale_random(123, 10, 5), 100))))
 print("Here are 100 random numbers from another scale:")
 print(", ".join((str(x) for x in it.islice(scale_random(123, 5, 10), 100))))
 
-from fractions import Fraction
 
 print("Let us examine Theon's ladder for square root of 7.")
 for i, (a, b) in enumerate(it.islice(theons_ladder(7), 30)):
     f = Fraction(a, b)
     f = f * f
     print(f"{i}: a = {a}, b = {b} error = {float(7 - f):.11}")
-    
+
 print("For c = 2, terms in even positions of Theon's ladder give")
 print("us Pythagorean triples whose legs differ by exactly one:")
 for (a, b) in it.islice(theons_ladder(2), 0, 40, 2):
@@ -310,7 +322,7 @@ for (a, b) in it.islice(theons_ladder(2), 0, 40, 2):
             s = m + 1
         else:
             e = m
-    print(f"({s}, {s+1}, {h}) ", end = "")
+    print(f"({s}, {s+1}, {h})", end=" ")
 print()
 
 # What other mysteries of number theory are hiding inside this

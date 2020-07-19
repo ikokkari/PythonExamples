@@ -7,21 +7,21 @@ import re
 # full words. This way, any single quotes that remain are actual quotes.
 
 replacements = (
-      ( "doesn't", "does not" ),
-      ( "don't", "do not" ),
-      ( "you're", "you are" ),
-      ( "i'm", "i am" ),
-      ( "we're", "we are" ),
-      ( "they're", "they are" ),
-      ( "won't", "will not" ),
-      ( "can't", "can not" ),
-      ( "shan't", "shall not" ),
-      ( "shouldn't", "should not" ),
-      ( "mustn't", "must not" )
+      ("doesn't", "does not"),
+      ("don't", "do not"),
+      ("you're", "you are"),
+      ("i'm", "i am"),
+      ("we're", "we are"),
+      ("they're", "they are"),
+      ("won't", "will not"),
+      ("can't", "can not"),
+      ("shan't", "shall not"),
+      ("shouldn't", "should not"),
+      ("mustn't", "must not")
     )
 
-# Precompile a regex machine to recognize word separators. For simplicity,
-# we define any non-letter to be a word separator.
+# Precompile a regex machine to recognize word separators. For
+# simplicity, we accept any non-letter to be a word separator.
 
 word_separators = re.compile("[^a-z]+")
 
@@ -31,7 +31,7 @@ words = {}
 
 with open('warandpeace.txt', encoding="utf-8") as wap:
     for line in wap:
-        if len(line) < 2: # skip empty lines
+        if len(line) < 2:  # skip empty lines
             continue
         # Lowercase the line and remove the trailing linebreak character.
         line = line.lower()
@@ -41,7 +41,8 @@ with open('warandpeace.txt', encoding="utf-8") as wap:
         for (orig, repl) in replacements:
             line = line.replace(orig, repl)
         # Remove whatever other contractions might remain.
-        line = re.sub(r"'s\b", "", line) # Raw strings are handy for regexes.
+        # Raw strings are handy for regexes.
+        line = re.sub(r"'s\b", "", line)
         line = re.sub(r"'ll\b", " will", line)
         # Process the individual words in the line.
         for word in word_separators.split(line):
@@ -60,7 +61,7 @@ words_list_f = [(c, w) for (w, c) in words.items()]
 # comparison happens lexicographically, so the primary sorting criteria
 # is the count. Words of equal frequency then get sorted according to
 # their dictionary order.
-words_list_f = sorted(words_list_f, reverse = True)
+words_list_f = sorted(words_list_f, reverse=True)
 # Extract the sorted words into a separate list, dropping the counts.
 words_list = [w for (c, w) in words_list_f]
 

@@ -1,6 +1,6 @@
-# A tuple is essentially a list, but immutable. Tuples can be indexed and
-# iterated just like lists. Tuples are useful, for example, in representing
-# coordinates in fixed number of dimensions.
+# A tuple is essentially a list, but immutable. Tuples can be
+# indexed and iterated just like lists. Tuples are useful, for
+# example, in representing coordinates in fixed dimensions.
 
 t1 = (1, 5, -2)
 t2 = (6, -4, 9)
@@ -11,30 +11,33 @@ t2 = (6, -4, 9)
 # optional parentheses, but using the parentheses is still often clearer.
 
 a, b = 1, 2
-print(f"a is {a}, b is {b}") # 1 2
+print(f"a is {a}, b is {b}")  # 1 2
 b, a = a, b
-print(f"a is {a}, b is {b}") # 2 1
+print(f"a is {a}, b is {b}")  # 2 1
 
 a, b, *c = 1, 2, 3, 4, 5
-print(f"a is {a}, b is {b}, c is {c}") # 1 2 [3, 4, 5]
+print(f"a is {a}, b is {b}, c is {c}")  # 1 2 [3, 4, 5]
 a, *b, c, = 1, 2, 3, 4, 5
-print(f"a is {a}, b is {b}, c is {c}") # 1 [2, 3, 4] 5
+print(f"a is {a}, b is {b}, c is {c}")  # 1 [2, 3, 4] 5
 *a, b, c = 1, 2, 3, 4, 5
-print(f"a is {a}, b is {b}, c is {c}") # [1, 2, 3] 4 5
+print(f"a is {a}, b is {b}, c is {c}")  # [1, 2, 3] 4 5
 
-# Parentheses are required to disambiguate syntax in some situations. It is
-# never wrong to use redundant parentheses here, or for that matter, in any
-# situation where these parentheses make the meaning clear to the reader.
-# Who wants to memorize the precedence and associativity rules of even one
-# programming language, let alone a dozen different languages?
+# Parentheses disambiguate syntax in some situations. It is never
+# never wrong to use redundant parentheses here, or for that matter,
+# in any situation where these parentheses make the meaning clear
+# to the reader. Who wants to memorize all the precedence and
+# associativity rules of even one programming language, let alone
+# a dozen different languages that you use sporadically?
 
-t1 = 1, 2, 3, 4, 5    # a tuple of 5 elements, each one an integer
-t2 = 1, (2, 3, 4), 5  # a tuple of 3 elements, one of which is a tuple of 3
+t1 = 1, 2, 3, 4, 5    # a tuple of 5 elements, each an integer
+t2 = 1, (2, 3, 4), 5  # a tuple of 3 elements, one of which is a tuple
 print(f"len(t1) == {len(t1)}, len(t2) == {len(t2)}")
-t3 = 1, 2, 3 == 1, 2, 3      # a 5-element tuple whose middle element is boolean
-t4 = (1, 2, 3) == (1, 2, 3)  # a boolean result of comparing two tuples
-print(t3) # (1, 2, False, 2, 3)
-print(t4) # True
+# a 5-element tuple whose middle element is boolean
+t3 = 1, 2, 3 == 1, 2, 3
+# a boolean result of comparing two tuples
+t4 = (1, 2, 3) == (1, 2, 3)
+print(t3)  # (1, 2, False, 2, 3)
+print(t4)  # True
 
 # Since tuples are immutable, the following would be errors:
 # t1[2] = 7       # changing the element at the given index
@@ -61,5 +64,5 @@ print(emptytuple, singletontuple, x)
 # Tuple order comparison happens lexicographically. If the first element
 # does not resolve the issue, look at second, and so on.
 
-print( (42, 1, 3) < (17, 1000000000, 99) ) # False
-print( (42, 17, 99) < (42, 17, 100) ) # True
+print((42, 1, 3) < (17, 1000000000, 99))  # False
+print((42, 17, 99) < (42, 17, 100))  # True

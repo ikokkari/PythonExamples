@@ -2,6 +2,7 @@
 
 from heapq import heappop, heappush, merge
 
+
 # A traditional version to compute and return the n:th Hamming number.
 # A priority queue is used to keep track of all the Hamming numbers
 # we have discovered so far. The same numbers are also kept in a
@@ -9,14 +10,14 @@ from heapq import heappop, heappush, merge
 # cannot give us. Different data structures organize data in ways
 # that make different operations fast.
 
-def nth_hamming(n, muls = (2, 3, 5)):
+def nth_hamming(n, muls=(2, 3, 5)):
     # A Python list can be used as a priority_queue by using only
     # the functions in heapq module to access it. These functions
     # maintain the priority queue "binary heap" order in the list.
     frontier_pq = [1]
-    frontier_set = set(frontier_pq)    
-    while n > 0:        
-        curr = heappop(frontier_pq)        
+    frontier_set = set(frontier_pq)
+    while n > 0:
+        curr = heappop(frontier_pq)
         frontier_set.remove(curr)
         for m in muls:
             if m * curr not in frontier_set:
@@ -41,7 +42,7 @@ def iterator_uniq(it):
 # Hamming numbers with their values multiplied by 2, 3 and 5.
 # However, this is not quite as efficient as the algorithm
 # above implemented with a priority queue.
-            
+
 __iter_count = 0
 
 def hamming_it():
@@ -54,7 +55,7 @@ def hamming_it():
         (2*x for x in hamming_it()),
         (3*x for x in hamming_it()),
         (5*x for x in hamming_it())
-    ))    
+    ))
 
 
 if __name__ == "__main__":

@@ -5,9 +5,9 @@ class Card:
     # to start its name. They can still access it, but at least they
     # know that they are doing something that they are not supposed
     # to be doing.
-    __values = { 'ace': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5,
-                 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10,
-                 'jack': 11, 'queen': 12, 'king': 13 }
+    __values = {'ace': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5,
+                'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10,
+                'jack': 11, 'queen': 12, 'king': 13}
 
     # Normally you would only put function and name declarations
     # inside a class body, but this one just goes to show that any
@@ -29,7 +29,7 @@ class Card:
 
     def __str__(self):
         return f"{self.rank} of {self.suit}"
-    
+
     def __repr__(self):
         return f"Card({self.rank}, {self.suit})"
 
@@ -40,24 +40,27 @@ class Card:
     # objects to be defined inside those objects, instead of writing
     # this as an outside function outranks(c1, c2, trump) like it
     # was still the sixties.
-    def outranks(self, other, trump = None):
-        if other == None:
+
+    def outranks(self, other, trump=None):
+        if other is None:
             return True
-        elif trump == None and self.suit != other.suit:
+        elif trump is None and self.suit != other.suit:
             return False
         elif self.suit == trump and other.suit != trump:
             return True
         else:
-            return self.get_value() > other.get_value()        
+            return self.get_value() > other.get_value()
 
 # Using the Card class, we could now implement some kind of trick taking
 # game where each player is given a hand that is a list of cards. Let's
 # quickly demonstrate that our cards and their methods work correctly.
 
+
 c1 = Card('eight', 'hearts')
 c2 = Card('ace', 'clubs')
 c3 = Card('queen', 'hearts')
 c4 = Card('two', 'diamonds')
+
 print(f"Our cards are {c1}, {c2}, {c3} and {c4}.")
 
 # Let's ask these objects exactly who they think they are.
@@ -75,22 +78,24 @@ print(", ".join(dir(c1)))
 print(f"Here is the directory of names its class:")
 print(", ".join(dir(Card)))
 
-# Cards have the ability to check if they outrank other cards. 
+# Cards have the ability to check if they outrank other cards.
 
 print("\nNext, some ranking comparisons between these cards.")
 print(f"Does {c1} outrank {c2} in notrump? {c1.outranks(c2)}")
-print(f"Does {c1} outrank {c2} with hearts as trump? {c1.outranks(c2, 'hearts')}")
+print(f"Does {c1} outrank {c2} in hearts? {c1.outranks(c2, 'hearts')}")
 print(f"Does {c1} outrank {c3} in notrump? {c1.outranks(c3)}")
 print(f"Does {c3} outrank {c1} in notrump? {c3.outranks(c1)}")
 
 # Watch how much easier thinking about computations becomes once the
 # concepts are sufficiently high level. One from your graded labs:
 
-def winning_card(cards, trump = None, winner_so_far = None):    
+
+def winning_card(cards, trump=None, winner_so_far=None):
     for card in cards:
         if card.outranks(winner_so_far, trump):
             winner_so_far = card
     return winner_so_far
+
 
 cards = [c1, c2, c3, c4]
 # Conversion of list to string uses repr, not str, for the list elements.

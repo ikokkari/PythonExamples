@@ -4,7 +4,8 @@ import random
 # pattern up to length n, gives the string of letters that follow that
 # pattern in the original text.
 
-def build_table(text, n = 3, mlen = 100):
+
+def build_table(text, n=3, mlen=100):
     result = {}
     for i in range(len(text) - n - 1):
         # The n-character string starting at position i.
@@ -13,7 +14,7 @@ def build_table(text, n = 3, mlen = 100):
         next_char = text[i + n]
         # Update the dictionary for each suffix of the current pattern.
         for j in range(n):
-            follow = result.get(pattern[j:], "") 
+            follow = result.get(pattern[j:], "")
             # Store only the first mlen occurrences of pattern.
             if len(follow) < mlen:
                 result[pattern[j:]] = follow + next_char
@@ -21,7 +22,8 @@ def build_table(text, n = 3, mlen = 100):
 
 # Using the previous table, generate m characters of random text.
 
-def dissociated_press(table, m, result, maxpat = 3):
+
+def dissociated_press(table, m, result, maxpat=3):
     pattern = result[:min(len(result), maxpat)]
     while m > 0:
         follow = table.get(pattern, "")
@@ -34,16 +36,18 @@ def dissociated_press(table, m, result, maxpat = 3):
             # Shorten the pattern if it grows too long.
             if len(pattern) > maxpat:
                 pattern = pattern[1:]
-        else: # Nothing for the current pattern, so shorten it.
+        else:  # Nothing for the current pattern, so shorten it.
             pattern = pattern[1:]
     return result
 
+
 if __name__ == "__main__":
-    # Convert the contents of text file into one string without line breaks.
+    # Convert the contents of text file into one string.
     with open('warandpeace.txt', encoding="utf-8") as wap:
         text = "".join(wap)
     table = build_table(text, 6, 500)
     print(f"Table contains {len(table)} entries.")
     for maxpat in range(1, 7):
         print(f"\nRandom text with maxpat value {maxpat}:")
-        print(dissociated_press(table, 600, "A", maxpat).replace('\n', ' '))
+        text = dissociated_press(table, 600, "A", maxpat)
+        print(text.replace('\n', ' '))

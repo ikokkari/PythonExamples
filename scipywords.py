@@ -1,5 +1,9 @@
 import numpy as np
 import random
+from scipy.spatial.distance import pdist, squareform
+from scipy.sparse import csr_matrix
+from scipy.sparse.csgraph import connected_components
+from scipy.sparse.csgraph import dijkstra
 
 # Demonstrate the scipy.sparse.csgraph graph algoritms package
 # to solve some word problems that we have seen earlier. Adapted
@@ -13,7 +17,7 @@ with open('words_sorted.txt', encoding="utf-8") as f:
 print(f"Read in a word list of {len(wordlist)} words.")
 wordlist = sorted([x for x in wordlist if len(x) == n])
 print(f"There remain {len(wordlist)} words of length {n}.")
-    
+
 # Convert list of words to numpy array.
 
 words = np.asarray(wordlist)
@@ -29,30 +33,29 @@ print(f"Unicode matrix has the shape {word_bytes.shape}.")
 # Compute the distance between each pair of words. You can also
 # try the Euclidean distance instead of Hamming distance.
 
-from scipy.spatial.distance import pdist, squareform
+
 hamming_dist = pdist(word_bytes, metric="hamming")
 
 # Convert the words into sparse graphs.
 
-from scipy.sparse import csr_matrix
+
 graph_h = csr_matrix(squareform(hamming_dist < 1.5 / words.itemsize))
 
 # This graph may be in separate components. Let's find out.
 
-from scipy.sparse.csgraph import connected_components
 N_h, components_h = connected_components(graph_h, directed=False)
 print(f"The word graph is in {N_h} separate components.")
-comps = [ words[components_h == i] for i in range(N_h) ]
+comps = [words[components_h == i] for i in range(N_h)]
 
 # Compute the shortest distances between 'live' and 'dead'.
 # Dijkstra's algorithm can do that for us.
 
-from scipy.sparse.csgraph import dijkstra
+
 def word_ladder(graph, start, ends):
     d, p = dijkstra(graph, indices=start, return_predecessors=True)
     print(f"Shortest paths from {words[start]!r} are:", flush=True)
     for end in ends:
-        if d[end] != np.inf:            
+        if d[end] != np.inf:
             result = []
             i = end
             while i != start:
@@ -61,7 +64,8 @@ def word_ladder(graph, start, ends):
             result.append(words[start])
             print(f"To {words[end]}: {result[::-1]}")
         else:
-            print(f"To {words[end]}: NO PATH FOUND.")        
+            print(f"To {words[end]}: NO PATH FOUND.")
+
 
 # First, find the position indices of these words in wordlist.
 start = words.searchsorted('hacker')

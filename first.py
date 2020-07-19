@@ -1,12 +1,21 @@
-# These lines, since they start with the pound sign, are comments that
-# the Python interpreter simply ignores.
+# Python comes with a bunch of good libraries that define all kinds of
+# functions so that we don't need to write them ourselves. For example,
+# let us import the math library and showcase some of its functions.
 
-# A Python program consists of a series of statements that, when that
-# program is run, are executed in the order that they are listed. The
-# simplest statement is an assignment that associates a value to a name.
-# This statement creates a name and initializes it to the value of the
-# right-hand side expression that can be just a constant or a more
-# complicated expression.
+import math
+
+# Exact integer fractions are not in the Python core language itself,
+# but the handy library fractions defines them as a type that you can
+# use as you would any other type.
+
+from fractions import Fraction
+
+# A Python program consists of a series of statements that, when
+# that program is run, are executed in the order that they are
+# listed. The simplest statement is an assignment that associates
+# a value to a name. This statement creates a name and initializes
+# it to the value of the right-hand side expression that can be
+# a mere constant or a more complicated expression.
 
 a = 42
 b = a * 2 - 3
@@ -61,16 +70,12 @@ del d
 d = 'This is yet another string in our first program.'
 print(d)
 
-# Python comes with a bunch of good libraries that define all kinds of
-# functions so that we don't need to write them ourselves. For example,
-# let us import the math library and showcase some of its functions.
 
-import math
-
-# Now all the high school math functions are defined, and we can use them.
-# However, in the namespace they are under the separate namespace math, so
-# to access these names, we need to use the prefix 'math' to get to that
-# namespace.
+# After importing math in the beginning, the high school math
+# functions are defined, and we can use them. However, in the
+# namespace they are under the separate namespace math, so to
+# access these names, we need to use the prefix 'math' to get
+# to that namespace.
 
 x = 1.2345678
 print(math.sqrt(x))
@@ -86,16 +91,11 @@ z2 = complex(-3, 1)  # -3 + j
 z3 = z1 * z2         # -10+10j
 print(f"The real part is {z3.real} and the imaginary part is {z3.imag}.")
 
-# Exact integer fractions are not in the Python core language itself,
-# but the handy library fractions defines them as a type that you can
-# use as you would any other type.
-
-from fractions import Fraction
 
 f1 = Fraction(-2, 7)  # a fraction from two integers
 f2 = Fraction('5/9')  # a fraction from a string
 f3 = f1 * f2
-print(f"The product of {f1} and {f2} equals {f3}.") # -10/63
+print(f"The product of {f1} and {f2} equals {f3}.")  # -10/63
 
 # Joe and Moe are peeling potatoes. Working by himself, Joe could peel
 # the entire pile in three hours, whereas Moe could peel the same pile
@@ -107,23 +107,23 @@ joe = Fraction(1, 3)
 moe = Fraction(1, 5)
 together = joe + moe
 time = 1 / together
-print(f"Working together, Joe and Moe peel the potatoes in {time} hours.")
+print(f"Together, Joe and Moe finish in {time} hours.")
 
 # Remember that strings and integers are not the same thing, even as they
 # can be trivially converted to one another.
 
 a = 22 + 22
-print(a)        # 44
-b = '22' + '22' # string addition works as plain concatenation
-print(b)        # '2222', not '44'
+print(a)         # 44
+b = '22' + '22'  # string addition works as plain concatenation
+print(b)         # '2222', not '44'
 c = int('22') + int('22')
-print(c)        # 44
+print(c)         # 44
 
 # The built-in function type tells you the type of something.
 
-print(type(a))     # <class 'int'>
-print(type(b))     # <class 'str'>
-print(type(False)) # <class 'bool'>
+print(type(a))      # <class 'int'>
+print(type(b))      # <class 'str'>
+print(type(False))  # <class 'bool'>
 
 # Assignment is actually smart enough so that multiple assignments can be
 # performed in a single step. Since all right hand side expressions are
@@ -131,21 +131,21 @@ print(type(False)) # <class 'bool'>
 # we are doing the naive swap.
 
 x, y = 17, 42
-print(f"Before swap, x equals {x}, and y equals {y}.") # 17 42
-x, y = y, x     
-print(f"After swap, x equals {x}, and y equals {y}.") # 42 17
+print(f"Before swap, x equals {x}, and y equals {y}.")  # 17 42
+x, y = y, x
+print(f"After swap, x equals {x}, and y equals {y}.")  # 42 17
 
 # In basic arithmetic, division is handled with a couple of different
 # operators depending on what kind of division you want. Couple of things
 # about it can first be a bit surprising.
 
-print(11 / 4)   # 2.75, the usual everyday division
-print(11 / -4)  # -2.75
-print(11 // 4)  # 2, integer division with duplicated slash
-print(11 // -4) # -3, not -2, as integer division uses floor
-print(11 % 4)   # 3, % is the integer division remainder operator
-print(-11 % 4)  # 1
-print(11 % -4)  # -1
+print(11 / 4)    # 2.75, the usual everyday division
+print(11 / -4)   # -2.75
+print(11 // 4)   # 2, integer division with duplicated slash
+print(11 // -4)  # -3, not -2, as integer division uses floor
+print(11 % 4)    # 3, % is the integer division remainder operator
+print(-11 % 4)   # 1
+print(11 % -4)   # -1
 
 # Last, in addition to all the values that we have, there is a built-in
 # special value None that means that a name has no value. (Chew on

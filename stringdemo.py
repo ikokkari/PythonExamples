@@ -1,16 +1,20 @@
+import unicodedata as uu  # properties of Unicode characters
+from string import Template
+from string import capwords
+
 # Ordinary string literals in Python. Escape sequences can be used
 # to embed various special characters inside string literals.
 
 s1 = "Hello there,\tworld!"
 s2 = ""
 
-import unicodedata as uu # properties of Unicode characters
-
 # Python 3 strings are sequences of arbitrary Unicode characters.
-for c in range(100,10100,500):
+
+for c in range(100, 10100, 500):
     cc = chr(c)
     s2 += cc
-    print(f"Character {cc} is {uu.name(cc)}, in category {uu.category(cc)}.")
+    name, cat = uu.name(cc), uu.category(cc)
+    print(f"Character {cc} is {name}, in category {cat}.")
 
 # Old time byte strings can contain only ASCII characters 0-127.
 
@@ -41,14 +45,12 @@ print(s4)   # Here a is 99
 # bytecode before executing the program, so syntax errors are revealed
 # before the script starts running. Uncomment to see this happen.
 
-#print(f"a is now {a:!4&^#}")
+# print(f"a is now {a:!4&^#}")
 
 a = 42
-print(s4) # a is still 99 inside the string
+print(s4)  # a is still 99 inside the string
 
 # And yet another way to compose strings from smaller pieces.
-
-from string import Template
 
 tt = Template("$who likes $food.")
 
@@ -68,8 +70,8 @@ it = iter(s1)
 print(next(it))  # H
 print(next(it))  # e
 for x in it:
-    print(ord(x), end = ' ') # whole bunch of Unicode codepoints
-print() # line break
+    print(ord(x), end=' ')  # whole bunch of Unicode codepoints
+print()  # line break
 
 # Raw strings can be handy with regexes and other things that handle
 # special characters differently from Python.
@@ -82,14 +84,14 @@ print(s5)
 
 s6 = u'noe\u0308l'
 print(s6)
-print("".join(reversed(s6))) # reversing unicode string is tricksy
-print(s6[::-1]) # clever indexing reverse taken from Stack Overflow
+print("".join(reversed(s6)))  # reversing unicode s tricksy
+print(s6[::-1])  # clever indexing reverse taken from Stack Overflow
 
 # Taken from "WTF Python". What is going on here?
 value = 11
 valuе = 32
-print(value) # 11
-print(valuе) # 32
+print(value)  # 11
+print(valuе)  # 32
 
 # Some handy methods on strings.
 print(s1.title())
@@ -104,8 +106,6 @@ print('1234'.rjust(10))
 # In principle all string operations could be done using methods
 # that we already have, but it's pointless to reinvent the wheel
 # unless you feel like exercising.
-
-from string import capwords
 
 s = "let us capitalize every word of this sentence."
 print(capwords(s))

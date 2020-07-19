@@ -1,6 +1,7 @@
 import turtle
 from math import sqrt
 
+
 def spiral(n):
     while(n > 5):
         turtle.forward(n)
@@ -8,6 +9,7 @@ def spiral(n):
         turtle.forward(n)
         turtle.right(90)
         n -= 5
+
 
 def koch(d):
     # Once the line segment is short enough, render it as segment.
@@ -20,8 +22,9 @@ def koch(d):
         koch(d/3)
         turtle.right(120)
         koch(d/3)
-        turtle.left(60) # 60 - 120 + 60 == 0, as it should
+        turtle.left(60)  # 60 - 120 + 60 == 0, as it should
         koch(d/3)
+
 
 # Koch Snowflake consist of three Koch curves arranged in triangle.
 def koch_snowflake(d):
@@ -29,7 +32,7 @@ def koch_snowflake(d):
         koch(d)
         turtle.right(120)
 
-s2 = sqrt(2)
+
 def zig(d, m1, m2):
     if d < 10:
         turtle.forward(d)
@@ -38,27 +41,30 @@ def zig(d, m1, m2):
         zig(.5 * d, m1, m2)
         zig(.5 * d, m2, m1)
         m2(135)
-        zig(.5 * s2 * d, m2, m1)
-        zig(.5 * s2 * d, m1, m2)
+        zig(.5 * sqrt(2) * d, m2, m1)
+        zig(.5 * sqrt(2) * d, m1, m2)
         m1(45)
 
+
 # Fractal trees are a classic turtle graphics application.
+
 def tree(d):
-        # Every tree starts with the trunk.
-        turtle.forward(d)
-        if d > 3:
-            # Take the absolute position for safekeeping.
-            pos = turtle.position()
-            heading = turtle.heading()
-            turtle.left(70)
-            tree(d/1.5)
-            # Restore the position to the end of trunk.
-            turtle.penup()            
-            turtle.setposition(pos)
-            turtle.setheading(heading)
-            turtle.pendown()
-            turtle.right(35)
-            tree(d/1.5)
+    # Every tree starts with the trunk.
+    turtle.forward(d)
+    if d > 3:
+        # Take the absolute position for safekeeping.
+        pos = turtle.position()
+        heading = turtle.heading()
+        turtle.left(70)
+        tree(d/1.5)
+        # Restore the position to the end of trunk.
+        turtle.penup()
+        turtle.setposition(pos)
+        turtle.setheading(heading)
+        turtle.pendown()
+        turtle.right(35)
+        tree(d/1.5)
+
 
 if __name__ == "__main__":
     turtle.tracer(10000, 0)
@@ -85,4 +91,3 @@ if __name__ == "__main__":
     tree(150)
 
     turtle.update()
-    

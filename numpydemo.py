@@ -1,9 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import scipy.interpolate as sci
+import scipy.integrate as scint
+import scipy.optimize as sco
 
-a = np.array([1.2, 5.5, -4.3, 9.1, 0.2, -3.3], dtype = 'double')
+a = np.array([1.2, 5.5, -4.3, 9.1, 0.2, -3.3], dtype='double')
 print(f"a is now:\n{a!s}")
-a = a.reshape((2,3))
+a = a.reshape((2, 3))
 print(f"a is now:\n{a!s}")
 a = a.reshape(6)
 print(f"a is now:\n{a!s}")
@@ -37,13 +40,14 @@ print(f"a is now:\n{a!s}")
 # is automatically broadcast into higher dimensions so that the
 # shapes of the two matrices are compatible for that operation.
 
-c = np.array([1,2,3,4,5,6]).reshape((2,3))  # shape (2, 3)
-d = np.array([1,2,3])                       # shape (3,) becomes (2, 3)
+c = np.array([1, 2, 3, 4, 5, 6])
+c = c.reshape((2, 3))        # shape (2, 3)
+d = np.array([1, 2, 3])      # broadcast into (2, 3)
 print("c + d equals:", (c + d))
 
 # Cherry picking elements by indexing with a truth-valued array.
 
-v = a > 3 # Generates a truth-valued array from elementwise comparisons
+v = a > 3  # A truth-valued array from elementwise comparisons
 print(f"v is now: {v}")
 print(f"a[v] is: {a[v]}")
 
@@ -59,7 +63,6 @@ y = 3.2 * np.sin(x*1.4) + .35*x*x
 
 # Interpolation of values between given data points.
 
-import scipy.interpolate as sci
 # Create a function to represente the interpolation.
 f = sci.interp1d(x, y, kind='cubic')
 # Apply that function to elements on higher resolution.
@@ -72,12 +75,13 @@ plt.figure(1)
 plt.plot(x, y, 'o', xx, yy, '-')
 plt.show()
 
+
 # Scipy offers a host of numerical integration functions.
 
-import scipy.integrate as scint
+# First, let's make up a function to integrate.
+def f(x):
+    return 3.3*x*x - np.exp(x-3)*4.2*x + 1.5*np.cos(x)
 
-# Let's make up a function to integrate.
-f = lambda x: 3.3*x*x - np.exp(x-3)*4.2*x + 1.5*np.cos(x)
 
 # Integration, given a function f that works in any single point.
 print(f"Quad: {scint.quad(f, -5, 5)[0]:.6f}")
@@ -93,7 +97,5 @@ print(f"Simpson: {scint.simps(yy, x=xx):.6f}")
 # Last, the minimization of some function f. (To maximize f,
 # you can always simply minimize -f.)
 
-import scipy.optimize as sco
-
-result = sco.minimize(f, 0, method = 'BFGS')
+result = sco.minimize(f, 0, method='BFGS')
 print(f"Function is minimized at x = {result.x[0]:.5f}.")

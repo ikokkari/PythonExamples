@@ -1,28 +1,32 @@
+import functools
+import operator
+from fractions import Fraction
+
 # Many problems can be solved surprisingly easily by first solving a
 # smaller version of that problem, whose result is then used to solve
 # the original problem. The classic textbook example is the factorial.
 
+
 def factorial(n):
     if n < 2:
-        return 1                    # base case
+        return 1                      # base case
     else:
-        return n * factorial(n-1)   # recursive call
+        return n * factorial(n - 1)   # recursive call
+
 
 # Functional programming version, for humour value:
-
-import functools
-import operator
 
 def factorial2(n):
     return functools.reduce(operator.mul, range(1, n+1))
 
-# Well, that was nothing much to write home about, since we already did
-# that with iteration. However, it turns out that in theory, what you
-# can do with recursion you can also do with iteration, and vice versa.
-# However, in practice one of the techniques can be vastly superior for
-# some problems. Here are a couple of example problems where the recursive
-# solution is far simpler and easier than the iterative one. First, the
-# classic Towers of Hanoi puzzle.
+
+# Well, that was nothing much to write home about, since we
+# already did that with iteration. However, it turns out that
+# in theory, what you can do with recursion you can also do with
+# iteration, and vice versa. However, in practice one of the
+# techniques can be vastly superior for some problems. A couple
+# of example problems where the recursive solution is easier
+# than iteration. First, the classic Towers of Hanoi puzzle.
 # http://en.wikipedia.org/wiki/Towers_of_Hanoi
 
 def hanoi(src, tgt, n):
@@ -33,8 +37,9 @@ def hanoi(src, tgt, n):
     print(f"Move top disk from peg {src} to peg {tgt}.")
     hanoi(mid, tgt, n-1)
 
-# For computing high integer powers, binary power is more efficient than
-# repeated multiplication n - 1 times.
+
+# For computing high integer powers, binary power is more efficient
+# than repeated multiplication n - 1 times.
 
 def binary_power(a, n):
     if n < 0:
@@ -46,12 +51,13 @@ def binary_power(a, n):
     else:
         return a * binary_power(a * a, (n-1) // 2)
 
+
 # Without converting a number to a string but using only operations of
 # integer arithmetic, reverse its digits. For example, the integer 12345
 # would become 54321.
 
 def reverse_digits(n):
-    def rev_dig_acc(n, a): # accumulator recursion
+    def rev_dig_acc(n, a):  # accumulator recursion
         if n == 0:
             return a
         else:
@@ -61,6 +67,7 @@ def reverse_digits(n):
     else:
         return rev_dig_acc(n, 0)
 
+
 # Flattening a list that can contain other lists as elements is a classic
 # list programming exercise. This being Python, the correct "duck typing"
 # way of checking of something is a list is to check if it is iterable,
@@ -69,11 +76,12 @@ def reverse_digits(n):
 def flatten(li):
     result = []
     for x in li:
-        if hasattr(x, '__iter__'): # is x an iterable?
+        if hasattr(x, '__iter__'):  # is x an iterable?
             result.extend(flatten(x))
         else:
             result.append(x)
     return result
+
 
 # The subset sum problem asks if it is possible to choose a subset of
 # given items (all assumed to be integers) that together add up to goal.
@@ -85,15 +93,16 @@ def subset_sum(items, goal):
     if goal == 0:
         return []
     if len(items) == 0 or goal < 0:
-        return None    
+        return None
     last = items.pop()
     answer = subset_sum(items, goal-last)
-    if answer != None:
+    if answer is not None:
         answer.append(last)
     else:
         answer = subset_sum(items, goal)
     items.append(last)
     return answer
+
 
 # The knight's tour problem is another classic. Given an n*n chessboard,
 # and the start coordinates of the knight, find a way to visit every
@@ -101,49 +110,51 @@ def subset_sum(items, goal):
 # the square that the knight started from.
 # http://en.wikipedia.org/wiki/Knight's_tour
 
-def knight_tour(n = 8, sx = 1, sy = 1):
+def knight_tour(n=8, sx=1, sy=1):
     # List to accumulate the moves during the recursion.
     result = []
     # Squares that the tour has already visited.
-    visited = set( )
-    # Possible moves of a chess knight.
-    moves = ((2,1),(1,2),(2,-1),(-1,2),(-2,1),(1,-2),(-2,-1),(-1,-2))
-    
+    visited = set()
+    # Eight possible moves of a chess knight.
+    moves = ((2, 1), (1, 2), (2, -1), (-1, 2),
+             (-2, 1), (1, -2), (-2, -1), (-1, -2))
+
     # Test whether square (x, y) is inside the chessboard. We use
     # the 1-based indexing here, as is normally done by humans.
-    def inside(x,y):
+    def inside(x, y):
         return x > 0 and y > 0 and x <= n and y <= n
-    
+
     # Find all the unvisited neighbours of square (x, y).
     def neighbours(x, y):
-        return [(x+dx, y+dy) for (dx, dy) in moves if inside(x+dx,y+dy)
-                and (x+dx, y+dy) not in visited]       
-    
+        return [(x+dx, y+dy) for (dx, dy) in moves
+                if inside(x+dx, y+dy)
+                and (x+dx, y+dy) not in visited]
+
     # Try to generate the rest of the tour from square (cx, cy).
     def generate_tour(cx, cy):
         result.append((cx, cy))
         if len(result) == n*n:
             # The tour must be closed to be considered success.
             return (sx - cx, sy - cy) in moves
-        visited.add((cx,cy))
+        visited.add((cx, cy))
         for (nx, ny) in neighbours(cx, cy):
             if generate_tour(nx, ny):
                 return True
-        # Undo the current move 
+        # Undo the current move
         result.pop()
-        visited.remove((cx,cy))
+        visited.remove((cx, cy))
         return False
     if generate_tour(sx, sy):
         return result
     else:
         return None
 
-# Ackermann function is a function that grows fast. Really, really, really
-# fast. Faster than you can begin to imagine, until you have taken some
-# decent theory of computability courses. And not even then.
-# http://en.wikipedia.org/wiki/Ackermann_function
 
-from fractions import Fraction
+# Ackermann function is a function that grows fast. Really,
+# really, really fast. Faster than you can begin to imagine,
+# until you have taken some decent theory of computability
+# courses. And probably not even then.
+# http://en.wikipedia.org/wiki/Ackermann_function
 
 def ackermann(m, n):
     if m == 0:
@@ -153,14 +164,15 @@ def ackermann(m, n):
     else:
         return ackermann(m-1, ackermann(m, n-1))
 
+
 if __name__ == "__main__":
     print(f"Factorial of 20 equals {factorial(20)} and {factorial(20)}.")
     print("Solution for Hanoi with three disks:")
     hanoi(1, 3, 3)
     print("Here is one solution to subset sum with goal 81:")
-    print(subset_sum([1,4,7,10,15,22,23,35,37], 81))
+    print(subset_sum([1, 4, 7, 10, 15, 22, 23, 35, 37], 81))
     print("Flattening the list produces the following:")
-    print(flatten([1, (42, 99), [2,[3,[4,[5],6],7],8],9]))
+    print(flatten([1, (42, 99), [2, [3, [4, [5], 6], 7], 8], 9]))
     print("Here is a 6*6 knights tour:")
     print(knight_tour(6, 1, 1))
     print(f"Ackermann(3, 3) = {ackermann(3, 3)}.")
@@ -172,6 +184,6 @@ if __name__ == "__main__":
     # the actual type of their argument, as long as the arguments have
     # the capabilities expected from them.
     b = Fraction(3, 7)
-    print(f"{b} raised to 100th power equals {binary_power(b, 100)}.")    
+    print(f"{b} raised to 100th power equals {binary_power(b, 100)}.")
     v = 123456789
     print(f"{v} reversed is {reverse_digits(v)}.")

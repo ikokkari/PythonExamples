@@ -2,6 +2,7 @@ from fractions import Fraction
 from decimal import Decimal, getcontext
 from math import fsum
 
+
 def demonstrate_imprecision():
     # Floating point can represent exactly only terminating series of
     # powers of two. All three numbers are unrepresentable.
@@ -23,9 +24,10 @@ def demonstrate_imprecision():
 
     # Precision of floating point does not work out well when adding
     # numbers of vastly different magnitudes.
-    print(sum([3e30, 1, -3e30])) # 0.0
+    print(sum([3e30, 1, -3e30]))   # 0.0
     # Better.
-    print(fsum([3e30, 1, -3e30])) # 1.0
+    print(fsum([3e30, 1, -3e30]))  # 1.0
+
 
 def decimal_precision_demo():
     a = Decimal("0.2")
@@ -47,6 +49,7 @@ def decimal_precision_demo():
     a = Decimal("2") ** 10000
     print(a)
 
+
 def infinity_and_nan_demo():
     ninf = float('-inf')
     pinf = float('inf')
@@ -57,11 +60,13 @@ def infinity_and_nan_demo():
     print(f"Infinity minus infinity equals {nan}.")
     print(f"nan equals nan is {nan == nan}.")
 
+
 def harmonic(n):
     total = Fraction(0)
     for i in range(1, n+1):
         total += Fraction(1, i)
     return total
+
 
 def estimate_pi(n):
     total = Fraction(0)
@@ -69,11 +74,12 @@ def estimate_pi(n):
         total += Fraction(1, i*i)
     return total * 6
 
+
 if __name__ == "__main__":
     demonstrate_imprecision()
     decimal_precision_demo()
     infinity_and_nan_demo()
-    pi = estimate_pi(1000)
+    pi = estimate_pi(10000)
     getcontext().prec = 10
     print("Estimating pi: ", end="")
     print((Decimal(str(pi.numerator)).sqrt() /

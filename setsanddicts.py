@@ -4,8 +4,8 @@
 # other iterable. Duplicate elements are discarded, so Larry will be in
 # the first set only once despite being listed twice.
 
-names1 = { 'Larry', 'Johnny', 'Billy', 'Mary', 'Larry' }
-names2 = { 'Max', 'Lena', 'Larry', 'Billy', 'Tina' }
+names1 = {'Larry', 'Johnny', 'Billy', 'Mary', 'Larry'}
+names2 = {'Max', 'Lena', 'Larry', 'Billy', 'Tina'}
 
 # Membership check is done with the operators 'in' and 'not in'
 print('Tony' in names1)        # False
@@ -18,20 +18,20 @@ union = names1.union(names2)
 difference = names1.difference(names2)
 intersection = names1.intersection(names2)
 
-print(union)       # {'Lena', 'Johnny', 'Max', 'Billy', 'Larry', 'Tina', 'Mary'}
-print(difference)  # {'Mary', 'Johnny'}
-print(intersection)# {'Billy', 'Larry'}
+print(f"Union of names is {union}.")
+print(f"Their difference is {difference}.")
+print(f"Their intersection is {intersection}.")
 
-# Sets do not allow indexing, but they do allow iteration. The guarantee
-# of iteration order depends on the Python version. Old versions guaranteed
-# only that the iteration order stays the same in consecutive iterations,
-# provided that the set was not modified in between. Since Python 3.7, the
-# iteration order is guaranteed to be the same as the insertion order,
-# which may come handy occasionally.
+# Sets do not allow indexing, but they do allow iteration. The
+# guarantee of iteration order depends on the Python version. Old
+# versions guarantee only that the iteration order stays the same
+# in consecutive iterations, provided that the set is not modified
+# in between. Since Python 3.7, the iteration order is guaranteed
+# to be the same as the insertion order, which may come handy occasionally.
 
 print("First time through this set:")
 for x in names2:
-    print(f"{x} is in the second set.") 
+    print(f"{x} is in the second set.")
 
 print("Second time through the same set:")
 for x in names2:
@@ -42,12 +42,12 @@ for x in names2:
 # object, simply list the pairs of keys and values between curly braces,
 # each key separated from its value with a colon.
 
-scores = { 'Mary': 14, 'Tony': 8, 'Billy': 20, 'Lena': 3}
+scores = {'Mary': 14, 'Tony': 8, 'Billy': 20, 'Lena': 3}
 
 # Since the same notation of curly braces is used for both sets and
 # dictionaries, I wonder which one {} is? (It's a dictionary.)
 
-print("The type of {} " f"is {type({})}.") # <class 'dict'>
+print("The type of {} " f"is {type({})}.")  # <class 'dict'>
 
 # A dictionary can be "indexed" with its keys.
 
@@ -74,7 +74,7 @@ print([x for x in scores.items()])
 
 # Each dictionary can contain only one entry for keys that are equal
 # in the sense of operator ==, even if these objects are separate.
-numdic = { 42: "Hello", 42.0: "World" } # pyflakes gives a warning...
+numdic = {42: "Hello", 42.0: "World"}  # pyflakes gives a warning...
 print(42 == 42.0)    # True (implicit cast)
 print(42 is 42.0)    # False
 print(numdic[42])    # World

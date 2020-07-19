@@ -4,11 +4,11 @@
 a = 42
 b = a + 1
 
-print(f"a equals {a}, b equals {b}") # 42, 43
+print(f"a equals {a}, b equals {b}")  # 42, 43
 
 a = 99
 
-print(f"a equals {a}, b equals {b}") # 99, 43
+print(f"a equals {a}, b equals {b}")  # 99, 43
 
 # The name is not the same thing as the object that it refers to.
 # Whenever a name occurs in an expression, it means the object that
@@ -19,7 +19,7 @@ b = str(9999)
 
 print("Results for two strings '9999'")
 
-print(f"a == b: {a==b}\na is b: {a is b}") 
+print(f"a == b: {a==b}\na is b: {a is b}")
 
 # Actual memory addresses are dependent on the underlying system. The
 # only thing guaranteed is that separate objects will have separate
@@ -34,7 +34,7 @@ b = 5
 
 print("Results for integer value 5:")
 
-print(f"a == b: {a==b}\na is b: {a is b}") 
+print(f"a == b: {a==b}\na is b: {a is b}")
 
 # There is an upper limit to such caching, though.
 
@@ -43,7 +43,7 @@ b = 10**100
 
 print("Results for one googol:")
 
-print(f"a == b: {a==b}\na is b: {a is b}") 
+print(f"a == b: {a==b}\na is b: {a is b}")
 
 # Whenever a variable appears in an expression, its value is substituted
 # in its place. Therefore, id(a) gives you the memory address where the
@@ -61,10 +61,10 @@ print(f"id(a) equals {id(a)}, id(b) equals {id(b)}")
 # collection contains object references, not the names.
 
 items = [a, a, a]
-print(items) # ['yeah', 'yeah', 'yeah']
+print(items)  # ['yeah', 'yeah', 'yeah']
 
 a = "nope"
-print(items) # ['yeah', 'yeah', 'yeah']
+print(items)  # ['yeah', 'yeah', 'yeah']
 
 # If the same object is placed in multiple places of a list or other
 # collection, all those places in collection refer to the same object.
@@ -73,26 +73,26 @@ first = [1, 2, 3]
 # Three references to the same object.
 second = [first, first, first]
 
-print(second) # [[1,2,3], [1,2,3], [1,2,3]]
+print(second)  # [[1,2,3], [1,2,3], [1,2,3]]
 first[0] = 99
-print(second) # [[99,2,3], [99,2,3], [99,2,3]]
+print(second)  # [[99,2,3], [99,2,3], [99,2,3]]
 
 # A list can contain itself as an element. Perfectly legal, although weird.
 
 first.append(first)
-print(first) # Smart little function realizes it has an infinite cycle.
+print(first)  # Smart function realizes it has an infinite cycle.
 
 # Splicing a list or other sequence creates a whole new object.
 
 a = [1, 2, 3, 4, 5]
 b = a[2:4]
 a[2] = 99
-print(b) # [3, 4]
+print(b)  # [3, 4]
 
 # However, dictionary views are live pointing to the underlying data.
 
-d = { 1:"yeah", 2:"nope", "foo":42, 1.3:a }
+d = {1: "yeah", 2: "nope", "foo": 42, 1.3: a}
 dk = d.keys()
-print(dk) # a dict_keys object
+print(dk)  # a dict_keys object
 del d[1]
-print(dk) # dict_keys with no more 1
+print(dk)  # dict_keys with no more 1
