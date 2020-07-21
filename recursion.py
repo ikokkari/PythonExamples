@@ -1,10 +1,12 @@
 import functools
 import operator
+import itertools
 from fractions import Fraction
 
-# Many problems can be solved surprisingly easily by first solving a
-# smaller version of that problem, whose result is then used to solve
-# the original problem. The classic textbook example is the factorial.
+# Many problems can be solved surprisingly easily by first
+# solving a smaller version of that problem, whose result is
+# then productively used in solving the original problem. The
+# classic textbook first example of recursion is factorial.
 
 
 def factorial(n):
@@ -14,10 +16,26 @@ def factorial(n):
         return n * factorial(n - 1)   # recursive call
 
 
-# Functional programming version, for humour value:
+# Functional programming version, if only for humour value:
 
-def factorial2(n):
+def factorial_func(n):
     return functools.reduce(operator.mul, range(1, n+1))
+
+
+# Why not Zoidb... itertools? Without more-itertools, we
+# need to define the lazy last element extractor ourselves.
+
+def last_elem(it):
+    last = next(it)
+    for c in it:
+        last = c
+    return last
+
+
+def factorial_it(n):
+    return last_elem(itertools.accumulate(
+        range(1, n+1), operator.mul)
+    )
 
 
 # Well, that was nothing much to write home about, since we
@@ -41,37 +59,27 @@ def hanoi(src, tgt, n):
 # For computing high integer powers, binary power is more efficient
 # than repeated multiplication n - 1 times.
 
-def binary_power(a, n):
+def binary_power(a, n, verbose=False):
+    if verbose:
+        print(f"Entering binary_power({n}).")
     if n < 0:
         raise ValueError("Binary power negative exponent not allowed.")
     elif n == 0:
-        return 1
+        result = 1
     elif n % 2 == 0:
-        return binary_power(a * a, n // 2)
+        result = binary_power(a * a, n // 2, verbose)
     else:
-        return a * binary_power(a * a, (n-1) // 2)
+        result = a * binary_power(a * a, (n-1) // 2, verbose)
+    if verbose:
+        print(f"Exiting binary_power({n}) with {result}.")
+    return result
 
 
-# Without converting a number to a string but using only operations of
-# integer arithmetic, reverse its digits. For example, the integer 12345
-# would become 54321.
-
-def reverse_digits(n):
-    def rev_dig_acc(n, a):  # accumulator recursion
-        if n == 0:
-            return a
-        else:
-            return rev_dig_acc(n // 10, 10 * a + n % 10)
-    if n < 0:
-        return -reverse_digits(-n)
-    else:
-        return rev_dig_acc(n, 0)
-
-
-# Flattening a list that can contain other lists as elements is a classic
-# list programming exercise. This being Python, the correct "duck typing"
-# way of checking of something is a list is to check if it is iterable,
-# that is, for our purposes it behaves like a list.
+# Flattening a list that can contain other lists as elements is a
+# classic list programming exercise. This being Python, the correct
+# "duck typing" spirit of checking of something is a list is to
+# check if it is iterable, that is, for our purposes it behaves
+# like a list.
 
 def flatten(li):
     result = []
@@ -83,11 +91,12 @@ def flatten(li):
     return result
 
 
-# The subset sum problem asks if it is possible to choose a subset of
-# given items (all assumed to be integers) that together add up to goal.
-# If there is no solution, the function returns None, otherwise it
-# returns the list of items that together add up to the goal.
 # http://en.wikipedia.org/wiki/Subset_sum_problem
+# The subset sum problem asks if it is possible to select a subset
+# of given items (all assumed to be integers) that together add up
+# exactly to goal. If no solution exists, the function returns None,
+# otherwise it returns the lexicographically highest sublist of
+# items whose elements together add up exactly to the goal.
 
 def subset_sum(items, goal):
     if goal == 0:
@@ -160,14 +169,17 @@ def ackermann(m, n):
     if m == 0:
         return n+1
     elif m > 0 and n == 0:
-        return ackermann(m-1, 1)
+        return ackermann(m - 1, 1)
     else:
-        return ackermann(m-1, ackermann(m, n-1))
+        return ackermann(m - 1, ackermann(m, n - 1))
 
 
 if __name__ == "__main__":
-    print(f"Factorial of 20 equals {factorial(20)} and {factorial(20)}.")
-    print("Solution for Hanoi with three disks:")
+    f1 = factorial(10)
+    f2 = factorial_func(10)
+    f3 = factorial_it(10)
+    print(f"The factorial of 10 equals {f1}, {f2} and {f3}.")
+    print("Solution for Towers of Hanoi with three disks:")
     hanoi(1, 3, 3)
     print("Here is one solution to subset sum with goal 81:")
     print(subset_sum([1, 4, 7, 10, 15, 22, 23, 35, 37], 81))
@@ -177,13 +189,19 @@ if __name__ == "__main__":
     print(knight_tour(6, 1, 1))
     print(f"Ackermann(3, 3) = {ackermann(3, 3)}.")
     print(f"Ackermann(3, 4) = {ackermann(3, 4)}.")
-    # print(f"Ackermann(4, 4) = {ackermann(4, 4)}.") # recursion limit exceeded
-    print(f"Using binary power, 2**10001 = {binary_power(2, 10001)}.")
+    # print(f"Ackermann(4, 4) = {ackermann(4, 4)}.")
+    # would give error "recursion limit exceeded"
+    print(f"Steps of computing binary_power(2, 100) are:")
+    bp = binary_power(2, 100, True)
+    print(f"The result is {bp}.")
+
+    # Gold testing means testing a function against some existing
+    # "golden" function already known to be correct.
     assert 2**10001 == binary_power(2, 10001)
+
     # Python functions are polymorphic in that they don't care about
     # the actual type of their argument, as long as the arguments have
     # the capabilities expected from them.
     b = Fraction(3, 7)
     print(f"{b} raised to 100th power equals {binary_power(b, 100)}.")
     v = 123456789
-    print(f"{v} reversed is {reverse_digits(v)}.")

@@ -3,10 +3,10 @@ from functools import reduce, partial
 from fractions import Fraction
 from random import randint
 
-# This example demonstrates a bunch of Python features for functional
-# programming. This means that functions are treated as data that can
-# be stored to variables, passed to other functions, returned from
-# functions as results, created on the fly etc.
+# This example demonstrates some of Python features for functional
+# programming. This means that functions are treated as data that
+# can be stored to variables, passed to other functions, returned
+# from functions as results, created on the fly as needed, etc.
 
 
 def is_positive(n):
@@ -21,13 +21,15 @@ def square(n):
 # Note that these both return iterator objects instead of doing
 # the computation right away, so we force the computation to
 # take place with list().
+
 print("The positive elements are: ", end='')
 print(list(filter(is_positive, [-7, 8, 42, -1, 0])))
+
 print("The squares of first five positive integers are: ", end='')
 print(list(map(square, [1, 2, 3, 4, 5])))
 
-# Reduce is a handy operation to repeatedly combine first two elements
-# of the given sequence into one, until only one element remains.
+# Reduce is a handy operation to repeatedly combine first two
+# elements of given sequence into one, until only one remains.
 
 print(reduce(mul, [1, 2, 3, 4, 5], 1))  # 120 = 5!
 
@@ -57,20 +59,24 @@ def is_eventually_periodic(f, x, giveup=1000):
         giveup -= 1
     return tortoise == hare
 
-# Next, let's examine how functions can be given to other functions as
-# parameters, and returned as results to the caller. To demonstrate this,
-# let's write a function negate that can be given any predicate function,
-# and it creates and returns a function that behaves as the negation of
+# Next, let's examine how functions can be given to other functions
+# as parameters, and returned as results to the caller. To demo this,
+# let's write a function negate that can be given any predicate, and
+# it creates and returns a function that behaves as the negation of
 # its parameter.
 
 
 def negate(f):
     # Nothing says that we can't define a function inside a function.
-    # Since we don't know what parameters f takes, we write our function
-    # to accept any arguments and keyword arguments.
-    def result(*args, **kwargs):
+    # Since we don't know what parameters f takes, we write this
+    # function to accept any arguments and keyword arguments that
+    # it simply passes down to the original f without further ado.
+
+    def negated_f(*args, **kwargs):
         return not f(*args, **kwargs)
-    return result  # return the function that we just defined
+
+    # Return the function that was just defined.
+    return negated_f
 
 # Let's try this out by negating the following simple function.
 
@@ -79,30 +85,32 @@ def is_odd(x):
     return x % 2 != 0
 
 
-is_even = negate(is_odd)
-print(is_even)     # <function result at ....>
+is_even = negate(is_odd)           # I can't even...
+print(is_even)                     # <function result at ....>
 print(f"Is 2 even? {is_even(2)}")  # True
 print(f"Is 3 even? {is_even(3)}")  # False
 
-# Partial evaluation or "currying" means fixing some of the parameter
-# values of a function to create a function that takes fewer parameters
-# but is otherwise the same.
 
+# Partial evaluation or "currying" means setting some of the
+# arguments of a function to stone, to create a new function
+# that takes fewer parameters but works otherwise the same as
+# the original function.
 
 def foo(a, b, c):
     return a + (b * c)
 
 
 # Create a version of foo with parameter b fixed to -1.
+
 foob = partial(foo, b=-1)
-print(f"After partial application, foob(2, 5)={foob(a = 2, c = 5)}.")
+print(f"After partial, foob(2, 5)={foob(a=2, c=5)}.")
 
 # Sometimes functions can take a long time to calculate, but we
 # know that they will always return the same result for the same
-# parameters. The function memoize takes an arbitrary function as
-# a parameter, and creates and returns a new function that gives
-# the same results as the original, but remembers the results that
-# it has already computed and simply looks up those results that
+# arguments. The function memoize takes an arbitrary function as
+# an argument, and creates and returns a new function that gives
+# the same results as the original. However, it remembers what
+# it has already computed, and simply looks up those results that
 # have previously been calculated.
 
 
@@ -199,9 +207,10 @@ for b in range(1, 6):
     print(f"Barrel {b}: {', '.join(comp)}.")
 
 
-# Wouldn't it be "groovy" to memoize the memoize function itself, so that
-# if some function has already been memoized, the same function won't be
-# memoized again but its previously memoized version is returned?
+# Wouldn't it be "groovy" to memoize the memoize function itself, so
+# that if some function has already been memoized, the same function
+# won't be redundantly memoized again, but its previously memoized
+# version is returned? Isn't duck typing just dandy?
 
 memoize = memoize(memoize)
 
@@ -214,10 +223,11 @@ f1 = memoize(divisible_by_3)
 f2 = memoize(divisible_by_3)      # already did that one
 print(f"f1 is f2 = {f1 is f2}.")  # True
 
-# We can use the memoization technique to speed up checking whether the
-# so-called Collatz sequence starting from the given number eventually
-# reaches 1. The function collatz(n) tells how many steps this takes.
 
+# We can use the memoization technique to speed up checking whether
+# the so-called Collatz sequence starting from the given number
+# eventually reaches 1. The function collatz(n) tells how many
+# steps this needs.
 
 @memoize
 def collatz(n):
@@ -233,7 +243,7 @@ lc = max(((collatz(i), i) for i in range(1, 10**6)))
 print(f"Collatz sequence from {lc[1]} contains {lc[0]} steps.")
 print(f"Stored {len(collatz.results)} results. Some of them are:")
 
-for i in range(10):
+for _ in range(10):
     v = randint(1, 10**6 - 1)
     print(f"From {v}, sequence contains {collatz.results[(v,)]} steps.")
 
@@ -261,7 +271,7 @@ def thue_morse(n, sign):
     if n == 1:
         return '0' if sign == 0 else '1'
     else:
-        return thue_morse(n-1, sign) + thue_morse(n-1, 1-sign)
+        return thue_morse(n - 1, sign) + thue_morse(n - 1, 1 - sign)
 
 
 print("Thue-Morse sequences from 2 to 10 are:")
@@ -271,21 +281,22 @@ for i in range(2, 11):
 # Memoization of recursions that have repeating subproblems is awesome.
 print(f"Computing those required {__tm_call_count} recursive calls.")
 
+
 # The next function can be given any number of functions as parameters,
 # and it creates and returns a function whose value is the maximum of
 # the results of any of these functions.
 
-
 def max_func(*args):
     funcs = args
 
-    def result(*args):
+    def our_max_f(*args):
         return max((f(*args) for f in funcs))
-    return result
+
+    return our_max_f
 
 
-# Try that one out with some polynomials that we create as a lambda
-# to be used as throwaway arguments of max_func.
+# Try that one out with some polynomials created as lambdas, to be
+# used as throwaway arguments of max_func.
 
 f = max_func(lambda x: -(x*x) + 3*x - 7,   # -x^2+3x-7
              lambda x: 4*x*x - 10*x + 10,  # 4x^2-10x+10
@@ -318,13 +329,14 @@ def counter(f):
     def reset_count():
         count[0] = 0
 
+    # This is ugly, but necessary. As so many other things in life.
     cf.get_count = get_count
     cf.reset_count = reset_count
     return cf
 
+
 # Demonstrate the previous decorator by counting how many times the
 # sorting algorithm computes the given key...
-
 
 def kf(x):
     return x
@@ -341,7 +353,7 @@ kf.reset_count()
 sorted(range(-100000, 100000), key=kf, reverse=True)
 print(f"The key was computed {kf.get_count()} times.")
 
-# Another sometimes handy feature of Python is the ability to compile
+# Another sometimes handy feature of Python is its ability to compile
 # and execute new code dynamically on the fly, in any desired context.
 # However, be careful using eval and exec to strings that originate
 # from outside your program, as this opens a doorway for a malicious

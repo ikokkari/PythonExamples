@@ -27,11 +27,11 @@ print(f"String sb is {sb}.")
 a = 42
 b = 123.45678
 
-# Python 3.6 formatted string. There is a whole minilanguage available.
+# Python formatted string. There is a whole minilanguage available.
 
 s3 = f"a is now {a} (which is {a:x} in hex), and b is now {b:.3f} \
 which is {b:e} in scientific notation."
-print(s3)   # note the rounding of decimal number b
+print(s3)   # note the correct rounding of floating point number b
 
 # The string does not remember where its characters came from.
 
@@ -50,7 +50,9 @@ print(s4)   # Here a is 99
 a = 42
 print(s4)  # a is still 99 inside the string
 
-# And yet another way to compose strings from smaller pieces.
+# And yet another way to compose strings from smaller pieces. Very
+# few examples of people actually using this scheme have been found.
+# The mystery deepens.
 
 tt = Template("$who likes $food.")
 
@@ -64,7 +66,7 @@ print(tt.substitute(who="Jack", food="steak"))
 s2 = "a is now %3d, b is now %.4f." % (a, b)
 print(s2)
 
-# Strings are iterable, and can thus be processed like other iterables.
+# Strings are iterable, and can be processed as iterables.
 
 it = iter(s1)
 print(next(it))  # H
@@ -73,7 +75,7 @@ for x in it:
     print(ord(x), end=' ')  # whole bunch of Unicode codepoints
 print()  # line break
 
-# Raw strings can be handy with regexes and other things that handle
+# Raw strings can be handy with regexes and other systems that need
 # special characters differently from Python.
 
 s5 = r'Bunch of % \ special characters as they are.'
@@ -84,7 +86,7 @@ print(s5)
 
 s6 = u'noe\u0308l'
 print(s6)
-print("".join(reversed(s6)))  # reversing unicode s tricksy
+print("".join(reversed(s6)))  # reversing unicode is tricksy
 print(s6[::-1])  # clever indexing reverse taken from Stack Overflow
 
 # Taken from "WTF Python". What is going on here?
@@ -94,11 +96,14 @@ print(value)  # 11
 print(valuе)  # 32
 
 # Some handy methods on strings.
+
 print(s1.title())
 print(s1.upper())
 print(s1.lower())
 print(s1.capitalize())
+
 # Add whitespace to left, right or both sides to reach given length.
+
 print('1234'.center(10))
 print('1234'.ljust(10))
 print('1234'.rjust(10))
