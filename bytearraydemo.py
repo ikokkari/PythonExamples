@@ -9,11 +9,11 @@
 import zlib
 from hashlib import sha256
 
-s = "This will be turned into an array of bytes \U0001F603, man!"
+s = "Here is an example Unicode string \U0001F603, man!"
 
-print(f"Length of s is {len(s)} characters.")
+print(f"Length of original string is {len(s)} characters.")
 sb = s.encode('utf-8')
-print(f"Length of sb is {len(sb)} bytes.")
+print(f"Length of extracted byte array is {len(sb)} bytes.")
 s = sb.decode('utf-8')
 print(f"Decoding sb gives back the string:\n{repr(s)}.")
 
@@ -33,7 +33,9 @@ chk.update(sb)
 print(f"Its SHA-256 checksum is:\n{chk.hexdigest()}")
 
 # Natural language contains so much redundancy and uses so few of
-# the available charactes and words that it compresses massively.
+# the available character and word combinations that usually it
+# compresses massively without any information loss.
+
 sbc = zlib.compress(sb)
 print(f"Compressed, it needs only {len(sbc)} bytes.")
 

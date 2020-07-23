@@ -48,7 +48,7 @@ print(f"Rising power of 10 to 3 equals {rising_power(10, 3)}.")
 
 # Determine whether the sequence x, f(x), f(f(f(x))), ... becomes
 # periodic after some point. A computer science classic without
-# needing more than O(1) extra memory.
+# needing more than constant amount of extra memory.
 
 
 def is_eventually_periodic(f, x, giveup=1000):
@@ -123,6 +123,7 @@ def memoize(f):
             res = f(*args)       # calculate the result
             results[args] = res  # and store it in dictionary
         return res
+
     # Alias the local variable so it can be seen from outside.
     lookup_f.results = results
     # Result is a function that can be called same as original.
@@ -151,14 +152,14 @@ print(f"The memoized fib contains {len(fib.results)} cached results.")
 # http://paulbourke.net/fractals/qseries/
 
 
+@memoize
 def hof_q(n):
     if n < 3:
         return 1
     else:
-        return hof_q(n - hof_q(n-1)) + hof_q(n - hof_q(n-2))
+        return hof_q(n - hof_q(n - 1)) + hof_q(n - hof_q(n - 2))
 
 
-hof_q = memoize(hof_q)
 print(f"HofQ(100) = {hof_q(100)}.")
 
 # We can also perform the memoization explicitly. Since the function
@@ -190,7 +191,7 @@ print(f"HofQt table contains {len(Q)} cached entries.")
 def wine(barrel, age, year, pour=Fraction(1, 2)):
     # Imaginary "zero" barrel to represent incoming flow of new wine.
     if barrel == 0:
-        return 1 if age == 0 else 0
+        return Fraction(1) if age == 0 else 0
     # In the initial state, all barrels consist of new wine.
     elif year == 0:
         return 1 if age == 0 else 0
@@ -268,8 +269,8 @@ __tm_call_count = 0
 def thue_morse(n, sign):
     global __tm_call_count
     __tm_call_count += 1
-    if n == 1:
-        return '0' if sign == 0 else '1'
+    if n < 2:
+        return f"{str(sign)}"
     else:
         return thue_morse(n - 1, sign) + thue_morse(n - 1, 1 - sign)
 

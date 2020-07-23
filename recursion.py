@@ -6,14 +6,21 @@ from fractions import Fraction
 # Many problems can be solved surprisingly easily by first
 # solving a smaller version of that problem, whose result is
 # then productively used in solving the original problem. The
-# classic textbook first example of recursion is factorial.
+# classic textbook first example of recursion is factorial
+# whose formula n! = 1 * 2 * ... * (n-1) * n is self-similar.
 
 
-def factorial(n):
+@functools.lru_cache()
+def factorial(n, verbose=False):
+    if verbose:
+        print(f"enter with n = {n}")
     if n < 2:
-        return 1                      # base case
+        result = 1                      # base case
     else:
-        return n * factorial(n - 1)   # recursive call
+        result = n * factorial(n - 1, verbose)   # linear recursive call
+    if verbose:
+        print(f"Returning {result} from {n}")
+    return result
 
 
 # Functional programming version, if only for humour value:
@@ -49,11 +56,11 @@ def factorial_it(n):
 
 def hanoi(src, tgt, n):
     if n < 1:
-        return
+        return None
     mid = 6 - src - tgt
-    hanoi(src, mid, n-1)
+    hanoi(src, mid, n - 1)
     print(f"Move top disk from peg {src} to peg {tgt}.")
-    hanoi(mid, tgt, n-1)
+    hanoi(mid, tgt, n - 1)
 
 
 # For computing high integer powers, binary power is more efficient
@@ -63,13 +70,13 @@ def binary_power(a, n, verbose=False):
     if verbose:
         print(f"Entering binary_power({n}).")
     if n < 0:
-        raise ValueError("Binary power negative exponent not allowed.")
+        raise ValueError(f"Negative exponent {n} not allowed.")
     elif n == 0:
         result = 1
     elif n % 2 == 0:
         result = binary_power(a * a, n // 2, verbose)
     else:
-        result = a * binary_power(a * a, (n-1) // 2, verbose)
+        result = a * binary_power(a * a, (n - 1) // 2, verbose)
     if verbose:
         print(f"Exiting binary_power({n}) with {result}.")
     return result
@@ -77,13 +84,14 @@ def binary_power(a, n, verbose=False):
 
 # Flattening a list that can contain other lists as elements is a
 # classic list programming exercise. This being Python, the correct
-# "duck typing" spirit of checking of something is a list is to
-# check if it is iterable, that is, for our purposes it behaves
-# like a list.
+# "duck typing" spirit of checking of something is an iterable
+# sequence is to check if it allows creation of iterator objects
+# with the magic method __iter__, that is, for our purposes it acts
+# like a sequence.
 
-def flatten(li):
+def flatten(items):
     result = []
-    for x in li:
+    for x in items:
         if hasattr(x, '__iter__'):  # is x an iterable?
             result.extend(flatten(x))
         else:
@@ -104,10 +112,12 @@ def subset_sum(items, goal):
     if len(items) == 0 or goal < 0:
         return None
     last = items.pop()
-    answer = subset_sum(items, goal-last)
+    # Take the last element into chosen subset
+    answer = subset_sum(items, goal - last)
     if answer is not None:
         answer.append(last)
     else:
+        # Try not taking last element into subset
         answer = subset_sum(items, goal)
     items.append(last)
     return answer
@@ -167,7 +177,7 @@ def knight_tour(n=8, sx=1, sy=1):
 
 def ackermann(m, n):
     if m == 0:
-        return n+1
+        return n + 1
     elif m > 0 and n == 0:
         return ackermann(m - 1, 1)
     else:

@@ -8,6 +8,17 @@ import random
 # previous i - 1 horizontal and vertical words. If babbage is
 # set to True, the word square must have same rows and columns.
 
+# For example, the incomplete square
+#
+# hello
+# oasis
+# tt
+# ee
+# ln
+#
+# would be represented by parameter values n = 5, i = 2, vv = 0,
+# horiz = ['hello', 'oasis'] and vert = ['hotel', 'eaten'].
+
 def wordfill(n, i, horiz, vert, wordlist, vv, babbage=False):
     # Entire square is complete when rows 0, ..., n-1 are filled.
     if i == n:
@@ -23,7 +34,7 @@ def wordfill(n, i, horiz, vert, wordlist, vv, babbage=False):
             # Try using that word as the horizontal word.
             if not (word in horiz or word in vert):
                 horiz.append(word)
-                if babbage:
+                if babbage:  # Horizontal and vertical words equal
                     w = wordfill(n, i+1, horiz, horiz, wordlist, 0, True)
                 else:
                     w = wordfill(n, i+vv, vert, horiz, wordlist, 1-vv)
@@ -53,7 +64,7 @@ if __name__ == "__main__":
         i1 = bisect.bisect_left(wordlist, w1[0])
         i2 = bisect.bisect_right(wordlist, chr(ord(w1[0]) + 1))
         # Choose one of those words as the first vertical word.
-        w2 = wordlist[random.randint(i1, i2-1)]
+        w2 = wordlist[random.randint(i1, i2 - 1)]
         print(f"Trying out starting words {w1}, {w2}...", end=" ")
         found = False
         for sol in it.islice(wordfill(n, 1, [w1], [w2], wordlist, 0), 1):

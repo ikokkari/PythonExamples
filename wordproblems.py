@@ -137,6 +137,7 @@ def longest_substring_with_k_chars(text, k=2):
     # Extract the longest found substring as the answer.
     return text[maxpos:maxpos + max_]
 
+
 # Given a sorted list of words and the first word, construct a
 # word chain in which each word starts with the suffix of the
 # previous word with the first k characters removed, for example
@@ -201,8 +202,8 @@ def remain_words(words):
 def all_anagrams(words):
     codes = {}
     # The first 26 prime numbers, one for each letter from a to z.
-    primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
-              53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101]
+    primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43,
+              47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101]
     for word in words:
         m = 1
         for c in word:
