@@ -1,9 +1,9 @@
 import random
 
+
 # Read through the text and build a dictionary that, for each found
 # pattern up to length n, gives the string of letters that follow that
 # pattern in the original text.
-
 
 def build_table(text, n=3, mlen=100):
     result = {}
@@ -20,8 +20,8 @@ def build_table(text, n=3, mlen=100):
                 result[pattern[j:]] = follow + next_char
     return result
 
-# Using the previous table, generate m characters of random text.
 
+# Using the previous table, generate m characters of random text.
 
 def dissociated_press(table, m, result, maxpat=3):
     pattern = result[:min(len(result), maxpat)]
