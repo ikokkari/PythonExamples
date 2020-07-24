@@ -3,10 +3,10 @@ import random
 
 
 # Recursively fill an n-by-n box of letters so that every row and
-# every column is some n-letter word. The call finds all the
+# every column is some n-letter word. This generator finds all
 # possible ways to fill in the i:th horizontal word, given the
-# previous i - 1 horizontal and vertical words. If babbage is
-# set to True, the word square must have same rows and columns.
+# previous i-1 horiz-ontal and vert-ical words. If babbage is
+# True, the words must be equal in both directions.
 
 # For example, the incomplete square
 #
@@ -17,7 +17,9 @@ import random
 # ln
 #
 # would be represented by parameter values n = 5, i = 2, vv = 0,
-# horiz = ['hello', 'oasis'] and vert = ['hotel', 'eaten'].
+# horiz = ['hello', 'oasis'] and vert = ['hotel', 'eaten']. The
+# parameter vv flips between 0 and 1 to indicate whether the
+# level parameter i should be incremented in the next call.
 
 
 def wordfill(n, i, horiz, vert, wordlist, vv, babbage=False):
@@ -37,7 +39,7 @@ def wordfill(n, i, horiz, vert, wordlist, vv, babbage=False):
                 horiz.append(word)
                 if babbage:  # Horizontal and vertical words equal
                     w = wordfill(n, i+1, horiz, horiz, wordlist, 0, True)
-                else:
+                else:  # Mirror the square around diagonal
                     w = wordfill(n, i+vv, vert, horiz, wordlist, 1-vv)
                 yield from w
                 horiz.pop()
@@ -45,9 +47,10 @@ def wordfill(n, i, horiz, vert, wordlist, vv, babbage=False):
 
 
 if __name__ == "__main__":
+    # A module can be imported only when actually needed.
     import itertools as it
 
-    n = 6   # Size of each individual word square.
+    n = 5   # Size of each individual word square.
 
     with open('words_sorted.txt', encoding="utf-8") as f:
         wordlist = [x.strip() for x in f]
@@ -56,13 +59,14 @@ if __name__ == "__main__":
     print(f"There remain {len(wordlist)} words of length {n}.")
 
     wordset = set(wordlist)
-    rows, cols = 1, 1
-    result = []
+    rows, cols, result = 2, 3, []
+
     while len(result) < rows * cols:
         # The first word on the first row.
         w1 = random.choice(wordlist)
         # Find the section of words that start with same letter.
         i1 = bisect.bisect_left(wordlist, w1[0])
+        # Words starting with 'a' end at words starting with 'b'...
         i2 = bisect.bisect_right(wordlist, chr(ord(w1[0]) + 1))
         # Choose one of those words as the first vertical word.
         w2 = wordlist[random.randint(i1, i2 - 1)]
