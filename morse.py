@@ -23,7 +23,7 @@ codes = {
 # of the original map to the same value, only the last pair
 # of value: key is stored in the reverse dictionary.
 
-codes_r = {codes[v]: v for v in codes}
+codes_r = {codes[k]: k for k in codes}
 
 
 # Given a string of characters, encode it in Morse code
@@ -45,11 +45,11 @@ def decode_morse(message):
     if message == '':
         yield ''
     else:
-        for i in range(1, min(len(message) + 1, 5)):
-            prefix = message[:i]
-            if prefix in codes:
+        for prefix in codes:
+            if message.startswith(prefix):
                 head = codes[prefix]
-                for follow in decode_morse(message[i:]):
+                skip = len(prefix)
+                for follow in decode_morse(message[skip:]):
                     yield head + follow
 
 

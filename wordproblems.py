@@ -2,6 +2,7 @@ from random import choice, sample
 from bisect import bisect_left, bisect_right
 
 # Regular expressions can come handy in text problems.
+
 import re
 
 
@@ -18,27 +19,27 @@ def histogram(words):
 # Find all words that are palindromes.
 
 def palindromes(words):
-    return [x for x in words if x == x[::-1]]
+    return [w for w in words if w == w[::-1]]
 
 
 # Find all words that are a different word when read backwards.
 
 def semordnilap(words):
     wset = set(words)
-    return [x for x in words if x != x[::-1] and x[::-1] in wset]
+    return [w for w in words if w != w[::-1] and w[::-1] in wset]
 
 
 # Find all the rotodromes, words that become other words when rotated.
 
 def rotodromes(words):
-    def _is_rotodrome(word, wset):
+    def is_rotodrome(word, wset):
         for i in range(1, len(word)):
             w2 = word[i:] + word[:i]
             if w2 != word and w2 in wset:
                 return True
         return False
     wset = set(words)
-    return [x for x in words if _is_rotodrome(x, wset)]
+    return [w for w in words if is_rotodrome(w, wset)]
 
 
 # Find the "almost palindromes", words that become palindromes when
@@ -51,7 +52,7 @@ def almost_palindromes(words):
             if w2 == w2[::-1]:
                 return True
         return False
-    return [x for x in words if len(x) > 2 and almost(x)]
+    return [w for w in words if len(w) > 2 and almost(w)]
 
 
 # Rotate the consonants of the text cyclically, keeping the rest of
@@ -86,7 +87,7 @@ def rotate_consonants(text, off=1):
 # Find the words that contain at least three duplicated letters.
 
 def triple_duplicate(words):
-    return [x for x in words if len(re.findall(r'(.)\1', x)) > 2]
+    return [x for x in words if len(re.findall(r'(.)\1', x)) >= 3]
 
 
 # Find the words that contain three duplicated letters all together.
@@ -99,6 +100,8 @@ def consec_triple_duplicate(words):
 # How many words can be spelled out using only given characters?
 
 def limited_alphabet(words, chars):
+    # def limited(word, chars):
+    #     return all(c in chars for c in word)
     # A regular expression used many times is good to precompile
     # into the matching machine for speed and efficiency.
     pat = re.compile('^[' + chars + ']+$')
@@ -198,22 +201,23 @@ def remain_words(words):
             return result
 
 
-# Generate a table of all anagrams from the given words.
+# Generate a table of all anagrams from the given wordlist.
+
 def all_anagrams(words):
     codes = {}
     # The first 26 prime numbers, one for each letter from a to z.
     primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43,
               47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101]
     for word in words:
-        m = 1
+        code = 1
         for c in word:
             # ord(c) gives the Unicode integer codepoint of c.
-            m *= primes[ord(c) - ord('a')]
+            code *= primes[ord(c) - ord('a')]
         # All anagrams have the same encoding number, due to the
         # commutativity of integer multiplication combined with the
         # Fundamental Theorem of Arithmetic that says every integer
         # has exactly one prime possible factorization.
-        codes[m] = codes.get(m, []) + [word]
+        codes[code] = codes.get(code, []) + [word]
     return codes
 
 
@@ -242,6 +246,7 @@ if __name__ == "__main__":
         while idx < len(words_r) and words_r[idx].startswith(suffix):
             result.append(words_r[idx][::-1])
             idx += 1
+        result.sort()
         result = ", ".join(result)
         print(f"\nWords that end with {suffix[::-1]!r} are {result}.")
 
@@ -340,5 +345,5 @@ if __name__ == "__main__":
     words6 = [word for word in words if len(word) == 6]
     anagrams = all_anagrams(words6)
     print("The anagram groups with eight or more members are:")
-    for li in (x for x in anagrams if len(anagrams[x]) >= 8):
-        print(", ".join(anagrams[li]))
+    for ans in (x for x in anagrams if len(anagrams[x]) >= 8):
+        print(", ".join(anagrams[ans]))

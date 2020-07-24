@@ -19,10 +19,11 @@ import random
 # would be represented by parameter values n = 5, i = 2, vv = 0,
 # horiz = ['hello', 'oasis'] and vert = ['hotel', 'eaten'].
 
+
 def wordfill(n, i, horiz, vert, wordlist, vv, babbage=False):
     # Entire square is complete when rows 0, ..., n-1 are filled.
     if i == n:
-        yield horiz
+        yield horiz  # Success!
     else:
         # Vertical words constrain the next horizontal word.
         prefix = "".join([w[i] for w in vert])
@@ -46,7 +47,7 @@ def wordfill(n, i, horiz, vert, wordlist, vv, babbage=False):
 if __name__ == "__main__":
     import itertools as it
 
-    n = 5   # Size of each individual word square.
+    n = 6   # Size of each individual word square.
 
     with open('words_sorted.txt', encoding="utf-8") as f:
         wordlist = [x.strip() for x in f]
@@ -55,7 +56,7 @@ if __name__ == "__main__":
     print(f"There remain {len(wordlist)} words of length {n}.")
 
     wordset = set(wordlist)
-    rows, cols = 2, 3
+    rows, cols = 1, 1
     result = []
     while len(result) < rows * cols:
         # The first word on the first row.
