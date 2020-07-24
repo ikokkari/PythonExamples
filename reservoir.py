@@ -1,7 +1,13 @@
 from random import randint
 
 
-# Randomly choose k elements from given iterable.
+# Randomly choose k elements from given sequence. This algorithm
+# proceeds in "online" fashion in that it looks each element of
+# the sequence only once, and never again after that. The memory
+# use is proportional only to the sample size k, and independent
+# of the length of the sequence. It seems impossible to choose
+# a fair random sample of some lazy sequence that has billions
+# of elements in such small memory space, and yet here we are.
 
 def reservoir(items, k):
     buffer = []
@@ -11,9 +17,9 @@ def reservoir(items, k):
         else:
             idx = randint(0, count)
             if idx < k:  # The new element hits the reservoir.
-                buffer[idx] = v  # displace some previous element
+                buffer[idx] = v  # Displace a previous element.
         count += 1
-    yield from buffer  # Emit the reservoir elements.
+    yield from buffer  # All done, so emit the reservoir.
 
 
 if __name__ == "__main__":
