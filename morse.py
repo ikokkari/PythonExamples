@@ -58,8 +58,8 @@ def decode_morse(message):
 # To paraphrase that Heath Ledger Joker meme, nobody has a
 # problem when a generator uses some other lazy sequence
 # such as range as part of its computation, but make your
-# generator recursively use another instance of that same
-# generator, and everyone loses their minds...
+# generator recursively use another instance of that very
+# same generator, and everyone loses their minds...
 
 # Since in general there can be an exponential number of
 # possible decodings back to characters, it is essential
@@ -95,11 +95,19 @@ if __name__ == '__main__':
 # all encode to the same series of Morse dots and dashes.
 
 # Were Morse code designed today, it would surely be constructed
-# as a "Huffman code" to produce an optimal prefix code for the
-# character frequencies of English. This guarantees the unique
-# decodability of each sequence of dots and dashes back to the
-# original English text. Alas, we cannot really fault Samuel Morse
+# as a "Huffman code" to produce the optimal prefix code for the
+# individual character frequencies of English. This guarantees
+# unique decodability of each sequence of dots and dashes back to
+# the original English text. Alas, we cannot fault Samuel Morse
 # (1791-1872) for not being aware of all the nifty advances of
-# combinatorial algorithms during the twentieth century...
+# combinatorial algorithms made during the twentieth century...
 
 # https://en.wikipedia.org/wiki/Huffman_coding
+
+# Note that Huffman code is optimal only if every character must
+# be encoded separately. More advanced compression methods can and
+# will automatically exploit the conditional probabilities between
+# consecutive letters. For example, after seeing "qui", letters p,
+# t and z suddenly become more likely, compared to their baseline
+# probabilities in English when every letter must be encoded on its
+# own, separated from its surrounding context...
