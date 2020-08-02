@@ -2,15 +2,15 @@ from abc import ABC, abstractmethod
 from math import pi
 from random import randint
 
-# Making your class extend ABC forbids creation of objects of this type.
-# This type serves as abstract superclass that guarantees that all its
-# subclasses that will ever exist will have certain methods in them.
-
+# Making your class extend ABC forbids creation of objects. This
+# type serves as abstract superclass that guarantees that every
+# subclass that will ever exist will have certain methods in them.
 
 # Shape hierarchy is a standard example of class inheritance, other
 # than the Animal class hierarchy, both quite a bit cliched. But all
-# cliches became that way by being so good that everybody and their
-# brother kept using them!
+# cliches became cliches in the first place by being so good that
+# everybody and their brother kept using them!
+
 
 class Shape(ABC):
 
@@ -68,13 +68,15 @@ class Rectangle(Shape):
         return 2 * (self.__width + self.__height)
 
     # We can define new methods that do not exist in superclass.
+
     def is_square(self):
         return self.__width == self.__height
 
+
 # Another subclass of Shape, with different area and perimeter formulas.
 
-
 class Circle(Shape):
+
     def __init__(self, radius):
         super().__init__()
         self.__radius = radius
@@ -88,12 +90,13 @@ class Circle(Shape):
     def perimeter(self):
         return pi * self.__radius * 2
 
+
 # Just like function decorators, objects can be decorated. The class
 # for this purpose has the same methods, but those methods first ask
 # the underlying object for the answer that they then modify some way.
 
-
 class Scaled(Shape):
+
     def __init__(self, other, scale):
         super().__init__()
         self.other = other

@@ -6,8 +6,8 @@ class Card:
     # know that they are doing something that they are not supposed
     # to be doing.
     __values = {'ace': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5,
-                'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10,
-                'jack': 11, 'queen': 12, 'king': 13}
+                'six': 6, 'seven': 7, 'eight': 8, 'nine': 9,
+                'ten': 10, 'jack': 11, 'queen': 12, 'king': 13}
 
     # Normally you would only put function and name declarations
     # inside a class body, but this one just goes to show that any
@@ -27,11 +27,14 @@ class Card:
     # explicitly state your instance attributes. You simply create
     # them on the fly in __init__ and other methods as needed.
 
+    def __eq__(self, other):
+        return self.rank == other.rank and self.suit == other.suit
+
     def __str__(self):
         return f"{self.rank} of {self.suit}"
 
     def __repr__(self):
-        return f"Card({self.rank}, {self.suit})"
+        return f"Card('{self.rank}', '{self.suit}')"
 
     def get_value(self):
         return Card.__values[self.rank]
