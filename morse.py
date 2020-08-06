@@ -58,8 +58,8 @@ def decode_morse(message):
 # To paraphrase that Heath Ledger Joker meme, nobody has a
 # problem when a generator uses some other lazy sequence
 # such as range as part of its computation, but make your
-# generator recursively use another instance of that very
-# same generator, and everyone loses their minds...
+# generator recursively use another instance of that same
+# type of generator, and everyone loses their minds...
 
 # Since in general there can be an exponential number of
 # possible decodings back to characters, it is essential
@@ -67,7 +67,7 @@ def decode_morse(message):
 # decodings one at the time instead of potentially filling
 # up the entire process memory. For example, just consider
 # the number of different ways to decode a sequence of n
-# consecutive dots back to letter sequences:
+# consecutive dots back to sequences of characters:
 
 # In [0]: [len(list(decode_morse('.'*n))) for n in range(1, 13)]
 # Out[0]: [1, 2, 4, 8, 15, 29, 56, 108, 208, 401, 773, 1490]

@@ -1,4 +1,4 @@
-from random import randint
+from random import randint, shuffle
 
 
 # Randomly choose k elements from given sequence. This algorithm
@@ -19,7 +19,12 @@ def reservoir(items, k):
             if idx < k:  # The new element hits the reservoir.
                 buffer[idx] = v  # Displace a previous element.
         count += 1
+    shuffle(buffer)  # Shuffle the buffer in place.
     yield from buffer  # All done, so emit the reservoir.
+
+# The shuffling step in the end can be removed if we don't care
+# about the order of elements in the sample, but just the subset
+# of elements chosen to the sample.
 
 
 if __name__ == "__main__":
