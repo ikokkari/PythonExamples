@@ -1,5 +1,5 @@
 def sign(a):
-    if a < 0:
+    if (a < 0):
         return -1
     elif a > 0:
         return +1
@@ -7,8 +7,10 @@ def sign(a):
         return 0
 
 
+# Three functions to find the median.
+
 def median(a, b, c):
-    if a < b <= c or c <= b <= a:
+    if a <= b <= c or c <= b <= a:
         return b
     elif b <= a <= c or c <= a <= b:
         return a
@@ -25,10 +27,20 @@ def median_other_way(a, b, c):
         return a  # the only possibility that remains
 
 
+# Integer arithmetic can sometimes do the job of logical
+# decisions. Unlike Trix, integers are not just for kids.
+
+def median_arithmetic(a, b, c):
+    return a + b + c - min(a, b, c) - max(a, b, c)
+
+
+# Determine how many days there are in the given month.
+
 def days_in_month(m, leap_year=False):
     if m < 1 or m > 12:
         return 0
     elif m == 2:
+        # One-liner choice between two values
         return 29 if leap_year else 28
     else:
         return 30 if (m in (4, 6, 9, 11)) else 31
@@ -62,6 +74,6 @@ def test_leap_year():
         a1 = is_leap_year(y)
         a2 = is_leap_year_another_way(y)
         a3 = is_leap_year_with_logic(y)
-        if not (a1 == a2 and a2 == a3):  # a1 != a2 or a2 != a3:
+        if not (a1 == a2 == a3):  # a1 != a2 or a2 != a3:
             return False  # Tear it down and start again.
     return True           # I am pleased where man has been.
