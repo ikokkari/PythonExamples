@@ -1,10 +1,11 @@
 import random
 from fractions import Fraction
+from autogram import int_to_english
 
 # The itertools module defines tons of handy functions to perform
 # computations on existing iterators, to be combined arbitrarily.
 
-import itertools as it
+from itertools import takewhile, islice, permutations, combinations, combinations_with_replacement
 
 # The "double-ended queue" or "deque" allows efficient push
 # and pop operations from both ends of the queue, whereas a
@@ -112,20 +113,16 @@ def primes():
 
 
 # Theon's Ladder, devised by Theon of Smyrna (ca. 140 B.C), is a series
-# of rational numbers that converge to square root of two. Then after
-# two millenia, Shaun Giberson and Thomas J. Osler proved in 2013 that
-# the method generalizes for the square roots of any integer c. Since
-# outside actual math courses it is pretty rare to need any mathematics
-# that was not old news to the mathematicians in the 19th century, we
-# should latch onto this rare chance to examine something that was
-# missed for so long. This generator produces two-tuples (a, b) that
-# denote the numerator and denominator of that fraction.
+# of rational numbers that converge to square root of two. This method
+# generalizes for the square roots of any integer c. This generator
+# produces two-tuples (a, b) that denote the numerator and denominator
+# of that fraction, the infinite sequence converges to square root of n.
 
-def theons_ladder(c=2, a=1, b=1):
+def theons_ladder(n=2, a=1, b=1):
     while True:
         yield a, b
-        # Original Theon's ladder was just c = 2.
-        a, b = a + c * b, a + b
+        # Original Theon's ladder was just n = 2.
+        a, b = a + n * b, a + b
 
 
 # The next technique comes handy sometimes. Iterate through all
@@ -148,10 +145,9 @@ def all_pairs():
 # you find the (a, b) that is closest to origin (0, 0).
 
 
-# One more infinite generator, the Kolakoski sequence whose
-# elements describe the run-length encoding of that sequence.
-# That is, this self-referential sequence describes its own
-# structure. (Keanu says whoa.)
+# The Kolakoski sequence whose elements describe the run-length
+# encoding of that very same sequence. That is, this sequence
+# describes its own structure. (Keanu says whoa.)
 # https://en.wikipedia.org/wiki/Kolakoski_sequence
 
 def kolakoski(n=2):
@@ -167,6 +163,21 @@ def kolakoski(n=2):
         for i in range(v):
             q.append(prev)
 
+
+# Another cute self describing sequence, this one with words.
+
+def aronson():
+    start = "Letter t is in positions "
+    tees = [i + 1 for (i, c) in enumerate(start) if c == 't']
+    n = len(start) + 1
+    yield from start
+
+    while True:
+        i, tees = tees[0], tees[1:]
+        word = int_to_english(i) + ", "
+        yield from word
+        tees.extend([i + n for (i, c) in enumerate(word) if c == 't'])
+        n += len(word)
 
 # Since a generator can take parameters, we can write a iterator
 # decorator that modifies the result of any existing iterator. We
@@ -191,17 +202,6 @@ def stutter(seq, k):
     for x in seq:
         for i in range(k):
             yield x
-
-
-# Extract all n-element sublists of the sequence from iterator.
-
-def ngrams(it, n):
-    result = []
-    for v in it:
-        result.append(v)
-        if len(result) >= n:
-            yield result
-            result = result[1:]
 
 
 # Extract all unique permutations of 0, ..., n-1 from sequence,
@@ -243,23 +243,10 @@ def unique_permutations(it, n):
             ones -= 1
 
 
-# Functions every_kth and stutter cancel each other out.
-print("Collatz sequence starting from 12345 is:")
-print(list(every_kth(stutter(collatz(12345), 3), 3)))
-
-msg = "Hello world, how are you today?"
-print("A string split into three consecutive words, overlapping:")
-print(list(ngrams(msg.split(" "), 3)))
-
-# Extract the unique permutations from the list.
-items = [0, 2, 1, 0, 1, 2, 0, 0, 2, 2, 0, 1]
-print(f"Unique 3-permutations of {items} are:")
-print(list(unique_permutations(items, 3)))
-
 
 # Since the iterator produces values one at the time, we could
 # analyze sequences too long to fit in memory all at once. First,
-# generator that produces random numbers in 0, ..., n - 1 so that
+# generator that produces random numbers in 0, ..., n-1 so that
 # a number that was seen recently cannot be emitted this round.
 
 def tabu_generator(n, len_, recent=None):
@@ -288,32 +275,44 @@ for recent in range(0, 6):
 # permutations of {0, ..., n-1} is an unsolved mathematical problem.
 # Google "greg egan haruhi superpermutation" for an interesting story.
 
+# Functions every_kth and stutter cancel each other out.
+print("Collatz sequence starting from 12345 is:")
+print(list(every_kth(stutter(collatz(12345), 3), 3)))
+
+# Extract the unique permutations from the list.
+items = [0, 2, 1, 0, 1, 2, 0, 0, 2, 2, 0, 1]
+print(f"Unique 3-permutations of {items} are:")
+print(list(unique_permutations(items, 3)))
+
 # Take primes until they become greater than thousand.
 print("Here is every seventh prime number up to one thousand:")
-print(list(it.takewhile((lambda x: x <= 1000), every_kth(primes(), 7))))
+print(list(takewhile((lambda x: x <= 1000), every_kth(primes(), 7))))
 
 print("Here are the first 1000 elements of Kolakoski(2):")
-print("".join((str(x) for x in it.islice(kolakoski(2), 1000))))
+print("".join((str(x) for x in islice(kolakoski(2), 1000))))
 
 print("Here are the first 1000 elements of Kolakoski(3):")
-print("".join((str(x) for x in it.islice(kolakoski(3), 1000))))
+print("".join((str(x) for x in islice(kolakoski(3), 1000))))
+
+print("First 2000 characters of modified Aronson sequence:")
+print("".join(islice(aronson(), 2000)))
 
 print("Here are 100 random numbers from increasing scales:")
-print(", ".join((str(x) for x in it.islice(scale_random(123, 10, 5), 100))))
+print(", ".join((str(x) for x in islice(scale_random(123, 10, 5), 100))))
 
 print("Here are 100 random numbers from another scale:")
-print(", ".join((str(x) for x in it.islice(scale_random(123, 5, 10), 100))))
+print(", ".join((str(x) for x in islice(scale_random(123, 5, 10), 100))))
 
 
 print("Let us examine Theon's ladder for square root of 7.")
-for i, (a, b) in enumerate(it.islice(theons_ladder(7), 30)):
+for i, (a, b) in enumerate(islice(theons_ladder(7), 30)):
     f = Fraction(a, b)
     f = f * f
     print(f"{i}: a = {a}, b = {b} error = {float(7 - f):.11}")
 
 print("For c = 2, terms in even positions of Theon's ladder give")
 print("us Pythagorean triples whose legs differ by exactly one:")
-for (a, b) in it.islice(theons_ladder(2), 0, 40, 2):
+for (a, b) in islice(theons_ladder(2), 0, 40, 2):
     h, s, e = b, 1, b
     while s < e:
         m = (s + e) // 2
@@ -338,16 +337,16 @@ print()
 # try the effect of increasing n (just by little!) to see how the
 # sequences grow exponentially.
 
-n = 4   # Try 5 or 6.
+n = 4   # Try also 5 or 6.
 
 print(f"Here are all possible permutations of {list(range(1, n+1))}.")
-print(list(it.permutations(range(1, n + 1))))
+print(list(permutations(range(1, n + 1))))
 
 print(f"Here are all possible 3-combinations of {list(range(1, n+1))}.")
-print(list(it.combinations(range(1, n + 1), 3)))
+print(list(combinations(range(1, n + 1), 3)))
 
 print(f"Here are all possible 3-multicombinations of {list(range(1, n+1))}.")
-print(list(it.combinations_with_replacement(range(1, n + 1), 3)))
+print(list(combinations_with_replacement(range(1, n + 1), 3)))
 
-# For more examples of iterators and generators, see the itertools
-# recipes section in Python documentation.
+# For good examples of iterators and generators in action, check
+# out the itertools recipes section in the Python documentation.

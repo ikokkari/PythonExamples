@@ -39,7 +39,7 @@ def __int_to_eng(n):
     else:  # Numbers 100 to 999
         name = f"{__int_to_eng(n//100)} hundred"
         if n % 100 != 0:
-            name += f"and {__int_to_eng(n%100)}"
+            name += f" and {__int_to_eng(n%100)}"
         return name
 
 
