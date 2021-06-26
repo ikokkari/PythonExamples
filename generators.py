@@ -166,26 +166,14 @@ def kolakoski(n=2):
 
 # Another cute self describing sequence, this one with words.
 
-def aronson(letter='t', start='Letter t is in positions '):
-    n, tees, curr = 1, [], start
+def aronson(letter='t'):
+    n, tees, curr = 1, [], f'Letter {letter} is in positions '
     while True:
         yield from curr
         tees.extend([i + n for (i, c) in enumerate(curr) if c == letter])
         n += len(curr)
         curr, tees = int_to_english(tees[0]) + ', ', tees[1:]
 
-
-def aronson2(letter='t', start='Letter t is in positions '):
-    tees = [i + 1 for (i, c) in enumerate(start) if c == letter]
-    n = len(start) + 1
-    yield from start
-
-    while True:
-        i, tees = tees[0], tees[1:]
-        word = int_to_english(i) + ", "
-        yield from word
-        tees.extend([i + n for (i, c) in enumerate(word) if c == letter])
-        n += len(word)
 
 # Since a generator can take parameters, we can write a iterator
 # decorator that modifies the result of any existing iterator. We
@@ -306,7 +294,7 @@ print("First 2000 characters of modified Aronson infinite t-sentence:")
 print("".join(islice(aronson(), 2000)))
 
 print("First 2000 characters of modified Aronson infinite e-sentence:")
-print("".join(islice(aronson('e', 'Letter e is in positions '), 2000)))
+print("".join(islice(aronson('e'), 2000)))
 
 print("Here are 100 random numbers from increasing scales:")
 print(", ".join((str(x) for x in islice(scale_random(123, 10, 5), 100))))
