@@ -166,9 +166,8 @@ def kolakoski(n=2):
 
 # Another cute self describing sequence, this one with words.
 
-def aronson():
-    start = "Letter t is in positions "
-    tees = [i + 1 for (i, c) in enumerate(start) if c == 't']
+def aronson(letter='t', start='Letter t is in positions '):
+    tees = [i + 1 for (i, c) in enumerate(start) if c == letter]
     n = len(start) + 1
     yield from start
 
@@ -176,7 +175,7 @@ def aronson():
         i, tees = tees[0], tees[1:]
         word = int_to_english(i) + ", "
         yield from word
-        tees.extend([i + n for (i, c) in enumerate(word) if c == 't'])
+        tees.extend([i + n for (i, c) in enumerate(word) if c == letter])
         n += len(word)
 
 # Since a generator can take parameters, we can write a iterator
@@ -294,15 +293,17 @@ print("".join((str(x) for x in islice(kolakoski(2), 1000))))
 print("Here are the first 1000 elements of Kolakoski(3):")
 print("".join((str(x) for x in islice(kolakoski(3), 1000))))
 
-print("First 2000 characters of modified Aronson sequence:")
+print("First 2000 characters of modified Aronson t-sequence:")
 print("".join(islice(aronson(), 2000)))
+
+print("First 2000 characters of modified Aronson e-sequence:")
+print("".join(islice(aronson('e', 'Letter e is in position '), 2000)))
 
 print("Here are 100 random numbers from increasing scales:")
 print(", ".join((str(x) for x in islice(scale_random(123, 10, 5), 100))))
 
 print("Here are 100 random numbers from another scale:")
 print(", ".join((str(x) for x in islice(scale_random(123, 5, 10), 100))))
-
 
 print("Let us examine Theon's ladder for square root of 7.")
 for i, (a, b) in enumerate(islice(theons_ladder(7), 30)):
