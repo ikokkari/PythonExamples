@@ -17,7 +17,8 @@ replacements = (
       ("can't", "can not"),
       ("shan't", "shall not"),
       ("shouldn't", "should not"),
-      ("mustn't", "must not")
+      ("mustn't", "must not"),
+      ("aren't", "are not")
     )
 
 # Precompile a regex machine to recognize word separators. For
