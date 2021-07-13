@@ -5,10 +5,13 @@ from math import log
 with open('mountains.json', encoding="utf-8") as data_file:
     mountains = json.load(data_file)
 
+# Uncomment this line to repeat this analysis for subset of mountains.
+# mountains = [m for m in mountains if m['ClimbingDifficulty'] == "Walk Up"]
+
 print(f"Read {len(mountains)} mountains from the JSON file.")
 print("JSON data file generated from Wolfram Mathematica.")
 
-with open('countries.json', encoding="utf-8") as data_file:
+with open('countries.json', encoding='utf-8') as data_file:
     countries = json.load(data_file)
 
 print(f"Read {len(countries)} countries from the JSON file.")
@@ -36,7 +39,7 @@ countries = sorted(countries,
 # itertools.islice is a handy way to impose cutoff on the sequence length.
 
 for (i, c) in it.islice(enumerate(countries), 30):
-    (te, tn) = tallest[c['Name']]
+    (te, tn) = tallest.get(c['Name'], smallest)
     print(f'{i+1:2}. {c["Name"]} with {tn}, elevation {te} m.')
 
 print("\nHere are the top hundred countries sorted by named mountains:")
@@ -46,7 +49,7 @@ countries = sorted(countries,
                    reverse=True)
 
 for (i, c) in it.islice(enumerate(countries), 100):
-    print(f'{i+1:2}. {c["Name"]} has {len(mic[c["Name"]])} named mountains.')
+    print(f'{i+1:2}. {c["Name"]} has {len(mic.get(c["Name"], []))} named mountains.')
 
 # https://en.wikipedia.org/wiki/Benford%27s_law
 print("\nLet's see how well mountain heights follow Benford's law.\n")
