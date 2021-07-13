@@ -1,11 +1,11 @@
 import json
-import itertools as it
+from itertools import islice
 from math import log
 
 with open('mountains.json', encoding="utf-8") as data_file:
     mountains = json.load(data_file)
 
-# Uncomment this line to repeat this analysis for subset of mountains.
+# Uncomment this line to repeat this analysis for a subset of mountains.
 # mountains = [m for m in mountains if m['ClimbingDifficulty'] == "Walk Up"]
 
 print(f"Read {len(mountains)} mountains from the JSON file.")
@@ -16,40 +16,44 @@ with open('countries.json', encoding='utf-8') as data_file:
 
 print(f"Read {len(countries)} countries from the JSON file.")
 
-mic, tallest = {}, {}
+mountains_in_country, tallest_in_country = {}, {}
 smallest = (0, 'Molehill')  # Made-up placeholder
 
 for mountain in mountains:
+    name = mountain['Name']
     for country in mountain['Countries']:
-        mic[country] = mic.get(country, []) + [mountain['Name']]
-        (te, tb) = tallest.get(country, smallest)
+        if country in mountains_in_country:
+            mountains_in_country[country].append(name)
+        else:
+            mountains_in_country[country] = [name]
+        (te, tb) = tallest_in_country.get(country, smallest)
         try:
             e = int(mountain['Elevation'].split(' ')[0])
             if e > te:
-                tallest[country] = (e, mountain['Name'])
+                tallest_in_country[country] = (e, mountain['Name'])
         except ValueError:
             pass
 
 print("\nHere are top thirty countries sorted by their tallest mountains:")
 
 countries = sorted(countries,
-                   key=lambda c: tallest.get(c['Name'], smallest),
+                   key=lambda c: tallest_in_country.get(c['Name'], smallest),
                    reverse=True)
 
 # itertools.islice is a handy way to impose cutoff on the sequence length.
 
-for (i, c) in it.islice(enumerate(countries), 30):
-    (te, tn) = tallest.get(c['Name'], smallest)
+for (i, c) in islice(enumerate(countries), 30):
+    (te, tn) = tallest_in_country.get(c['Name'], smallest)
     print(f'{i+1:2}. {c["Name"]} with {tn}, elevation {te} m.')
 
 print("\nHere are the top hundred countries sorted by named mountains:")
 
 countries = sorted(countries,
-                   key=lambda c: (len(mic.get(c['Name'], [])), c['Name']),
+                   key=lambda c: (len(mountains_in_country.get(c['Name'], [])), c['Name']),
                    reverse=True)
 
-for (i, c) in it.islice(enumerate(countries), 100):
-    print(f'{i+1:2}. {c["Name"]} has {len(mic.get(c["Name"], []))} named mountains.')
+for (i, c) in islice(enumerate(countries), 100):
+    print(f'{i+1:2}. {c["Name"]} has {len(mountains_in_country.get(c["Name"], []))} named mountains.')
 
 # https://en.wikipedia.org/wiki/Benford%27s_law
 print("\nLet's see how well mountain heights follow Benford's law.\n")

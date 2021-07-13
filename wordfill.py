@@ -48,18 +48,18 @@ def wordfill(n, i, horiz, vert, wordlist, vv, babbage=False):
 
 if __name__ == "__main__":
     # A module can be imported only when actually needed.
-    import itertools as it
+    from itertools import islice
 
     n = 5   # Size of each individual word square.
 
     with open('words_sorted.txt', encoding="utf-8") as f:
         wordlist = [x.strip() for x in f]
     print(f"Read in a word list of {len(wordlist)} words.")
-    wordlist = sorted([x for x in wordlist if len(x) == n])
+    wordlist = [x for x in wordlist if len(x) == n]
     print(f"There remain {len(wordlist)} words of length {n}.")
 
     wordset = set(wordlist)
-    rows, cols, result = 2, 3, []
+    rows, cols, result = 3, 3, []
 
     while len(result) < rows * cols:
         # The first word on the first row.
@@ -72,7 +72,7 @@ if __name__ == "__main__":
         w2 = wordlist[random.randint(i1, i2 - 1)]
         print(f"Trying out starting words {w1}, {w2}...", end=" ")
         found = False
-        for sol in it.islice(wordfill(n, 1, [w1], [w2], wordlist, 0), 1):
+        for sol in islice(wordfill(n, 1, [w1], [w2], wordlist, 0), 1):
             result.append(sol)
             found = True
         print("Those worked!" if found else "Nope!")
