@@ -16,10 +16,10 @@ def factorial(n):
     """Return the factorial of a positive integer.
     n -- The positive integer whose factorial is computed.
     """
-    result = 1
+    total = 1
     for i in range(2, n + 1):
-        result *= i
-    return result
+        total *= i
+    return total
 
 # The return statement at the end of the function is used to
 # tell what the function gives back to whoever calls it. Now
@@ -43,8 +43,8 @@ print(factorial.__doc__)
 # assigned to point some place else.
 
 f = factorial    # copy a reference to the function object
-result = f(30)   # make an actual function call
-print(result)    # 265252859812191058636308480000000
+factorial_30 = f(30)   # make an actual function call
+print(factorial_30)    # 265252859812191058636308480000000
 
 # All right, that out of the way, let's write some more functions that
 # operate on lists. First, find the largest element in the list. We do
@@ -53,7 +53,7 @@ print(result)    # 265252859812191058636308480000000
 
 def maximum(seq):
     """ Return the largest element in sequence."""
-    if seq == []:
+    if not seq:
         raise ValueError("Empty list has no maximum")
     first = True
     for x in seq:
@@ -194,15 +194,16 @@ def roll_dice(rolls, faces=6):
 
 total1 = roll_dice(10, 12)
 print(f"Rolling a 12-sided die 10 times gave a total of {total1}.")
+
 # With a default parameter, we don't need to give its value.
 total2 = roll_dice(6)
 print(f"Rolling a 6-sided die 10 times gave a total of {total2}.")
 
 
-# Fizzbuzz is a game where you try to list the numbers from start to end
-# but so that if a number is divisible by 3, you say "fizz", and if a
-# number is divisible by 5, you say "buzz", and if by both 3 and 5, you
-# say "fizzbuzz".
+# Fizzbuzz is a mental game where you try to list the numbers from
+# start to end but so that if a number is divisible by 3, you say
+# "fizz", and if a number is divisible by 5, you say "buzz", and
+# if divisible by both 3 and 5, you say "fizzbuzz".
 
 def fizzbuzz_translate(n):
     """Convert positive integer n to its fizzbuzz representation."""

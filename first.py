@@ -20,10 +20,10 @@ from fractions import Fraction
 a = 42
 b = a * 2 - 3
 
-# In addition to numbers, Python can also represent values that are text,
-# called strings. They are given between either single or double quotes.
-# You can take your pick which type of quote you prefer. Using one type
-# allows the use of other type inside the string.
+# Python can also represent and handle text strings. They are given
+# between either single or double quotes. You can take your pick
+# which type of quote you prefer. Using one kind of quote allows
+# the use of other type inside the string.
 
 c = 'Hello world'
 d = "Another 'string' given between double quotes"
@@ -84,13 +84,14 @@ print(math.exp(x))
 print(math.pow(x, math.pi))
 
 # Python even supports complex numbers right out of the box, and its
-# arithmetic operations just do the correct complex number arithmetic.
+# arithmetic operations just do the complex number arithmetic.
 
 z1 = complex(4, -2)  # 4 - 2j
 z2 = complex(-3, 1)  # -3 + j
 z3 = z1 * z2         # -10+10j
 print(f"The real part is {z3.real} and the imaginary part is {z3.imag}.")
 
+# However, Python uses floating point arithmetic for complex numbers.
 
 f1 = Fraction(-2, 7)  # a fraction from two integers
 f2 = Fraction('5/9')  # a fraction from a string
@@ -100,17 +101,17 @@ print(f"The product of {f1} and {f2} equals {f3}.")  # -10/63
 # Joe and Moe are peeling potatoes. Working by himself, Joe could peel
 # the entire pile in three hours, whereas Moe could peel the same pile
 # in five hours. How long will it take for these two men to peel the
-# potatoes if they work together? (No, the answer is not four hours,
-# the average of three and five.)
+# potatoes if they work together? (No, the answer is *not* four hours,
+# the simple average of three and five.)
 
-joe = Fraction(1, 3)
-moe = Fraction(1, 5)
-together = joe + moe
+joe_speed = Fraction(1, 3)
+moe_speed = Fraction(1, 5)
+together = joe_speed + moe_speed
 time = 1 / together
 print(f"Together, Joe and Moe finish in {time} hours.")
 
-# Remember that strings and integers are not the same thing, even as they
-# can be trivially converted to one another.
+# Remember that strings and integers are not the same thing, even as
+# they can be trivially converted to one another.
 
 a = 22 + 22
 print(a)         # 44
@@ -136,8 +137,8 @@ x, y = y, x
 print(f"After swap, x equals {x}, and y equals {y}.")  # 42 17
 
 # In basic arithmetic, division is handled with a couple of different
-# operators depending on what kind of division you want. Couple of things
-# about it can first be a bit surprising.
+# operators depending on what kind of division you want. Couple of
+# things about them can first be surprising.
 
 print(11 / 4)    # 2.75, the usual everyday division
 print(11 / -4)   # -2.75

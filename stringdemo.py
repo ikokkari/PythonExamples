@@ -91,7 +91,7 @@ print(s6[::-1])  # clever indexing reverse taken from Stack Overflow
 
 # Taken from "WTF Python". What is going on here?
 value = 11
-valuе = 32
+valuе = 32    # Linters in PyCharm and such reveal the subterfuge
 print(value)  # 11
 print(valuе)  # 32
 

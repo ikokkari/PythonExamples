@@ -1,11 +1,15 @@
 import random
 from fractions import Fraction
+
+# For the Aronson sequence below
+
 from autogram import int_to_english
 
 # The itertools module defines tons of handy functions to perform
 # computations on existing iterators, to be combined arbitrarily.
 
-from itertools import takewhile, islice, permutations, combinations, combinations_with_replacement
+from itertools import takewhile, islice, permutations,\
+     combinations, combinations_with_replacement
 
 # The "double-ended queue" or "deque" allows efficient push
 # and pop operations from both ends of the queue, whereas a
@@ -48,7 +52,7 @@ def fibonacci():
 def pyramid_series():
     v = 1
     while True:
-        for i in range(v):
+        for _ in range(v):
             yield v
         v += 1
 
@@ -97,16 +101,16 @@ def scale_random(seed, scale, skip):
 # only by the smaller primes found so far.
 
 def primes():
-    primes = [2, 3, 5, 7, 11]
+    _primes = [2, 3, 5, 7, 11]
     # Handy syntactic sugar for yield inside for-loop
-    yield from primes
+    yield from _primes
     curr = 13
     while True:
-        for divisor in primes:
+        for divisor in _primes:
             if curr % divisor == 0:
                 break
             if divisor * divisor > curr:
-                primes.append(curr)
+                _primes.append(curr)
                 yield curr
                 break
         curr += 2
@@ -134,7 +138,7 @@ def all_pairs():
     # In each antidiagonal of the infinite 2D grid, a + b == s.
     while True:
         for a in range(0, s + 1):
-            yield(a, s - a)
+            yield a, s - a
         s += 1
 
 # That one is handy when you need to loop through the infinite
@@ -209,7 +213,7 @@ def unique_permutations(it, n):
     # Current sublist of n most recent elements.
     curr = []
     # Counts of how many times each value occurs in current sublist.
-    counts = [0 for i in range(n)]
+    counts = [0 for _ in range(n)]
     # How many of those counts are ones, for quick lookup.
     ones = 0
     # Iterate through the values produced by the iterator.
@@ -239,7 +243,6 @@ def unique_permutations(it, n):
             ones -= 1
 
 
-
 # Since the iterator produces values one at the time, we could
 # analyze sequences too long to fit in memory all at once. First,
 # generator that produces random numbers in 0, ..., n-1 so that
@@ -259,92 +262,96 @@ def tabu_generator(n, len_, recent=None):
             len_ -= 1
 
 
-# Count how many permutations occur for different values of recent.
+def __demo():
+    # Count how many permutations occur for different values of recent.
+    for recent in range(0, 6):
+        itemgen, total = tabu_generator(8, 10**5, recent), 0
+        for _ in unique_permutations(itemgen, 8):
+            total += 1
+        print(f"With tabu length {recent}, {total} unique permutations.")
 
-for recent in range(0, 6):
-    itemgen, total = tabu_generator(8, 10**5, recent), 0
-    for perm in unique_permutations(itemgen, 8):
-        total += 1
-    print(f"With tabu length {recent}, {total} unique permutations.")
+    # Constructing the shortest possible sequence that contains all
+    # permutations of {0, ..., n-1} is an unsolved mathematical problem.
+    # Google "greg egan haruhi superpermutation" for an interesting story.
 
-# Constructing the shortest possible sequence that contains all
-# permutations of {0, ..., n-1} is an unsolved mathematical problem.
-# Google "greg egan haruhi superpermutation" for an interesting story.
+    # Functions every_kth and stutter cancel each other out.
+    print("Collatz sequence starting from 12345 is:")
+    print(list(every_kth(stutter(collatz(12345), 3), 3)))
 
-# Functions every_kth and stutter cancel each other out.
-print("Collatz sequence starting from 12345 is:")
-print(list(every_kth(stutter(collatz(12345), 3), 3)))
+    # Extract the unique permutations from the list.
+    items = [0, 2, 1, 0, 1, 2, 0, 0, 2, 2, 0, 1]
+    print(f"Unique 3-permutations of {items} are:")
+    print(list(unique_permutations(items, 3)))
 
-# Extract the unique permutations from the list.
-items = [0, 2, 1, 0, 1, 2, 0, 0, 2, 2, 0, 1]
-print(f"Unique 3-permutations of {items} are:")
-print(list(unique_permutations(items, 3)))
+    # Take primes until they become greater than thousand.
+    print("Here is every seventh prime number up to one thousand:")
+    print(list(takewhile((lambda x: x <= 1000), every_kth(primes(), 7))))
 
-# Take primes until they become greater than thousand.
-print("Here is every seventh prime number up to one thousand:")
-print(list(takewhile((lambda x: x <= 1000), every_kth(primes(), 7))))
+    print("Here are the first 1000 elements of Kolakoski(2):")
+    print("".join((str(x) for x in islice(kolakoski(2), 1000))))
 
-print("Here are the first 1000 elements of Kolakoski(2):")
-print("".join((str(x) for x in islice(kolakoski(2), 1000))))
+    print("Here are the first 1000 elements of Kolakoski(3):")
+    print("".join((str(x) for x in islice(kolakoski(3), 1000))))
 
-print("Here are the first 1000 elements of Kolakoski(3):")
-print("".join((str(x) for x in islice(kolakoski(3), 1000))))
+    print("First 2000 characters of modified Aronson infinite t-sentence:")
+    print("".join(islice(aronson(), 2000)))
 
-print("First 2000 characters of modified Aronson infinite t-sentence:")
-print("".join(islice(aronson(), 2000)))
+    print("First 2000 characters of modified Aronson infinite e-sentence:")
+    print("".join(islice(aronson('e'), 2000)))
 
-print("First 2000 characters of modified Aronson infinite e-sentence:")
-print("".join(islice(aronson('e'), 2000)))
+    print("Here are 100 random numbers from increasing scales:")
+    print(", ".join((str(x) for x in islice(scale_random(123, 10, 5), 100))))
 
-print("Here are 100 random numbers from increasing scales:")
-print(", ".join((str(x) for x in islice(scale_random(123, 10, 5), 100))))
+    print("Here are 100 random numbers from another scale:")
+    print(", ".join((str(x) for x in islice(scale_random(123, 5, 10), 100))))
 
-print("Here are 100 random numbers from another scale:")
-print(", ".join((str(x) for x in islice(scale_random(123, 5, 10), 100))))
+    print("Let us examine Theon's ladder for square root of 7.")
+    for i, (a, b) in enumerate(islice(theons_ladder(7), 30)):
+        f = Fraction(a, b)
+        f = f * f
+        print(f"{i}: a = {a}, b = {b} error = {float(7 - f):.11}")
 
-print("Let us examine Theon's ladder for square root of 7.")
-for i, (a, b) in enumerate(islice(theons_ladder(7), 30)):
-    f = Fraction(a, b)
-    f = f * f
-    print(f"{i}: a = {a}, b = {b} error = {float(7 - f):.11}")
+    print("For c = 2, terms in even positions of Theon's ladder give")
+    print("us Pythagorean triples whose legs differ by exactly one:")
+    for (a, b) in islice(theons_ladder(2), 0, 40, 2):
+        h, s, e = b, 1, b
+        while s < e:
+            m = (s + e) // 2
+            v = m**2 + (m+1)**2
+            if v < h * h:
+                s = m + 1
+            else:
+                e = m
+        print(f"({s}, {s+1}, {h})", end=" ")
+    print()
 
-print("For c = 2, terms in even positions of Theon's ladder give")
-print("us Pythagorean triples whose legs differ by exactly one:")
-for (a, b) in islice(theons_ladder(2), 0, 40, 2):
-    h, s, e = b, 1, b
-    while s < e:
-        m = (s + e) // 2
-        v = m**2 + (m+1)**2
-        if v < h * h:
-            s = m + 1
-        else:
-            e = m
-    print(f"({s}, {s+1}, {h})", end=" ")
-print()
+    # What other mysteries of number theory are hiding inside this
+    # ladder for various other starting values of a, b and c?
 
-# What other mysteries of number theory are hiding inside this
-# ladder for various other starting values of a, b and c?
+    # Iterators can be combined into various combinatorial possibilities.
+    # Again, even though there are exponentially many elements produced,
+    # these elements are generated lazily one at the time as needed. We
+    # could iterate through trillions of combinations without running out
+    # of memory, assuming we had the patience to wait out the answer.
 
-# Iterators can be combined into various combinatorial possibilities.
-# Again, even though there are exponentially many elements produced,
-# these elements are generated lazily one at the time as needed. We
-# could iterate through trillions of combinations without running out
-# of memory, assuming we had the patience to wait out the answer.
+    # For small n, these combinations are still pretty tolerable. You can
+    # try the effect of increasing n (just by little!) to see how the
+    # sequences grow exponentially.
 
-# For small n, these combinations are still pretty tolerable. You can
-# try the effect of increasing n (just by little!) to see how the
-# sequences grow exponentially.
+    n = 4   # Try also 5 or 6.
 
-n = 4   # Try also 5 or 6.
+    print(f"Here are all possible permutations of {list(range(1, n+1))}.")
+    print(list(permutations(range(1, n + 1))))
 
-print(f"Here are all possible permutations of {list(range(1, n+1))}.")
-print(list(permutations(range(1, n + 1))))
+    print(f"Here are all possible 3-combinations of {list(range(1, n+1))}.")
+    print(list(combinations(range(1, n + 1), 3)))
 
-print(f"Here are all possible 3-combinations of {list(range(1, n+1))}.")
-print(list(combinations(range(1, n + 1), 3)))
+    print(f"Here are all possible 3-multicombinations of {list(range(1, n+1))}.")
+    print(list(combinations_with_replacement(range(1, n + 1), 3)))
 
-print(f"Here are all possible 3-multicombinations of {list(range(1, n+1))}.")
-print(list(combinations_with_replacement(range(1, n + 1), 3)))
 
 # For good examples of iterators and generators in action, check
 # out the itertools recipes section in the Python documentation.
+
+if __name__ == "__main__":
+    __demo()

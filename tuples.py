@@ -57,7 +57,7 @@ print(tu)         # (1, 5, -2, 10)
 
 emptytuple = ()
 singletontuple = (42,)
-x = (42)  # an ordinary integer defined in a redundant way
+x = (42)  # an ordinary integer, defined in a redundant way
 
 print(emptytuple, singletontuple, x)
 

@@ -29,7 +29,7 @@ def hangman(wordlist, blank='*'):
     return misses
 
 
-if __name__ == "__main__":
+def __demo():
     with open('words_sorted.txt', encoding="utf-8") as f:
         wordlist = [word.strip() for word in f if len(word) > 5]
     print(f"Read a word list of {len(wordlist)} words.")
@@ -37,3 +37,7 @@ if __name__ == "__main__":
         if hangman(wordlist) is None:
             print("See you around!")
             break
+
+
+if __name__ == "__main__":
+    __demo()

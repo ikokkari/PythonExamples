@@ -22,15 +22,19 @@ def reservoir(items, k):
     shuffle(buffer)  # Shuffle the buffer in place.
     yield from buffer  # All done, so emit the reservoir.
 
+
 # The shuffling step in the end can be removed if we don't care
 # about the order of elements in the sample, but just the subset
 # of elements chosen to the sample.
 
-
-if __name__ == "__main__":
+def __demo():
     print("Here are 20 random non-short lines from 'War and Peace':")
     with open('warandpeace.txt', encoding='utf-8') as wap:
         source = enumerate(reservoir((x.strip() for x in wap
                                       if len(x) > 60), 20))
         for (idx, line) in source:
             print(f"{idx:2}: {line}")
+
+
+if __name__ == "__main__":
+    __demo()

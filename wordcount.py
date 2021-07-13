@@ -57,12 +57,16 @@ for w in ('prince', 'russia', 'you', 'supercalifragilisticexpialidocious'):
 # Turn a dictionary into a list of its items as (value, key) tuples.
 # Dictionary method items() produces sequence of (key, value) pairs,
 # but swapping these is trivial with a list comprehension.
+
 words_list_f = [(c, w) for (w, c) in words.items()]
+
 # Sorting the list of pairs of the form (count, word). Python tuple
 # comparison happens lexicographically, so the primary sorting criteria
 # is the count. Words of equal frequency then get sorted according to
 # their dictionary order.
+
 words_list_f = sorted(words_list_f, reverse=True)
+
 # Extract the sorted words into a separate list, dropping the counts.
 words_list = [w for (c, w) in words_list_f]
 

@@ -9,7 +9,7 @@ print(a)
 # Since a comprehension can be made out of any existing sequence,
 # more complex lists can be created out of existing comprehensions.
 
-# The members of previous list that contain are between 500 and 2000.
+# Elements of the previous list that are between 500 and 2000.
 
 b = [x for x in a if 500 < x < 2000]
 print(b)
@@ -17,7 +17,6 @@ print(b)
 # List comprehensions can do a lot of work that we later do with loops.
 # For example, let's find all the Unicode characters that are lowercase
 # letters and produce a list of them.
-
 
 letter_category = ud.category('a')
 c = [chr(c) for c in range(100000)
@@ -106,8 +105,6 @@ print(u1)
 
 # This technique allows us to partition a sequence into another sequence
 # of its consecutive elements, either overlapping or not.
-
-words = "Hello there, world! How are you doing today?".split()
 
 # Overlapping sequences of 3 consecutive elements by having the range
 # of n skip by default 1.

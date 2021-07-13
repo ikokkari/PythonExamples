@@ -93,8 +93,8 @@ print(f"Does {c3} outrank {c1} in notrump? {c3.outranks(c1)}")
 # concepts are sufficiently high level. One from your graded labs:
 
 
-def winning_card(cards, trump=None, winner_so_far=None):
-    for card in cards:
+def winning_card(cards_, trump=None, winner_so_far=None):
+    for card in cards_:
         if card.outranks(winner_so_far, trump):
             winner_so_far = card
     return winner_so_far

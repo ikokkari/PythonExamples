@@ -1,10 +1,12 @@
-# A name refers only its present value, but has no history of where
-# that value came from.
+# A name refers only to its present value, but has no history of
+# where that value came from.
 
 a = 42
 b = a + 1
 
 print(f"a equals {a}, b equals {b}")  # 42, 43
+
+# This is illustrated by Python not behaving like a spreadsheet.
 
 a = 99
 
@@ -27,7 +29,7 @@ print(f"a == b: {a==b}\na is b: {a is b}")
 
 print(f"id(a) equals {id(a)}, id(b) equals {id(b)}")
 
-# Integers are a bit funny, since small integers are stored in a special way.
+# Integers are a bit funny; small integers are stored in a special way.
 
 a = 5
 b = 5
@@ -87,6 +89,7 @@ print(first)  # Smart function realizes it has an infinite cycle.
 a = [1, 2, 3, 4, 5]
 b = a[2:4]
 a[2] = 99
+print(a)  # [1, 2, 99, 4, 5]
 print(b)  # [3, 4]
 
 # However, dictionary views are live pointing to the underlying data.

@@ -51,12 +51,12 @@ print(f"Rising power of 10 to 3 equals {rising_power(10, 3)}.")
 # needing more than constant amount of extra memory.
 
 
-def is_eventually_periodic(f, x, giveup=1000):
+def is_eventually_periodic(f, x, give_up=1000):
     tortoise, hare = x, f(x)
-    while tortoise != hare and giveup > 0:
+    while tortoise != hare and give_up > 0:
         tortoise = f(tortoise)
         hare = f(f(hare))
-        giveup -= 1
+        give_up -= 1
     return tortoise == hare
 
 # Next, let's examine how functions can be given to other functions
