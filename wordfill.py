@@ -46,7 +46,7 @@ def wordfill(n, i, horiz, vert, wordlist, vv, babbage=False):
             idx += 1
 
 
-if __name__ == "__main__":
+def __demo():
     # A module can be imported only when actually needed.
     from itertools import islice
 
@@ -57,8 +57,6 @@ if __name__ == "__main__":
     print(f"Read in a word list of {len(wordlist)} words.")
     wordlist = [x for x in wordlist if len(x) == n]
     print(f"There remain {len(wordlist)} words of length {n}.")
-
-    wordset = set(wordlist)
     rows, cols, result = 3, 3, []
 
     while len(result) < rows * cols:
@@ -87,3 +85,6 @@ if __name__ == "__main__":
                 print(result[i][j], end=" | ")
             print("")
         print("-" * ((n + 3) * cols + 1))
+
+if __name__ == "__main__":
+    __demo()

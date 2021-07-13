@@ -37,7 +37,7 @@ for mountain in mountains:
 print("\nHere are top thirty countries sorted by their tallest mountains:")
 
 countries = sorted(countries,
-                   key=lambda c: tallest_in_country.get(c['Name'], smallest),
+                   key=lambda cc: tallest_in_country.get(cc['Name'], smallest),
                    reverse=True)
 
 # itertools.islice is a handy way to impose cutoff on the sequence length.
@@ -49,7 +49,7 @@ for (i, c) in islice(enumerate(countries), 30):
 print("\nHere are the top hundred countries sorted by named mountains:")
 
 countries = sorted(countries,
-                   key=lambda c: (len(mountains_in_country.get(c['Name'], [])), c['Name']),
+                   key=lambda cc: (len(mountains_in_country.get(cc['Name'], [])), cc['Name']),
                    reverse=True)
 
 for (i, c) in islice(enumerate(countries), 100):

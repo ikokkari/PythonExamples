@@ -27,7 +27,7 @@ def dissociated_press(table, m, result, maxpat=3):
     pattern = result[:min(len(result), maxpat)]
     while m > 0:
         follow = table.get(pattern, "")
-        if(len(follow) > 0):
+        if len(follow) > 0:
             # Choose a random continuation for pattern and result.
             c = random.choice(follow)
             result += c
@@ -41,7 +41,7 @@ def dissociated_press(table, m, result, maxpat=3):
     return result
 
 
-if __name__ == "__main__":
+def __demo():
     # Convert the contents of text file into one string.
     with open('warandpeace.txt', encoding="utf-8") as wap:
         text = "".join(wap)
@@ -51,3 +51,7 @@ if __name__ == "__main__":
         print(f"\nRandom text with maxpat value {maxpat}:")
         text = dissociated_press(table, 600, "A", maxpat)
         print(text.replace('\n', ' '))
+
+
+if __name__ == "__main__":
+    __demo()

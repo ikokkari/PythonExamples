@@ -136,7 +136,7 @@ __text = __text.replace("\t", " ")
 # two z's.
 
 
-if __name__ == '__main__':
+def __demo():
     for x in [42, 3**7, 6**20, -(2**100), 9**200, 10**500]:
         print(f"{x} written in English is {int_to_english(x)}.")
     print("Here are integers 0-100 sorted in alphabetical order:")
@@ -149,3 +149,6 @@ if __name__ == '__main__':
     # When using a randomized algorithm, it is good to used a fixed
     # seed to make the results repeatable.
     autogram_finder(__text, Random(12345), True, 20)
+
+if __name__ == '__main__':
+    __demo()

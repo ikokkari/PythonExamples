@@ -1,4 +1,4 @@
-import random
+from random import choice
 from itertools import combinations
 
 # Define the suits and ranks that a deck of playing cards is made of.
@@ -11,11 +11,11 @@ ranks = {'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6,
 deck = [(rank, suit) for suit in suits for rank in ranks]
 
 
-def deal_hand(n, taken=[]):
+def deal_hand(n, taken=None):
     """Deal a random hand with n cards, without replacement."""
-    result = []
+    result, taken = [], taken if taken else []
     while len(result) < n:
-        c = random.choice(deck)
+        c = choice(deck)
         if c not in result and c not in taken:
             result.append(c)
     return result
@@ -139,8 +139,8 @@ def poker_straight(hand):
 def poker_straight_flush(hand):
     return poker_has_straight(hand) and poker_has_flush(hand)
 
-# "Sometimes nothing can be a pretty cool hand."
 
+# "Sometimes nothing can be a pretty cool hand."
 
 def poker_high_card(hand):
     return count_rank_pairs(hand) == 0 and not poker_has_flush(hand)\
@@ -205,7 +205,3 @@ def bridge_score(suit, level, vul, dbl, made):
     elif mul == 4:
         score += 100
     return score
-
-
-if __name__ == "__main__":
-    print(evaluate_all_poker_hands())

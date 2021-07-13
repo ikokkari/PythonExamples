@@ -38,8 +38,8 @@ def rotodromes(words):
             if w2 != word and w2 in wset:
                 return True
         return False
-    wset = set(words)
-    return [w for w in words if is_rotodrome(w, wset)]
+    w_set = set(words)
+    return [w for w in words if is_rotodrome(w, w_set)]
 
 
 # Find the "almost palindromes", words that become palindromes when
@@ -184,7 +184,7 @@ def remain_words(words):
     result = [[], [x for x in words if len(x) == 1]]
     wl = 2
     while True:
-        nextlevel, hasWords = {}, False
+        next_level, has_words = {}, False
         for w in (x for x in words if len(x) == wl):
             shorter = []
             for i in range(0, wl - 1):
@@ -192,16 +192,16 @@ def remain_words(words):
                 if ww in result[wl - 1]:
                     shorter.append(ww)
             if len(shorter) > 0:
-                nextlevel[w] = shorter
-                hasWords = True
-        if hasWords:
-            result.append(nextlevel)
+                next_level[w] = shorter
+                has_words = True
+        if has_words:
+            result.append(next_level)
             wl += 1
         else:
             return result
 
 
-# Generate a table of all anagrams from the given wordlist.
+# Generate a table of all anagrams from the given word list.
 
 def all_anagrams(words):
     codes = {}
@@ -221,7 +221,7 @@ def all_anagrams(words):
     return codes
 
 
-if __name__ == "__main__":
+def __demo():
     with open('words_sorted.txt', encoding="utf-8") as f:
         words = [x.strip() for x in f]
     print(f"Read in {len(words)} words.")
@@ -333,9 +333,9 @@ if __name__ == "__main__":
 
     print("\nSome letter eliminations:")
     elim_dict_list = remain_words(words)
-    startwords = list(elim_dict_list[8])
+    start_words = list(elim_dict_list[8])
     for i in range(10):
-        word = choice(startwords)
+        word = choice(start_words)
         while len(word) > 1:
             print(word, end=" -> ")
             word = choice(elim_dict_list[len(word)][word])
@@ -347,3 +347,7 @@ if __name__ == "__main__":
     print("The anagram groups with eight or more members are:")
     for ans in (x for x in anagrams if len(anagrams[x]) >= 8):
         print(", ".join(anagrams[ans]))
+
+
+if __name__ == "__main__":
+    __demo()

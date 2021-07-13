@@ -73,7 +73,7 @@ def decode_morse(message):
 # Out[0]: [1, 2, 4, 8, 15, 29, 56, 108, 208, 401, 773, 1490]
 
 
-if __name__ == '__main__':
+def __demo():
     with open('words_sorted.txt', encoding='utf-8') as f:
         wordlist = [word.strip() for word in f if len(word) < 8]
     print(f'Read a list of {len(wordlist)} words.')
@@ -90,6 +90,10 @@ if __name__ == '__main__':
         for word in dec:
             print(f"{word!r} split as {encode_morse(word, ' ')}")
         print('')
+
+
+if __name__ == '__main__':
+    __demo()
 
 # Motivated readers could find the largest group of words that
 # all encode to the same series of Morse dots and dashes.

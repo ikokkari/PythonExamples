@@ -114,10 +114,10 @@ class Scaled(Shape):
 
 # Demonstrate the previous classes in action.
 
-if __name__ == "__main__":
+def __demo():
     # An abstract class cannot be instantiated.
     try:
-        s = Shape()
+        _ = Shape()
     except Exception as e:
         print(f"Caught: {e}")
 
@@ -166,3 +166,7 @@ if __name__ == "__main__":
     print(f"Created: {s2}.")
 
     print(f"Total of {Shape.count} Shape objects were created.")
+
+
+if __name__ == "__main__":
+    __demo()

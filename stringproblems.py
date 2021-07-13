@@ -192,7 +192,7 @@ def tutnese(sentence):
     return translate_words(sentence, trans)
 
 
-if __name__ == "__main__":
+def __demo():
     text = "Ilkka Kokkarinen"
     print(f"Unique chars of {text} are {unique_chars(text)}.")
     print(f"Removing duplicates gives {eliminate_duplicates(text)}.")
@@ -219,3 +219,7 @@ if __name__ == "__main__":
     print(f"Are 'tater' and 'rater' anagrams? {tater_rater}")
     search_chaser = are_anagrams('search', 'chaser')
     print(f"Are 'search' and 'chaser' anagrams? {search_chaser}")
+
+
+if __name__ == "__main__":
+    __demo()

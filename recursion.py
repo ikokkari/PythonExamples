@@ -141,7 +141,7 @@ def knight_tour(n=8, sx=1, sy=1):
     # Test whether square (x, y) is inside the chessboard. We use
     # the 1-based indexing here, as is normally done by humans.
     def inside(x, y):
-        return x > 0 and y > 0 and x <= n and y <= n
+        return 0 < x <= n and 0 < y <= n
 
     # Find all the unvisited neighbours of square (x, y).
     def neighbours(x, y):

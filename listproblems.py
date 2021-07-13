@@ -94,7 +94,7 @@ def dissimilarity(first, second, kind='yule'):
 
 def apportion_congress_seats(seats, pop):
     # List of seats assigned to each state, initially one per state.
-    result = [1 for p in pop]
+    result = [1 for _ in pop]
     # List of states and their current priorities.
     pq = [(-p / sqrt(2), i) for (i, p) in enumerate(pop)]
     # Organize the list into a priority queue.
@@ -113,7 +113,7 @@ def apportion_congress_seats(seats, pop):
     return result
 
 
-if __name__ == "__main__":
+def __demo():
     print("Partitioning integers from 1 to 10, unstable:")
     print(partition(list(range(1, 11)), lambda x: x % 2 == 0))
     print("Partitioning integers from 1 to 10, stable:")
@@ -125,8 +125,8 @@ if __name__ == "__main__":
     print("\nSome dissimilarity metrics for random vectors.")
     print("v1       v2       yule   dice   s-s    jac    match  r-t")
     for i in range(10):
-        v1 = [randint(0, 1) for i in range(8)]
-        v2 = [randint(0, 1) for i in range(8)]
+        v1 = [randint(0, 1) for _ in range(8)]
+        v2 = [randint(0, 1) for _ in range(8)]
         # No vector can ever be dissimilar from itself.
         if any([dissimilarity(v1, v1, kind) != 0 for kind in kinds]):
             print("Something is hinky with dissimilarities!")
@@ -146,3 +146,7 @@ if __name__ == "__main__":
     pct = apportion_congress_seats(1000, pops)
     # These rounded percentages will add up to exactly 100.
     print(", ".join([f"{p/10:.1f}" for p in pct]))
+
+
+if __name__ == "__main__":
+    __demo()

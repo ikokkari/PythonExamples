@@ -51,7 +51,7 @@ def iterate_diff(items, verbose=False):
             print(items, end=" -> ")
         count += 1
     print("\n" if verbose else "", end="")
-    return (items[0], count)
+    return items[0], count
 
 
 # What is the relationship between the final value and the four
@@ -155,7 +155,7 @@ def heron_root(x):
 
 
 # Converting Roman numerals and positional integers back and forth
-# makes for interesting and educational excample of loops, lists
+# makes for interesting and educational example of loops, lists
 # and dictionaries.
 
 symbols_encode = [
@@ -206,7 +206,7 @@ def test_roman():
     return True
 
 
-if __name__ == "__main__":
+def __demo():
     a, b = 2*3*3*13*17*49, 3*5*5*7*33*19
     print(f"Greatest common divisor of {a} and {b}, visualized:")
     euclid_gcd(a, b, verbose=True)
@@ -218,7 +218,7 @@ if __name__ == "__main__":
     print("Here are the convergences of some four-lists:")
     random.seed(12345)  # Fixed seed always generates same random numbers
     for i in range(50):
-        items = [random.randint(1, 10 + 10 * i) for j in range(4)]
+        items = [random.randint(1, 10 + 10 * i) for _ in range(4)]
         (n, c) = iterate_diff(items, False)
         print(f"{items} converges to {n} in {c} steps.")
 
@@ -228,9 +228,9 @@ if __name__ == "__main__":
         print(f"Integer square root of {n} equals {s}.")
 
     # Here is a humongous number and its integer square root.
-    n = 1234**5678
+    n = 123**456
     s = str(integer_root(n))
-    print(f"Integer square root of 1234**5678 has {len(s)} digits.")
+    print(f"Integer square root of 123**456 has {len(s)} digits.")
     print(f"First five are {s[:5]}, and last five are {s[-5:]}.")
 
     # How many numbers are longer written in Arabic than in Roman?
@@ -249,3 +249,7 @@ if __name__ == "__main__":
     print(f"{grd}")
     # Correct answer copied from Wolfram Alpha as the gold standard:
     # print("1.6180339887498948482045868343656381177203091798058")
+
+
+if __name__ == "__main__":
+    __demo()

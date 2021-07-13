@@ -75,7 +75,7 @@ def estimate_pi(n):
     return total * 6
 
 
-if __name__ == "__main__":
+def __demo():
     demonstrate_imprecision()
     decimal_precision_demo()
     infinity_and_nan_demo()
@@ -84,3 +84,7 @@ if __name__ == "__main__":
     print("Estimating pi: ", end="")
     print((Decimal(str(pi.numerator)).sqrt() /
            Decimal(str(pi.denominator)).sqrt()))
+
+
+if __name__ == "__main__":
+    __demo()

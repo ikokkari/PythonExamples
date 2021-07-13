@@ -75,7 +75,7 @@ class Temperature:
     # datetime standard library module.
 
 
-if __name__ == "__main__":
+def __demo():
     t1 = Temperature(30, 'C')
     print(f"Temperature is {t1.C:.1f} C, {t1.F:.1f} F, {t1.K:.1f} K.")
     t2 = Temperature(100, 'F')
@@ -84,6 +84,10 @@ if __name__ == "__main__":
     print(f"Their difference is {t3.K:.1f} K.")
     # And the crash.
     try:
-        t4 = Temperature(-400, 'C')
+        _ = Temperature(-400, 'C')
     except ValueError as e:
         print(f"Caught error: {e}")
+
+
+if __name__ == "__main__":
+    __demo()

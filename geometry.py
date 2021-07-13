@@ -75,7 +75,7 @@ def line_segment_intersect(p0, p1, p2, p3):
         return False
     s1 = __sign(cross(p2, p3, p0))
     s2 = __sign(cross(p2, p3, p1))
-    return (s1 >= 0 and s2 <= 0) or (s1 <= 0 and s2 >= 0)
+    return (s1 >= 0 >= s2) or (s1 <= 0 <= s2)
 
 
 # To check whether the given polygon is convex, check that on the
@@ -199,7 +199,7 @@ def demonstrate_picks_theorem(poly):
 # the lowest y-coordinate point, and then uses the previous stack
 # algorithm to convexify the star polygon into the convex hull.
 
-def convex_hull(pts, cleanonly=False):
+def convex_hull(pts, clean_only=False):
     pb = (min((x for (x, y) in pts)), min(y for (x, y) in pts))
 
     def angle_cmp(p1, p2):
@@ -219,7 +219,7 @@ def convex_hull(pts, cleanonly=False):
             return 0
 
     pts.sort(key=cmp_to_key(angle_cmp))
-    return convexify(pts, cleanonly)
+    return convexify(pts, clean_only)
 
 
 # A "sweepline" algorithm that finds the two closest points in
@@ -244,7 +244,7 @@ def closest_points(pts):
     return bestd
 
 
-if __name__ == "__main__":
+def __demo():
     import random
 
     print("Let us compute the convex hull of a big grid.")
@@ -262,7 +262,7 @@ if __name__ == "__main__":
     pts = list(pts)
     print(f"Closest point distance is {closest_points(pts):.3f}.")
 
-    star = convex_hull(pts, cleanonly=True)
+    star = convex_hull(pts, clean_only=True)
     print(f"The star polygon consists of {len(star)} points.")
 
     print(f"Let us demonstrate Pick's theorem:")
@@ -285,3 +285,6 @@ if __name__ == "__main__":
                 allok = False
     if allok:
         print("Both functions returned the same answers.")
+
+if __name__ == "__main__":
+    __demo()

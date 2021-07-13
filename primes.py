@@ -74,7 +74,7 @@ def kth_prime(k):
 
 
 # For demonstration purposes when not imported as a module.
-if __name__ == "__main__":
+def __demo():
     print("Here are the first 100 prime numbers.")
     print([kth_prime(k) for k in range(100)])
     print(f"The primelist now has {len(__primelist)} elements.")
@@ -86,3 +86,7 @@ if __name__ == "__main__":
         n = 2**p - 1
         if is_prime(n):
             print(f"2**{p} - 1 = {n} is a Mersenne prime.")
+
+
+if __name__ == "__main__":
+    __demo()
