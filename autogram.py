@@ -54,7 +54,7 @@ def int_to_english(n):
         rest = int_to_english(n % __googol)
         name = f"{first} googol"
         if rest != "zero":
-            name += "and {rest}"
+            name += f" and {rest}"
         return name
     # Otherwise, break the number into blocks of three and convert.
     result, p = [], 0
