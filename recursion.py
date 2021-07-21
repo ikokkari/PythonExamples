@@ -1,6 +1,4 @@
 from functools import lru_cache
-import operator
-import itertools
 from fractions import Fraction
 
 # Many problems can be solved surprisingly easily by first
