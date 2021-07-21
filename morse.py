@@ -24,7 +24,7 @@ codes = {
 # Construct a reverse dictionary from an existing dictionary
 # with this handy dictionary comprehension. If multiple keys
 # of the original map to the same value, only the last pair
-# of value: key is stored in the reverse dictionary.
+# of value and key is stored in the reverse dictionary.
 
 codes_r = {codes[k]: k for k in codes}
 
@@ -88,7 +88,7 @@ def __demo():
         # We are interested only in decodings that are actual words.
         dec = [word for word in decode_morse(enc) if word in words]
         for word in dec:
-            print(f"{word!r} split as {encode_morse(word, ' ')}")
+            print(f"{word!r} split as {encode_morse(word, '|')}")
         print('')
 
 

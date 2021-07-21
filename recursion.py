@@ -1,4 +1,4 @@
-import functools
+from functools import lru_cache
 import operator
 import itertools
 from fractions import Fraction
@@ -10,7 +10,7 @@ from fractions import Fraction
 # whose formula n! = 1 * 2 * ... * (n-1) * n is self-similar.
 
 
-@functools.lru_cache()
+@lru_cache()
 def factorial(n, verbose=False):
     if verbose:
         print(f"enter with n = {n}")
@@ -21,28 +21,6 @@ def factorial(n, verbose=False):
     if verbose:
         print(f"Returning {result} from {n}")
     return result
-
-
-# Functional programming version, if only for humour value:
-
-def factorial_func(n):
-    return functools.reduce(operator.mul, range(1, n+1))
-
-
-# Why not Zoidb... itertools? Without more-itertools, we
-# need to define the lazy last element extractor ourselves.
-
-def last_elem(it):
-    last = next(it)
-    for c in it:
-        last = c
-    return last
-
-
-def factorial_it(n):
-    return last_elem(itertools.accumulate(
-        range(1, n+1), operator.mul)
-    )
 
 
 # Well, that was nothing much to write home about, since we
@@ -123,6 +101,55 @@ def subset_sum(items, goal):
     return answer
 
 
+# Hofstadter's recursive Q-function, memoized for efficiency.
+# http://paulbourke.net/fractals/qseries/
+
+@lru_cache(maxsize=10000)
+def hof_q(n):
+    if n < 3:
+        return 1
+    else:
+        return hof_q(n - hof_q(n - 1)) + hof_q(n - hof_q(n - 2))
+
+
+# The famous Thue-Morse sequence for "fairly taking turns". To
+# illustrate the power of memoization, let's use a global count
+# of how many times the function has been called.
+
+__tm_call_count = 0
+
+
+@lru_cache(maxsize=10000)
+def thue_morse(n, sign):
+    global __tm_call_count
+    __tm_call_count += 1
+    if n < 2:
+        return f"{str(sign)}"
+    else:
+        return thue_morse(n - 1, sign) + thue_morse(n - 1, 1 - sign)
+
+
+# An interesting problem from "Concrete Mathematics". A row of aging
+# barrels is filled with wine at year 0. After each year, a portion
+# of the aged wine from each barrel is poured in the next barrel from
+# end to beginning. The wine taken from last barrel is bottled for
+# sale, and the first barrel is refilled with new wine. What is the
+# composition of the given barrel after the number of years?
+
+@lru_cache(maxsize=10000)
+def wine(barrel, age, year, pour=Fraction(1, 2)):
+    # Imaginary "zero" barrel to represent incoming flow of new wine.
+    if barrel == 0:
+        return Fraction(1) if age == 0 else 0
+    # In the initial state, all barrels consist of new wine.
+    elif year == 0:
+        return 1 if age == 0 else 0
+    # Recursive formula for proportion of wine of age a.
+    else:
+        return (1 - pour) * wine(barrel, age - 1, year - 1) +\
+               pour * wine(barrel - 1, age - 1, year - 1)
+
+
 # The knight's tour problem is another classic. Given an n*n chessboard,
 # and the start coordinates of the knight, find a way to visit every
 # square on the board exactly once, ending up in some neighbour of
@@ -170,9 +197,9 @@ def knight_tour(n=8, sx=1, sy=1):
 
 
 # Ackermann function is a function that grows fast. Really,
-# really, really fast. Faster than you can begin to imagine,
-# until you have taken some decent theory of computability
-# courses. And probably not even then.
+# really, really fast. In fact, you could fill our universe
+# with the word "really", and that still wouldn't be enough
+# words "really" to describe its unimaginable growth.
 # http://en.wikipedia.org/wiki/Ackermann_function
 
 def ackermann(m, n):
@@ -184,24 +211,29 @@ def ackermann(m, n):
         return ackermann(m - 1, ackermann(m, n - 1))
 
 
-if __name__ == "__main__":
-    f1 = factorial(10)
-    f2 = factorial_func(10)
-    f3 = factorial_it(10)
-    print(f"The factorial of 10 equals {f1}, {f2} and {f3}.")
-    print("Solution for Towers of Hanoi with three disks:")
+def __demo():
+    print(f"The factorial of 10 equals {factorial(10)}.")
+
+    print("\nSolution for Towers of Hanoi with three disks:")
     hanoi(1, 3, 3)
-    print("Here is one solution to subset sum with goal 81:")
-    print(subset_sum([1, 4, 7, 10, 15, 22, 23, 35, 37], 81))
-    print("Flattening the list produces the following:")
+
+    items = [1, 4, 7, 10, 15, 22, 23, 35, 37]
+    print(f"\nSolving subset sum with {items}:")
+    for goal in range(100, 110):
+        print(f"Goal {goal}: solution {subset_sum(items, goal)!r}")
+
+    print("\nFlattening the list produces the following:")
     print(flatten([1, (42, 99), [2, [3, [4, [5], 6], 7], 8], 9]))
-    print("Here is a 6*6 knights tour:")
+
+    print("\nHere is a closed knights tour on a 6-by-6 chessboard:")
     print(knight_tour(6, 1, 1))
-    print(f"Ackermann(3, 3) = {ackermann(3, 3)}.")
+
+    print(f"\nAckermann(3, 3) = {ackermann(3, 3)}.")
     print(f"Ackermann(3, 4) = {ackermann(3, 4)}.")
     # print(f"Ackermann(4, 4) = {ackermann(4, 4)}.")
     # would give error "recursion limit exceeded"
-    print(f"Steps of computing binary_power(2, 100) are:")
+
+    print(f"\nSteps of computing binary_power(2, 100) are:")
     bp = binary_power(2, 100, True)
     print(f"The result is {bp}.")
 
@@ -212,6 +244,23 @@ if __name__ == "__main__":
     # Python functions are polymorphic in that they don't care about
     # the actual type of their argument, as long as the arguments have
     # the capabilities expected from them.
-    b = Fraction(3, 7)
-    print(f"{b} raised to 100th power equals {binary_power(b, 100)}.")
-    v = 123456789
+    b = Fraction(4, 5)
+    print(f"\n{b} raised to 100th power equals {binary_power(b, 100)}.")
+
+    print("\nHere are the first 500 items of Hofstadter's Q-series:")
+    print(", ".join((str(hof_q(n)) for n in range(501))))
+
+    year = 10
+    print(f"\nAfter year {year}, the wine barrels consist of (year:portion):")
+    for b in range(1, 6):
+        comps = [f"{a}:{wine(b, a, year)}" for a in range(1, year + 1)]
+        print(f"Barrel {b}: {', '.join(comps)}.")
+
+    print("\nThe Thue-Morse sequences from 2 to 10 are:")
+    for i in range(2, 11):
+        print(f"{i}: {thue_morse(i, 0)}")
+    print(f"\nExecuted total of {__tm_call_count} calls to Thue-Morse.")
+
+
+if __name__ == "__main__":
+    __demo()
