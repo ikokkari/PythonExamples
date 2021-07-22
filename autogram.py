@@ -77,7 +77,7 @@ def int_to_english(n):
 
 def autogram_finder(text, rng, verbose=True, perturb=20):
     letters, rounds = "abcdefghijklmnopqrstuvwxyz", 0
-    count, best = [rng.randint(2, 50) for c in letters], 0
+    count, best = [rng.randint(2, 50) for _ in letters], 0
 
     while True:
         rounds += 1
@@ -142,13 +142,14 @@ def __demo():
     print("Here are integers 0-100 sorted in alphabetical order:")
     print(sorted(range(0, 101), key=int_to_english))
     print("Here are integers 0-100 sorted in order of name lengths:")
-    print(sorted(range(0, 101), key=lambda x: (len(int_to_english(x)), x)))
+    print(sorted(range(0, 101), key=lambda n: (len(int_to_english(n)), n)))
     print("The numbers that do not contain the letter 'o':")
     print([x for x in range(1000) if 'o' not in int_to_english(x)])
 
     # When using a randomized algorithm, it is good to used a fixed
     # seed to make the results repeatable.
     autogram_finder(__text, Random(12345), True, 20)
+
 
 if __name__ == '__main__':
     __demo()

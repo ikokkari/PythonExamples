@@ -344,9 +344,11 @@ def __demo():
     print("\nLet us compute all anagrams for the six letter words.")
     words6 = [word for word in words if len(word) == 6]
     anagrams = all_anagrams(words6)
-    print("The anagram groups with eight or more members are:")
-    for ans in (x for x in anagrams if len(anagrams[x]) >= 8):
-        print(", ".join(anagrams[ans]))
+    print("The anagram groups with eight or more members are:\n")
+    # Note that anagrams is a dictionary that maps prime codes to
+    # lists of words that all have that same prime code.
+    for code in (c for c in anagrams if len(anagrams[c]) >= 8):
+        print(", ".join(anagrams[code]))
 
 
 if __name__ == "__main__":

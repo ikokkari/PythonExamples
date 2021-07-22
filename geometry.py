@@ -286,5 +286,6 @@ def __demo():
     if allok:
         print("Both functions returned the same answers.")
 
+
 if __name__ == "__main__":
     __demo()

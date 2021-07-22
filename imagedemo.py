@@ -9,6 +9,7 @@ from scipy import misc, ndimage
 # In image processing, convolution with a tactically chosen kernel
 # matrix can achieve all kinds of effects.
 
+
 def convolve(img, kernel):
     return ndimage.convolve(img, kernel, mode='constant', cval=0.0)
 
@@ -24,11 +25,11 @@ def grayscale(img):
 def rotate_mosaic(img, r=16):
     (h, w, *b) = img.shape
     return np.vstack(    # Stack the rotated rows vertically.
-            [np.hstack(  # Stack the results of same row horizontally.
-            [np.rot90(   # Rotate the extracted subimage.
-            img[y:y+r, x:x+r, :]  # r*r subimage with top left at (y, x).
-            # Over all the columns in current row, and over all the rows.
-            ) for x in range(0, w, r)]) for y in range(0, h, r)]
+             [np.hstack(  # Stack the results of same row horizontally.
+              [np.rot90(img[y:y+r, x:x+r, :])   # Rotate subimage.
+               for x in range(0, w, r)])  # Over all columns.
+              for y in range(0, h, r)  # Over all rows.
+              ]
     )
 
 # Many other ways to perform edge detection also exist.
@@ -42,7 +43,9 @@ Faler = [
       ]
 
 
-def detect_edges(image, masks=Faler):
+def detect_edges(image, masks=None):
+    if masks is None:
+        masks = Faler
     edges = np.zeros(image.shape)
     for mask in masks:
         edges = np.maximum(ndimage.convolve(image, mask), edges)
@@ -59,11 +62,9 @@ def floyd_steinberg(img, thres=0.7):
     result = np.zeros(shape=(h, w), dtype='float')
     for y in range(h):
         for x in range(w):
+            # How bright the pixel [y][x] should be.
             bt = float(img[y][x]) / 255 + result[y][x]
-            if bt > thres:
-                actual = 1.0
-            else:
-                actual = 0.0
+            actual = 1.0 if bt > thres else 0.0
             result[y][x] = actual
             error = bt - actual  # negate this for a fun effect
             if x < w - 1:
@@ -96,18 +97,20 @@ def probabilistic_dither(img, thres=0.7):
             # Once accumulation reaches 1.0, make that pixel white.
             if acc > thres:
                 result[y][x] = 1.0
-                acc -= 1.0
+                acc -= 0.7
             idx = (idx + 1) % 20
     return result
 
 
 # Using matplotlib to display the image in a figure window.
+
 def display(img, info, cmap='gray'):
     print(info)
     (h, w, *b) = img.shape
-    # Create a new figure window.
+    # Create a new figure window without the axis lines.
     plt.figure(figsize=((w/80), (h/80)), dpi=80)
     plt.axis('off')
+    # Render the image into the figure.
     plt.imshow(img, cmap=cmap)
     # Display that figure.
     plt.show()
@@ -164,24 +167,26 @@ if __name__ == "__main__":
     import math
 
     # Transform point (x, y) of a spiral back into original image.
+
     def spiral(pt, repx=5, repy=1, pull=8, w=1024, h=768):
         (py, px, b) = pt
         dv = (px - w // 2, py - h // 2)
         if abs(dv[0]) + abs(dv[1]) < 2:
-            return (py, px, pt[2])
+            return py, px, pt[2]
         r, phi = cmath.polar(dv[0] + dv[1] * 1j)
         r = math.log(r, pull)
         xf = repx * phi / math.tau
         xx = (xf - math.floor(xf)) * w
         yf = abs(r - repy * phi / math.tau)
         yy = (yf - math.floor(yf)) * h
-        return (yy, xx, pt[2])
+        return yy, xx, pt[2]
 
     f9 = ndimage.geometric_transform(forig, trans)
     display(f9, "A geometric transformation.")
 
     # The spiral transformation needs to know the dimensions of
     # original image to be able to operate.
+
     ekw = {'w': forig.shape[1], 'h': forig.shape[0]}
     f10 = ndimage.geometric_transform(forig, spiral,
                                       extra_keywords=ekw)

@@ -1,8 +1,9 @@
-import numpy as np
-import matplotlib.pyplot as plt
 import math
-from scipy import ndimage
 from functools import partial
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy import ndimage
+
 
 # Generally all these are after http://paulbourke.net/fractals/
 
@@ -15,7 +16,7 @@ def pointstep(size, n, fx, fy, w=2, exp=.5):
         nx, ny = fx(cx, cy), fy(cx, cy)
         px = int((nx + w) / (2*w) * size)
         py = int((ny + w) / (2*w) * size)
-        if px >= 0 and px < size and py >= 0 and py < size:
+        if 0 <= px < size and 0 <= py < size:
             ctr[py][px] += 1
             if ctr[py][px] > mv:
                 mv = ctr[py][px]
@@ -58,7 +59,7 @@ def move(x, y, size, step=1):
         nx += size
     if ny < 0:
         ny += size
-    return (nx, ny)
+    return nx, ny
 
 
 def avalanche_world(size, n, step=2, prob=0.3, pf=None):
@@ -72,24 +73,23 @@ def avalanche_world(size, n, step=2, prob=0.3, pf=None):
         ctr[y][x] += 1
         nx, ny = move(x, y, size, 1)
         if ctr[y][x] > ctr[ny][nx]:
-            if ((ctr[y][x] - ctr[ny][nx]) * prob > pf()):
+            if (ctr[y][x] - ctr[ny][nx]) * prob > pf():
                 ctr[ny][nx] += 1
                 ctr[y][x] -= 1
                 x, y = move(nx, ny, size, step)
     return ctr
 
 
-def ifs(size, n, tbl, w=2, exp=0.2):
+def ifs(size, n, tbl_, exp=0.2):
     ctr = np.zeros(shape=(size, size), dtype='uint16')
-    cx, cy = 1, 1
-    mv = 0
+    cx, cy, mv = 1, 1, 0
     for i in range(n):
-        a, b, c, d, e, f = tbl[np.random.randint(0, len(tbl))]
+        a, b, c, d, e, f = tbl_[np.random.randint(0, len(tbl_))]
         nx = a * cx + b * cy + e
         ny = c * cx + d * cy + f
         px = int(abs(nx) * size)
         py = int(abs(ny) * size)
-        if px >= 0 and px < size and py >= 0 and py < size:
+        if 0 <= px < size and 0 <= py < size:
             ctr[py][px] += 1
             if ctr[py][px] > mv:
                 mv = ctr[py][px]
@@ -128,7 +128,7 @@ if __name__ == "__main__":
        (-0.0350, 0.0700, -0.4690, 0.0220, 0.4884, 0.5069),
        (-0.0580, -0.0700, 0.4530, -0.1111, 0.5976, 0.0969)
     ]
-    display(ifs(1000, 100000, tbl, w=1), "IFS Tree", cmap="tab20c")
+    display(ifs(1000, 100000, tbl), "IFS Tree", cmap="tab20c")
     display(avalanche_world(500, 500000, 1, prob=0.3,
                             pf=partial(np.random.exponential, .5)),
             "Avalanche", cmap="gray")

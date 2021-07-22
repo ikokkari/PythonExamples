@@ -38,9 +38,9 @@ def wordfill(n, i, horiz, vert, wordlist, vv, babbage=False):
             if not (word in horiz or word in vert):
                 horiz.append(word)
                 if babbage:  # Horizontal and vertical words equal
-                    w = wordfill(n, i+1, horiz, horiz, wordlist, 0, True)
+                    w = wordfill(n, i + 1, horiz, horiz, wordlist, 0, True)
                 else:  # Mirror the square around diagonal
-                    w = wordfill(n, i+vv, vert, horiz, wordlist, 1-vv)
+                    w = wordfill(n, i + vv, vert, horiz, wordlist, 1 - vv)
                 yield from w
                 horiz.pop()
             idx += 1
@@ -50,7 +50,7 @@ def __demo():
     # A module can be imported only when actually needed.
     from itertools import islice
 
-    n = 5   # Size of each individual word square.
+    n = 5  # Size of each individual word square.
 
     with open('words_sorted.txt', encoding="utf-8") as f:
         wordlist = [x.strip() for x in f]
@@ -75,8 +75,8 @@ def __demo():
             found = True
         print("Those worked!" if found else "Nope!")
 
-    print(f"Printing out {rows*cols} found word squares.\n")
-    print("-" * ((n+3)*cols + 1))
+    print(f"Printing out {rows * cols} found word squares.\n")
+    print("-" * ((n + 3) * cols + 1))
     for row in range(rows):
         idx = row * cols
         for j in range(n):
@@ -85,6 +85,7 @@ def __demo():
                 print(result[i][j], end=" | ")
             print("")
         print("-" * ((n + 3) * cols + 1))
+
 
 if __name__ == "__main__":
     __demo()

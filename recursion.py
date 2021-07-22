@@ -215,7 +215,7 @@ def __demo():
     print("\nSolution for Towers of Hanoi with three disks:")
     hanoi(1, 3, 3)
 
-    items = [1, 4, 7, 10, 15, 22, 23, 35, 37]
+    items = [1, 4, 7, 10, 15, 22, 23, 30, 32]
     print(f"\nSolving subset sum with {items}:")
     for goal in range(100, 110):
         print(f"Goal {goal}: solution {subset_sum(items, goal)!r}")
