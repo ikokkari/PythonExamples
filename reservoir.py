@@ -9,17 +9,19 @@ from random import randint, shuffle
 # a fair random sample of some lazy sequence that has billions
 # of elements in such small memory space, and yet here we are.
 
-def reservoir(items, k):
+# Sequence can be either eager or lazy: since we only access it
+# with for-loop, either way works and we don't need anything else.
+
+def reservoir(seq, k):
     buffer = []
-    for (count, v) in enumerate(items):
+    for (count, v) in enumerate(seq):
         if count < k:  # First k elements build up the reservoir.
             buffer.append(v)
         else:
-            idx = randint(0, count)
+            idx = randint(0, count)  # Random cannon shot.
             if idx < k:  # The new element hits the reservoir.
-                buffer[idx] = v  # Displace a previous element.
-        count += 1
-    shuffle(buffer)  # Shuffle the buffer in place.
+                buffer[idx] = v  # Displace some previous element.
+    # shuffle(buffer)  # Shuffle the buffer in place.
     yield from buffer  # All done, so emit the reservoir.
 
 
