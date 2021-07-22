@@ -47,11 +47,12 @@ def rotodromes(words):
 
 def almost_palindromes(words):
     def almost(word):
-        for i in range(len(word) - 1):
-            w2 = word[:i] + word[i+1:]
-            if w2 == w2[::-1]:
-                return True
-        return False
+        if word != word[::-1]:
+            for i in range(len(word) - 1):
+                w2 = word[:i] + word[i+1:]
+                if w2 == w2[::-1]:
+                    return True
+            return False
     return [w for w in words if len(w) > 2 and almost(w)]
 
 
@@ -307,11 +308,11 @@ def __demo():
     for k in range(1, 16):
         print(f"k = {k:2}: {longest_substring_with_k_chars(text, k)}")
 
-    print(f"\nHow about the longest 10-char substring of War and Peace?")
+    print(f"\nHow about the longest 10-char substring of War and Peace? It is:")
     with open('warandpeace.txt', encoding="utf-8") as wap:
         text = " ".join(wap)
     text.replace("\n", " ")
-    print(f"It is:{longest_substring_with_k_chars(text, 10)}")
+    print(f"{longest_substring_with_k_chars(text, 10)}")
 
     print("\nNext, some word chains of five-letter words.")
     words5 = [word for word in words if len(word) == 5]
