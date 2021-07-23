@@ -47,7 +47,9 @@ def rotodromes(words):
 
 def almost_palindromes(words):
     def almost(word):
+        # Words that are already palindromes don't count.
         if word != word[::-1]:
+            # Loop through the positions to remove a character.
             for i in range(len(word)):
                 w2 = word[:i] + word[i+1:]
                 if w2 == w2[::-1]:
@@ -176,7 +178,7 @@ def word_chain(words, first, k=1, len_=3):
     return backtrack(first)
 
 
-# What words remain words by removing one character? Create and return
+# What words remain words after removing one character? Create and return
 # a list whose i:th element is a dictionary of all such words of length
 # i, mapped to the list of words of length i-1 that they can be turned
 # into by removing one letter.
@@ -204,20 +206,27 @@ def remain_words(words):
 
 # Generate a table of all anagrams from the given word list.
 
+# The first 26 prime numbers, one for each letter from a to z.
+__primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43,
+            47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101]
+
+
+def prime_code(word):
+    code = 1
+    for c in word:
+        # ord(c) gives the Unicode integer codepoint of c.
+        code *= __primes[ord(c) - ord('a')]
+    return code
+
+
 def all_anagrams(words):
     codes = {}
-    # The first 26 prime numbers, one for each letter from a to z.
-    primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43,
-              47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101]
     for word in words:
-        code = 1
-        for c in word:
-            # ord(c) gives the Unicode integer codepoint of c.
-            code *= primes[ord(c) - ord('a')]
-        # All anagrams have the same encoding number, due to the
-        # commutativity of integer multiplication combined with the
-        # Fundamental Theorem of Arithmetic that says every integer
-        # has exactly one prime possible factorization.
+        code = prime_code(word)
+        # All anagrams have the same prime code, thanks to the
+        # commutativity of integer multiplication combined with
+        # the Fundamental Theorem of Arithmetic that says every
+        # integer has exactly one prime possible factorization.
         codes[code] = codes.get(code, []) + [word]
     return codes
 
@@ -342,13 +351,14 @@ def __demo():
             word = choice(elim_dict_list[len(word)][word])
         print(word)
 
-    print("\nLet us compute all anagrams for the six letter words.")
-    words6 = [word for word in words if len(word) == 6]
-    anagrams = all_anagrams(words6)
-    print("The anagram groups with eight or more members are:\n")
+    N, M = 7, 8
+    print(f"\nLet us compute all anagrams for the {N}-letter words.")
+    anagrams = all_anagrams(word for word in words if len(word) == N)
+    print(f"The anagram groups with {M} or more members are:\n")
+
     # Note that anagrams is a dictionary that maps prime codes to
     # lists of words that all have that same prime code.
-    for code in (c for c in anagrams if len(anagrams[c]) >= 6):
+    for code in (c for c in anagrams if len(anagrams[c]) >= M):
         print(", ".join(anagrams[code]))
 
 
