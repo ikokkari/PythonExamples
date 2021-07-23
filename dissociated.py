@@ -1,4 +1,5 @@
 import random
+from itertools import islice
 
 
 # Read through the text and build a dictionary that, for each found
@@ -21,24 +22,22 @@ def build_table(text, n=3, mlen=100):
     return result
 
 
-# Using the previous table, generate m characters of random text.
+# Aided by such table, generate random text one character at the time.
 
-def dissociated_press(table, m, result, maxpat=3):
-    pattern = result[:min(len(result), maxpat)]
-    while m > 0:
-        follow = table.get(pattern, "")
-        if len(follow) > 0:
-            # Choose a random continuation for pattern and result.
-            c = random.choice(follow)
-            result += c
-            pattern += c
-            m -= 1
-            # Shorten the pattern if it grows too long.
-            if len(pattern) > maxpat:
-                pattern = pattern[1:]
-        else:  # Nothing for the current pattern, so shorten it.
+def dissociated_press(table, start, maxpat=3):
+    yield from start
+    pattern = start[-maxpat:]
+    while pattern not in table:
+        pattern = pattern[1:]
+    while True:
+        follow = table[pattern]
+        # Choose a random continuation for pattern and result.
+        c = random.choice(follow)
+        yield c
+        # Update the pattern also, shortening if it grows too long.
+        pattern += c
+        if len(pattern) > maxpat:
             pattern = pattern[1:]
-    return result
 
 
 def __demo():
@@ -49,7 +48,7 @@ def __demo():
     print(f"Table contains {len(table)} entries.")
     for maxpat in range(1, 7):
         print(f"\nRandom text with maxpat value {maxpat}:")
-        text = dissociated_press(table, 600, "A", maxpat)
+        text = "".join(islice(dissociated_press(table, 'Queen', maxpat), 600))
         print(text.replace('\n', ' '))
 
 

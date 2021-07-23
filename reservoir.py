@@ -18,7 +18,7 @@ def reservoir(seq, k):
         if count < k:  # First k elements build up the reservoir.
             buffer.append(v)
         else:
-            idx = randint(0, count)  # Random cannon shot.
+            idx = randint(0, count)  # Others take a random shot.
             if idx < k:  # The new element hits the reservoir.
                 buffer[idx] = v  # Displace some previous element.
     # shuffle(buffer)  # Shuffle the buffer in place.

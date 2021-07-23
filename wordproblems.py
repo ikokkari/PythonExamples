@@ -35,7 +35,7 @@ def rotodromes(words):
     def is_rotodrome(word, wset):
         for i in range(1, len(word)):
             w2 = word[i:] + word[:i]
-            if w2 != word and w2 in wset:
+            if word != w2 and w2 in wset:
                 return True
         return False
     w_set = set(words)
@@ -48,11 +48,11 @@ def rotodromes(words):
 def almost_palindromes(words):
     def almost(word):
         if word != word[::-1]:
-            for i in range(len(word) - 1):
+            for i in range(len(word)):
                 w2 = word[:i] + word[i+1:]
                 if w2 == w2[::-1]:
                     return True
-            return False
+        return False
     return [w for w in words if len(w) > 2 and almost(w)]
 
 
@@ -73,11 +73,11 @@ def rotate_consonants(text, off=1):
         if c in __cons:
             # Location of the next consonant in the consonant list.
             succ = (pos + off) % len(cons_pos)
+            # The consonant that comes into the current position i.
+            sc = text[cons_pos[succ]]
             # Maintain the capitalization.
-            if c.isupper():
-                result += text[cons_pos[succ]].upper()
-            else:
-                result += text[cons_pos[succ]].lower()
+            result += sc.upper() if c.isupper() else sc.lower()
+            # Next consonant and incoming consonant advance in lockstep.
             pos = (pos + 1) % len(cons_pos)
         else:
             # Take the character into result as is.
@@ -228,7 +228,7 @@ def __demo():
     print(f"Read in {len(words)} words.")
 
     # Binary search can quickly find all words with given prefix.
-    for prefix in ["aor", "jims", "propo"]:
+    for prefix in ['aor', 'jims', 'propo']:
         result = []
         idx = bisect_left(words, prefix)
         while idx < len(words) and words[idx].startswith(prefix):
@@ -348,7 +348,7 @@ def __demo():
     print("The anagram groups with eight or more members are:\n")
     # Note that anagrams is a dictionary that maps prime codes to
     # lists of words that all have that same prime code.
-    for code in (c for c in anagrams if len(anagrams[c]) >= 8):
+    for code in (c for c in anagrams if len(anagrams[c]) >= 6):
         print(", ".join(anagrams[code]))
 
 
