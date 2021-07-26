@@ -120,7 +120,7 @@ def display(img, info, cmap='gray_r'):
     plt.show()
 
 
-if __name__ == "__main__":
+def __demo():
     tbl = [  # http://paulbourke.net/fractals/ifs_tree_a/
        (0.1950, -0.4880, 0.3440, 0.4430, 0.4431, 0.2452),
        (0.4620, 0.4140, -0.2520, 0.3610, 0.2511, 0.5692),
@@ -129,11 +129,14 @@ if __name__ == "__main__":
        (-0.0580, -0.0700, 0.4530, -0.1111, 0.5976, 0.0969)
     ]
     display(ifs(1000, 100000, tbl), "IFS Tree", cmap="tab20c")
-    display(avalanche_world(500, 500000, 1, prob=0.3,
-                            pf=partial(np.random.exponential, .5)),
-            "Avalanche", cmap="gray")
-    display(clifford(800, 1000000, -1.4, 1.6, 1.0, 0.7),
-            "Clifford", cmap="plasma")
+    avalanche = avalanche_world(500, 500000, 1, prob=0.3, pf=partial(np.random.exponential, .5))
+    display(avalanche, "Avalanche", cmap="gray")
+    cliffy = clifford(800, 1000000, -1.4, 1.6, 1.0, 0.7)
+    display(cliffy, "Clifford", cmap="plasma")
     display(dejong(800, 1000000, 1.4, -2.3, 2.4, -2.1), "DeJong")
     display(pascal(800, 5), "Pascal", cmap="prism")
     display(pascal(800, 3), "Pascal", cmap="tab20")
+
+
+if __name__ == "__main__":
+    __demo()

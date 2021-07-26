@@ -16,7 +16,7 @@ def build_table(text, n=3, mlen=100):
         # Update the dictionary for each suffix of the current pattern.
         for j in range(n):
             follow = result.get(pattern[j:], "")
-            # Store only the first mlen occurrences of pattern.
+            # Store only the first mlen occurrences of each pattern.
             if len(follow) < mlen:
                 result[pattern[j:]] = follow + next_char
     return result
@@ -34,7 +34,7 @@ def dissociated_press(table, start, maxpat=3):
         # Choose a random continuation for pattern and result.
         c = random.choice(follow)
         yield c
-        # Update the pattern also, shortening if it grows too long.
+        # Update the pattern also, shortening if necessary.
         pattern += c
         if len(pattern) > maxpat:
             pattern = pattern[1:]
