@@ -161,7 +161,8 @@ if __name__ == "__main__":
     def trans(c):
         (cy, cx) = c[0], c[1]
         return (cy + 10*np.sin(.17*cy-.03*cx),
-                cx + 12*(np.cos(-.06*cx) - np.sin(.12*cy)), c[2])
+                cx + 12*(np.cos(-.06*cx) - np.sin(.12*cy)),
+                c[2])
 
     import cmath
     import math

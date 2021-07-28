@@ -41,8 +41,8 @@ print(f"a is now:\n{a!s}")
 # shapes of the two matrices are compatible for that operation.
 
 c = np.array([1, 2, 3, 4, 5, 6])
-c = c.reshape((2, 3))        # shape (2, 3)
-d = np.array([1, 2, 3])      # broadcast into (2, 3)
+c = c.reshape((2, 3))  # shape (2, 3)
+d = np.array([1, 2, 3])  # broadcast into (2, 3)
 print("c + d equals:")
 print(c + d)
 
@@ -52,36 +52,16 @@ v = a > 3  # A truth-valued array from element-wise comparisons.
 print(f"v is now: {v}")
 print(f"a[v] is: {a[v]}")
 
-# Then, onto scipy and its basic functions copied from MATLAB.
 
-# The lower resolution data points from interval [0, 10].
-x = np.linspace(0, 10, 10)
-# The higher resolution data points on same interval [0, 10].
-xx = np.linspace(0, 10, 500)
-
-# Ufuncs again apply to all elements of the array.
-y = 3.2 * np.sin(x*1.4) + .35*x*x
-
-# Interpolation of values between given data points.
-
-# Create a function to represent the interpolation.
-f = scipy.interpolate.interp1d(x, y, kind='cubic')
-# Apply that function to elements on higher resolution.
-yy = f(xx)
-
-plt.figure(1)
-# Classic MATLAB plotting syntax, two plots in the same graph.
-# Good thing that Python functions can handle any number of
-# any type of arguments given to them with *args and **kwargs.
-plt.plot(x, y, 'o', xx, yy, '-')
-plt.show()
-
+# Then, onto scipy and its basic functions in style MATLAB.
 
 # Scipy offers a host of numerical integration functions.
 
+
 # First, let's make up a function to integrate.
+
 def f(x_):
-    return 3.3 * x_ * x_ - np.exp(x_ - 3) * 4.2 * x_ + 1.5 * np.cos(x_)
+    return x_ * (x_ - 4) / (3 + np.cos(2 * (x_ + 1) + 4 * np.sin(x_ / 10)))
 
 
 # Integration, given a function f that works in any single point.
@@ -95,8 +75,35 @@ yy = f(xx)
 print(f"Trapezoidal: {scipy.integrate.trapz(yy, x=xx):.6f}")
 print(f"Simpson: {scipy.integrate.simps(yy, x=xx):.6f}")
 
-# Last, the minimization of some function f. (To maximize f,
+# Next, the minimization of some function f. (To maximize f,
 # you can always simply minimize -f.)
 
 result = scipy.optimize.minimize(f, np.array([0]), method='BFGS')
 print(f"Function is minimized at x = {result.x[0]:.5f}.")
+
+# The lower resolution data points from interval [0, 10].
+x = np.linspace(0, 10, 10)
+# The higher resolution data points on same interval [0, 10].
+xx = np.linspace(0, 10, 500)
+
+# Ufuncs again apply to all elements of the array.
+y = f(x)
+
+# Last, interpolation of values between given data points.
+
+# Create function to represent the interpolation.
+f_linear = scipy.interpolate.interp1d(x, y, kind='linear')
+f_cubic = scipy.interpolate.interp1d(x, y, kind='cubic')
+
+# Apply that function to values on higher resolution.
+y_linear = f_linear(xx)
+y_cubic = f_cubic(xx)
+
+# Create the figure to display.
+plt.figure(1)
+
+# Classic MATLAB plotting syntax, two plots in the same graph.
+# Good thing that Python functions can handle any number of
+# any type of arguments given to them with *args and **kwargs.
+plt.plot(x, y, 'o', xx, y_linear, 'r', xx, y_cubic, 'g')
+plt.show()
