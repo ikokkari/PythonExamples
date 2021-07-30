@@ -3,7 +3,7 @@ from fractions import Fraction
 
 # For the Aronson sequence below
 
-from autogram import int_to_english
+from int_to_english import int_to_english
 
 # The itertools module defines tons of handy functions to perform
 # computations on existing iterators, to be combined arbitrarily.
@@ -35,10 +35,10 @@ from collections import deque
 # It's like that one is a law of some sorts for CS instructors.
 
 
-def fibonacci():
-    yield 1
-    yield 1
-    curr, prev = 2, 1
+def fibonacci(a=1, b=1):
+    yield a
+    yield b
+    curr, prev = a + b, b
     while True:  # Infinite loop for infinite sequence...
         yield curr  # Pause to give out this element.
         curr, prev = curr + prev, curr
@@ -101,10 +101,10 @@ def scale_random(seed, scale, skip):
 # only by the smaller primes found so far.
 
 def primes():
-    _primes = [2, 3, 5, 7, 11]
+    _primes = [2, 3, 5, 7, 11, 13]
     # Handy syntactic sugar for yield inside for-loop
     yield from _primes
-    curr = 13
+    curr = 17
     while True:
         for divisor in _primes:
             if curr % divisor == 0:
@@ -187,7 +187,7 @@ def aronson(letter='t'):
 
 # Let through every k:th element and discard the rest.
 
-def every_kth(seq, k):
+def every_kth(seq, k: int):
     count = k
     for x in seq:
         count -= 1
@@ -200,76 +200,11 @@ def every_kth(seq, k):
 
 def stutter(seq, k):
     for x in seq:
-        for i in range(k):
+        for _ in range(k):
             yield x
 
 
-# Extract all unique permutations of 0, ..., n-1 from sequence,
-# assuming that sequence contains only values in 0, ..., n-1.
-
-def unique_permutations(it, n):
-    # Set of permutations that we have already seen before.
-    seen = set()
-    # Current sublist of n most recent elements.
-    curr = []
-    # Counts of how many times each value occurs in current sublist.
-    counts = [0 for _ in range(n)]
-    # How many of those counts are ones, for quick lookup.
-    ones = 0
-    # Iterate through the values produced by the iterator.
-    for v in it:
-        curr.append(v)
-        # If sublist is too long, shorten it from the front.
-        if len(curr) > n:
-            out = curr[0]  # Make note of the outgoing element.
-            curr = curr[1:]
-            # Update the count for the outgoing element out.
-            counts[out] -= 1
-            if counts[out] == 1:
-                ones += 1
-            elif counts[out] == 0:
-                ones -= 1
-        # Update the count for the current element.
-        counts[v] += 1
-        if counts[v] == 1:
-            ones += 1
-            # If each value occurs exactly once, this is a permutation.
-            if ones == n:
-                currt = tuple(curr)
-                if currt not in seen:
-                    seen.add(currt)
-                    yield currt
-        elif counts[v] == 2:
-            ones -= 1
-
-
-# Since the iterator produces values one at the time, we could
-# analyze sequences too long to fit in memory all at once. First,
-# generator that produces random numbers in 0, ..., n-1 so that
-# a number that was seen recently cannot be emitted this round.
-
-def tabu_generator(n, len_, recent=None):
-    if recent is None:
-        recent = n // 2
-    tabu = []
-    while len_ > 0:
-        v = random.randint(0, n-1)
-        if v not in tabu:
-            yield v
-            tabu.append(v)
-            if len(tabu) > recent:
-                tabu = tabu[1:]
-            len_ -= 1
-
-
 def __demo():
-    # Count how many permutations occur for different values of recent.
-    for recent in range(0, 6):
-        itemgen, total = tabu_generator(8, 10**5, recent), 0
-        for _ in unique_permutations(itemgen, 8):
-            total += 1
-        print(f"With tabu length {recent}, {total} unique permutations.")
-
     # Constructing the shortest possible sequence that contains all
     # permutations of {0, ..., n-1} is an unsolved mathematical problem.
     # Google "greg egan haruhi superpermutation" for an interesting story.
@@ -277,11 +212,6 @@ def __demo():
     # Functions every_kth and stutter cancel each other out.
     print("Collatz sequence starting from 12345 is:")
     print(list(every_kth(stutter(collatz(12345), 3), 3)))
-
-    # Extract the unique permutations from the list.
-    items = [0, 2, 1, 0, 1, 2, 0, 0, 2, 2, 0, 1]
-    print(f"Unique 3-permutations of {items} are:")
-    print(list(unique_permutations(items, 3)))
 
     # Take primes until they become greater than thousand.
     print("Here is every seventh prime number up to one thousand:")
@@ -293,11 +223,11 @@ def __demo():
     print("Here are the first 1000 elements of Kolakoski(3):")
     print("".join((str(x) for x in islice(kolakoski(3), 1000))))
 
-    print("First 2000 characters of modified Aronson infinite t-sentence:")
-    print("".join(islice(aronson(), 2000)))
+    print("First 1000 characters of modified Aronson infinite t-sentence:")
+    print("".join(islice(aronson(), 1000)))
 
-    print("First 2000 characters of modified Aronson infinite e-sentence:")
-    print("".join(islice(aronson('e'), 2000)))
+    print("First 1000 characters of modified Aronson infinite e-sentence:")
+    print("".join(islice(aronson('e'), 1000)))
 
     print("Here are 100 random numbers from increasing scales:")
     print(", ".join((str(x) for x in islice(scale_random(123, 10, 5), 100))))
@@ -311,8 +241,8 @@ def __demo():
         f = f * f
         print(f"{i}: a = {a}, b = {b} error = {float(7 - f):.11}")
 
-    print("For c = 2, terms in even positions of Theon's ladder give")
-    print("us Pythagorean triples whose legs differ by exactly one:")
+    print("For c = 2, terms in even positions of Theon's ladder give precisely")
+    print("the Pythagorean triples whose legs differ by exactly one:")
     for (a, b) in islice(theons_ladder(2), 0, 40, 2):
         h, s, e = b, 1, b
         while s < e:
