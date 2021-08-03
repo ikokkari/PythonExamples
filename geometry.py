@@ -1,6 +1,7 @@
 # "God made the integers; all else is the work of man."
 # -- Leopold Kronecker
 
+import random
 from functools import cmp_to_key
 
 # Computational geometry is that what we can done with nothing
@@ -115,12 +116,12 @@ def point_inside_convex_polygon(poly, p):
 # the polygon edge. Also removes the redundant corner points
 # that connect two consecutive collinear edges.
 
-def convexify(poly, cleanonly=False):
+def convexify(poly, clean_only=False):
     # Initialize the stack with the first polygon edge.
     n, result = len(poly), [poly[0], poly[1]]
 
     def reject(c):
-        return (cleanonly and c == 0) or (not cleanonly and c <= 0)
+        return (clean_only and c == 0) or (not clean_only and c <= 0)
     # Loop through the points and eliminate right turns.
     for i in range(2, n + 1):
         p = poly[i % n]
@@ -177,12 +178,12 @@ def point_inside_polygon(poly, p):
 def demonstrate_picks_theorem(poly):
     area_shoe = polygon_area_twice(poly)
     inside, boundary = 0, 0
-    minx = min((x for (x, y) in poly)) - 1
-    maxx = max((x for (x, y) in poly)) + 1
-    miny = min((y for (x, y) in poly)) - 1
-    maxy = max((y for (x, y) in poly)) + 1
-    for x in range(minx, maxx):
-        for y in range(miny, maxy):
+    min_x = min((x for (x, y) in poly)) - 1
+    max_x = max((x for (x, y) in poly)) + 1
+    min_y = min((y for (x, y) in poly)) - 1
+    max_y = max((y for (x, y) in poly)) + 1
+    for x in range(min_x, max_x):
+        for y in range(min_y, max_y):
             r = point_inside_polygon(poly, (x, y))
             if r == 3:
                 inside += 1
@@ -228,23 +229,24 @@ def convex_hull(pts, clean_only=False):
 # points whose x-distance is less than equal to the current best
 # distance that we have found somewhere.
 
+# Squared Euclidean distance between two points on the plane.
+
 def dist(p1, p2):
     return (p2[0] - p1[0])**2 + (p2[1] - p1[1])**2
 
 
 def closest_points(pts):
     pts.sort()
-    bestd = dist(pts[0], pts[1])
+    best_d = dist(pts[0], pts[1])
     for i in range(2, len(pts)):
         j = i - 1
-        while j >= 0 and pts[i][0] - pts[j][0] < bestd:
-            bestd = min(bestd, dist(pts[i], pts[j]))
+        while j >= 0 and (pts[i][0] - pts[j][0])**2 < best_d:
+            best_d = min(best_d, dist(pts[i], pts[j]))
             j -= 1
-    return bestd
+    return best_d
 
 
 def __demo():
-    import random
 
     print("Let us compute the convex hull of a big grid.")
     pts = [(x, y) for x in range(100) for y in range(100)]
@@ -274,15 +276,15 @@ def __demo():
     demonstrate_picks_theorem(hull)
 
     print("Let's verify the point in convex polygon shortcut.")
-    allok = True
+    all_ok = True
     for x in range(0, m):
         for y in range(0, m):
             in1 = point_inside_polygon(hull, (x, y))
             in2 = point_inside_convex_polygon(hull, (x, y))
             if in1 != in2:
                 print(f"Discrepancy at {(x,y)}: {in1} {in2}")
-                allok = False
-    if allok:
+                all_ok = False
+    if all_ok:
         print("Both functions returned the same answers.")
 
 
