@@ -2,13 +2,11 @@
 # -- Leopold Kronecker
 
 from functools import cmp_to_key
-from math import sqrt
 
 # Computational geometry is that what we can done with nothing
 # but integers and their basic arithmetic operations. No trig
 # or anything that could not be done with integers is needed,
 # and yet we can do surprisingly much on the 2D plane.
-
 
 # First, compute the signed 2D cross product of vectors
 # p2-p1 and p3-p1 defined by three points p1, p2 and p3. This
@@ -16,13 +14,14 @@ from math import sqrt
 # negative if the turn p1:p2:p3 is right-handed, and zero if
 # the points are collinear.
 
+
 def cross(p1, p2, p3):
     (x1, y1), (x2, y2), (x3, y3) = p1, p2, p3
     return (x2 - x1) * (y3 - y1) - (y2 - y1) * (x3 - x1)
 
-# The magnitude of the cross product is equal to the area of
-# the parallelogram defined by the corner points p1, p2 and p3.
-# The area of the triangle is therefore exactly half of that.
+# The magnitude of the cross product is equal to the area of the
+# parallelogram defined by the corner points p1, p2 and p3. The
+# area of the triangle is therefore exactly half of that.
 
 # The rest of the functions that operate on plane polygons assume
 # that the corner points are given in counterclockwise order.
@@ -63,23 +62,23 @@ def line_segment_intersect(p0, p1, p2, p3):
     (x0, y0), (x1, y1), (x2, y2), (x3, y3) = p0, p1, p2, p3
 
     # Bounding box quick rejection check.
-    bb = max(x0, x1) < min(x2, x3) or max(x2, x3) < min(x0, x1)
-    bb = bb or max(y0, y1) < min(y2, y3) or max(y2, y3) < min(y0, y1)
-
-    if bb:
+    if max(x0, x1) < min(x2, x3) or max(x2, x3) < min(x0, x1):
         return False
+    if max(y0, y1) < min(y2, y3) or max(y2, y3) < min(y0, y1):
+        return False
+
     # The turns (p0:p1:p2) and (p0:p1:p3) must have opposite signs.
     s1 = __sign(cross(p0, p1, p2))
     s2 = __sign(cross(p0, p1, p3))
     if s1 < 0 and s2 < 0 or s1 > 0 and s2 > 0:
         return False
+    # It's important to check the crossing in both directions.
     s1 = __sign(cross(p2, p3, p0))
     s2 = __sign(cross(p2, p3, p1))
-    return (s1 >= 0 >= s2) or (s1 <= 0 <= s2)
+    return not(s1 < 0 and s2 < 0 or s1 > 0 and s2 > 0)
 
 
-# To check whether the given polygon is convex, check that on the
-# the route along the polygon edge, every turn is left-handed.
+# An polygon is convex iff every turn along its edge is same-handed.
 
 def polygon_is_convex(poly):
     p1, p2 = poly[-1], poly[-2]
@@ -230,7 +229,7 @@ def convex_hull(pts, clean_only=False):
 # distance that we have found somewhere.
 
 def dist(p1, p2):
-    return sqrt((p2[0] - p1[0])**2 + (p2[1] - p1[1])**2)
+    return (p2[0] - p1[0])**2 + (p2[1] - p1[1])**2
 
 
 def closest_points(pts):
