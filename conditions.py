@@ -7,7 +7,9 @@ def sign(a):
         return 0
 
 
-# Three functions to find the median.
+# Three different ways to find the median. Note that in the first one,
+# operator <= is necessary, whereas in the second one, < is correct.
+# Why is this so?
 
 def median(a, b, c):
     if a <= b <= c or c <= b <= a:
@@ -30,7 +32,7 @@ def median_other_way(a, b, c):
 # Integer arithmetic can sometimes do the job of logical
 # decisions. Unlike Trix, integers are not just for kids.
 
-def median_arithmetic(a, b, c):
+def median_using_arithmetic(a, b, c):
     return a + b + c - min(a, b, c) - max(a, b, c)
 
 
@@ -43,7 +45,8 @@ def days_in_month(m, leap_year=False):
         # One-liner choice between two values
         return 29 if leap_year else 28
     else:
-        return 30 if (m in (4, 6, 9, 11)) else 31
+        # Canonical way to check if m is member of a known handful
+        return 30 if m in (4, 6, 9, 11) else 31
 
 
 # Three functions to solve the same problems of determining
@@ -74,6 +77,7 @@ def test_leap_year():
         a1 = is_leap_year(y)
         a2 = is_leap_year_another_way(y)
         a3 = is_leap_year_with_logic(y)
+        # Chaining comparison operators works also for equality.
         if not (a1 == a2 == a3):  # a1 != a2 or a2 != a3:
             return False  # Tear it down and start again.
     return True           # I am pleased where man has been.

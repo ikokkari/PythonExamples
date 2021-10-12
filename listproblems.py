@@ -1,42 +1,58 @@
 from math import sqrt
+from fractions import Fraction
 import heapq
+
 
 # Given a sorted list of items, determine whether it contains two
 # elements that exactly add up to goal. If parameters i and j are
-# given, search only within the subarray from i up to j, inclusive.
+# given, search only within the sublist from i up to j, inclusive.
 
+# This is an example of technique known as "two pointers". Two
+# position indices start from the beginning and end of sequence.
+# Each round, one of these indices moves towards the other one,
+# maintaining the assumption that if the sequence contained the
+# solution in the first place, a solution still remains between
+# these indices. Eventually, either a solution will be found, or
+# the indices meet in the middle and reduce the problem to its
+# trivial base case.
 
 def two_summers(items, goal, i=0, j=None):
-    j = j if j is not None else len(items)-1
+    j = len(items)-1 if j is None else j
     while i < j:
         x = items[i] + items[j]
         if x == goal:
-            return True
+            return True  # Okay, that's a solution.
         elif x < goal:
-            i += 1
+            i += 1  # Smallest element can't be part of solution.
         else:
-            j -= 1
+            j -= 1  # Largest element can't be part of solution.
     return False
 
+# For more applications of the "two pointers" idea, see e.g.
+# https://codeforces.com/problemset/page/1?tags=two+pointers
 
 # In the graded labs, solve the classic problem of three_summers
-# in which you need to find three elements that add up to the goal.
+# where you need to find three elements that add up to the goal.
+
 
 # Modify the list s in place so that all elements for which the
 # given predicate pred is true are in the front in some order,
 # followed by the elements for which pred is false, in some order.
 
-def partition(s, pred):
-    i1, i2 = 0, len(s) - 1
+def partition_in_place(s, pred):
+    # Elements from position i to j, inclusive, can be anything.
+    # Anything to left of i is acceptable, anything to the right
+    # of j is unacceptable. When i == j, all is well.
+    i, j = 0, len(s) - 1
     # Each round, one of the indices takes a step towards other.
-    while i1 < i2:
+    while i < j:
         # If s[i1] satisfies the predicate, leave it be...
-        if pred(s[i1]):
-            i1 += 1
+        if pred(s[i]):
+            i += 1
         else:
             # Otherwise, swap it to the end
-            s[i1], s[i2] = s[i2], s[i1]
-            i2 -= 1
+            s[i], s[j] = s[j], s[i]
+            j -= 1
     # Note that for list of n elements, pred is called exactly
     # n-1 times. This can be valuable if pred is expensive.
     return s
@@ -85,18 +101,23 @@ def dissimilarity(first, second, kind='yule'):
     except ZeroDivisionError:
         return 0
 
+
 # Let us calculate how the congressional seats are divided over states
 # whose populations (in millions) are given in the parameter list pop.
 # The classic Huntington-Hill algorithm creates the fairest possible
 # allocation under the constraint that every state gets some integer
 # number of seats.
 
+# Instead of the usual priority formula pop / sqrt(s*(s+1)) that needs
+# floating point functions and square roots, we square the priority to
+# the form (pop * pop) / (s * (s+1)) that we can handle exactly as an
+# integer Fraction.
 
 def apportion_congress_seats(seats, pop):
     # List of seats assigned to each state, initially one per state.
     result = [1 for _ in pop]
     # List of states and their current priorities.
-    pq = [(-p / sqrt(2), i) for (i, p) in enumerate(pop)]
+    pq = [(Fraction(-p*p, 2), i) for (i, p) in enumerate(pop)]
     # Organize the list into a priority queue.
     heapq.heapify(pq)
     seats -= len(pop)
@@ -107,15 +128,15 @@ def apportion_congress_seats(seats, pop):
         # That state receives one more seat.
         result[state] += 1
         # Update the priority of that state and put it back to queue.
-        newpq = -pop[state] / sqrt(result[state] * (result[state] + 1))
-        heapq.heappush(pq, (newpq, state))
+        new_pq = Fraction(-pop[state] * pop[state], result[state] * (result[state] + 1))
+        heapq.heappush(pq, (new_pq, state))
         seats -= 1
     return result
 
 
 def __demo():
     print("Partitioning integers from 1 to 10, unstable:")
-    print(partition(list(range(1, 11)), lambda x: x % 2 == 0))
+    print(partition_in_place(list(range(1, 11)), lambda x: x % 2 == 0))
     print("Partitioning integers from 1 to 10, stable:")
     print(stable_partition(list(range(1, 11)), lambda x: x % 2 == 0))
 
@@ -136,15 +157,36 @@ def __demo():
         o2 = "".join([str(x) for x in v2])
         print(f"{o1} {o2} {res}")
 
-    # A small pretend nation with five states and 100 seats.
-    pops = [32, 22, 14, 8, 5]
-    seats = apportion_congress_seats(100, pops)
-    print(f"\nCongressonal seats for {pops} are given as {seats}.")
+    # https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_population
+    # April 2020 census data, 50 states + DC
+    us_states = [('AL', 5024279), ('AK', 733391), ('AZ', 7151502), ('AR', 3011524),
+          ('CA', 39538223), ('CO', 5773714), ('CT', 3605944), ('DE', 989948),
+          ('DC', 689545), ('FL', 21538187), ('GA', 10711908), ('HI', 1455271),
+          ('ID', 1839106), ('IL', 12812508), ('IN', 6785528), ('IA', 3190369),
+          ('KS', 2937880), ('KY', 4505836), ('LA', 4657757), ('ME', 1362359),
+          ('MD', 6177224), ('MA', 7029917), ('MI', 10077331), ('MN', 5706494),
+          ('MS', 2961279), ('MT', 1084225), ('MO', 6154913), ('NE', 1961504),
+          ('NV', 3104614), ('NH', 1377529), ('NJ', 9288994), ('NM', 2117522),
+          ('NY', 20201249), ('NC', 10439388), ('ND', 779094), ('OH', 11799448),
+          ('OK', 3959353), ('OR', 4237256), ('PA', 13002700), ('RI', 1097379),
+          ('SC', 5118425), ('SD', 886667), ('TN', 6910840), ('TX', 29145505),
+          ('UT', 3271616), ('VT', 643077), ('VA', 8631393), ('WA', 7705281),
+          ('WV', 1793716), ('WI', 5893718), ('WY', 576851)
+    ]
+
+    us_congress = apportion_congress_seats(435, [pop for (_, pop) in us_states])
+    us_congress = [(abbr, seats) for ((abbr, _), seats) in zip(us_states, us_congress)]
+    print("\nU.S. House of Representatives, seats according to April 2020 census:")
+    for (i, (abbr, seats)) in enumerate(us_congress):
+        print(f"{abbr}:{seats:-3d}", end=('\n' if i % 8 == 7 else '   '))
+
     # The Huntington-Hill algorithm can also be used to compute optimal
     # rounded percentages so that the percentages add up to exactly 100.
-    print(f"\nFor comparison, rounded percentages of {pops}:")
+    # Demonstrate this with some made-up data values:
+    pops = [42, 33, 17, 11, 8, 7, 2]
+    print(f"\n\nFor comparison, rounded percentages of {pops}:")
     pct = apportion_congress_seats(1000, pops)
-    # These rounded percentages will add up to exactly 100.
+    # Rounded percentages are guaranteed to add up to exactly 100.
     print(", ".join([f"{p/10:.1f}" for p in pct]))
 
 

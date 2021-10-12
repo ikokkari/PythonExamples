@@ -4,9 +4,8 @@ from itertools import combinations
 # Define the suits and ranks that a deck of playing cards is made of.
 
 suits = ['clubs', 'diamonds', 'hearts', 'spades']
-ranks = {'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6,
-         'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10,
-         'jack': 11, 'queen': 12, 'king': 13, 'ace': 14}
+ranks = {'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8,
+         'nine': 9, 'ten': 10, 'jack': 11, 'queen': 12, 'king': 13, 'ace': 14}
 
 deck = [(rank, suit) for suit in suits for rank in ranks]
 
@@ -26,15 +25,10 @@ def deal_hand(n, taken=None):
 
 def gin_count_deadwood(hand):
     """Count the deadwood points of leftover cards in gin rummy."""
-    count = 0
-    for (rank, suit) in hand:
-        v = ranks[rank]
-        if v == 14:
-            v = 1
-        elif v > 10:
-            v = 10
-        count += v
-    return count
+    total = 0
+    for (suit, rank) in hand:
+        total += 1 if ranks[rank] == 14 else min(ranks[rank], 10)
+    return total
 
 
 def blackjack_count_value(hand):
@@ -43,7 +37,7 @@ def blackjack_count_value(hand):
     and 21 made with three or more cards, and whether the hand is
     soft or hard."""
     total = 0  # Current point total of the hand
-    soft = 0  # Number of soft aces in the current hand
+    soft = 0   # Number of soft aces in the hand
     for (rank, suit) in hand:
         v = ranks[rank]
         if v == 14:  # Treat every ace as 11 to begin with
@@ -62,11 +56,11 @@ def blackjack_count_value(hand):
 
 def poker_has_flush(hand):
     """Determine if the five card poker hand has a flush."""
-    suit = None
-    for (r, s) in hand:
-        if suit is None:
-            suit = s
-        elif suit != s:
+    look_for = None
+    for (_, suit) in hand:
+        if look_for is None:
+            look_for = suit
+        elif look_for != suit:
             return False
     return True
 
@@ -75,13 +69,13 @@ def count_rank_pairs(hand):
     """Utility function that allows us quickly determine the
     rank shape of the hand. Count how many pairs of identical
     ranks exist inside the hand, comparing each card to the
-    ones after it. Instead of two nested for-loops, this uses
-    itertool.combinations for clarity."""
+    ones after it. Instead of two nested for-loops, we use
+    itertools.combinations for brevity and clarity."""
     count = 0
-    for ((r1, s1), (r2, s2)) in combinations(hand, 2):
-        if r1 == r2:
-            count += 1
+    for ((r1, _), (r2, _)) in combinations(hand, 2):
+        count += int(r1 == r2)  # Truth value becomes 0 or 1
     return count
+
 
 # The previous function makes all the following functions trivial.
 
@@ -105,10 +99,10 @@ def poker_two_pair(hand):
 def poker_one_pair(hand):
     return count_rank_pairs(hand) == 1
 
+
 # Of the possible poker ranks, straight is the trickiest to check when
 # the hand is unsorted. Also, ace can work either as highest or lowest
 # card inside a straight.
-
 
 def poker_has_straight(hand):
     # If a hand has any pairs, it is not a straight.
@@ -116,14 +110,14 @@ def poker_has_straight(hand):
         return False
     # We know now that the hand has no pairs.
     hand_ranks = [ranks[rank] for (rank, _) in hand]
-    min_rank = min(hand_ranks)
-    max_rank = max(hand_ranks)
+    min_rank, max_rank = min(hand_ranks), max(hand_ranks)
     if max_rank == 14:  # Special cases for ace straights
         if min_rank == 10:
             return True  # AKQJT
-        return all(x in hand_ranks for x in [2, 3, 4, 5])  # A2345
+        return all(rank in hand_ranks for rank in [2, 3, 4, 5])  # A2345
     else:
         return max_rank - min_rank == 4
+
 
 # Straight flushes complicate the hand rankings a little bit.
 
@@ -143,8 +137,7 @@ def poker_straight_flush(hand):
 # "Sometimes nothing can be a pretty cool hand."
 
 def poker_high_card(hand):
-    return count_rank_pairs(hand) == 0 and not poker_has_flush(hand)\
-           and not poker_has_straight(hand)
+    return count_rank_pairs(hand) == 0 and not poker_has_flush(hand) and not poker_has_straight(hand)
 
 # In fact, there are not too many five card hands (since there are
 # exactly choose(52, 5) = 2,598,960) for us to loop through to make
@@ -156,19 +149,19 @@ def evaluate_all_poker_hands():
     funcs = [poker_one_pair, poker_two_pair, poker_three_of_kind,
              poker_straight, poker_flush, poker_full_house,
              poker_four_of_kind, poker_straight_flush]
-    counters = [0] * len(funcs)
+    counters = [0 for _ in funcs]
     for hand in combinations(deck, 5):
         for (i, f) in enumerate(funcs):
             if f(hand):
                 counters[i] += 1
                 break  # No point looking for more for this hand
-        else:   # else-block after loop is executed if no break occurs
+        else:  # else-block after loop is executed if no break occurs
             counters[-1] += 1  # None of the above, therefore high card
     return [(f.__name__, counters[i]) for (i, f) in enumerate(funcs)]
 
 
-# Compute the resulting score of a made contract in the game
-# of contract bridge.
+# Compute the resulting score of a made contract in contract bridge.
+
 def bridge_score(suit, level, vul, dbl, made):
     mul = {'X': 2, 'XX': 4}.get(dbl, 1)
     score, bonus = 0, 0

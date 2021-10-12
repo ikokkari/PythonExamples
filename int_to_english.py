@@ -70,12 +70,17 @@ def int_to_english(n):
 def __int_to_english_demo():
     for x in [42, 3**7, 6**20, -(2**100), 9**200, 10**500 + 1]:
         print(f"{x} written in English is {int_to_english(x)}.")
-    print("\nHere are integers 0-100 sorted in alphabetical order:")
-    print([int_to_english(n) for n in sorted(range(0, 101), key=int_to_english)])
-    print("\nHere are integers 0-100 sorted by their name lengths:")
-    print([int_to_english(n) for n in sorted(range(0, 101), key=lambda n: (len(int_to_english(n)), n))])
-    print("\nHere are integers 0-1000 whose name does not contain 'o':")
-    print([x for x in range(1001) if 'o' not in int_to_english(x)])
+    alpha = ', '.join([int_to_english(n) for n in sorted(range(0, 101), key=int_to_english)])
+    by_length = [int_to_english(n) for n in sorted(range(0, 101),
+                                                   key=lambda n: (len(int_to_english(n)), n))]
+    by_length = ', '.join(by_length)
+    no_os = ', '.join([str(x) for x in range(1001) if 'o' not in int_to_english(x)])
+    print("\nIntegers 0-100 sorted in alphabetical order:")
+    print(alpha)
+    print("\nIntegers 0-100 sorted by their name lengths:")
+    print(by_length)
+    print("\nIntegers 0-1000 whose name does not contain letter 'o':")
+    print(no_os)
 
 
 if __name__ == '__main__':
