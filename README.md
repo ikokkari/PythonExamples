@@ -1,6 +1,6 @@
 # Python Examples
 
-Example programs from the course CCPS 109 Computer Science I, as taught by [Ilkka Kokkarinen](http://www.scs.ryerson.ca/~ikokkari/) for the Chang School of Continuing Education, Ryerson University, Toronto, Canada.
+Example programs from the course CCPS 109 Computer Science I, as taught by [Ilkka Kokkarinen](http://www.scs.ryerson.ca/~ikokkari/) for the Chang School of Continuing Education, Toronto Metropolitan University, Canada.
 
 The outline for the course is in [CCPS 109 Modules.pdf](https://github.com/ikokkari/PythonExamples/blob/master/CCPS%20109%20Modules.pdf).
 
