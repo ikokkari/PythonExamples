@@ -116,26 +116,29 @@ def primes():
         curr += 2
 
 
-# Theon's Ladder, devised by Theon of Smyrna (ca. 140 B.C), is a series
-# of rational numbers that converge to square root of two. This method
-# generalizes for the square roots of any integer c. This generator
-# produces two-tuples (a, b) that denote the numerator and denominator
-# of that fraction, the infinite sequence converges to square root of n.
+# Theon's Ladder, devised by Theon of Smyrna (ca. 140 B.C), is a sequence
+# of rational numbers that converges to square root of two. This method
+# generalizes for the square roots of any integer n. This generator
+# produces Fractions a/b that denote the numerator and denominator
+# of that fraction. The infinite sequence of Fraction(a, b) converges
+# rapidly to the square root of n.
 
 def theons_ladder(n=2, a=1, b=1):
     while True:
-        yield a, b
+        f = Fraction(a, b)
+        yield f
+        # Let the Fraction class simplify these numbers.
+        a, b = f.numerator, f.denominator
         # Original Theon's ladder was just n = 2.
         a, b = a + n * b, a + b
 
 
-# The next technique comes handy sometimes. Iterate through all
-# pairs of the form (a, b) where a and b are nonnegative integers
-# so that every such pair is visited exactly once.
+# The next technique comes handy sometimes. Iterate through all integer
+# pairs of the form (a, b) where a and b are nonnegative integers so
+# that every such pair is visited exactly once.
 
 def all_pairs():
-    s = 0
-    # In each antidiagonal of the infinite 2D grid, a + b == s.
+    s = 0  # In each antidiagonal of the infinite 2D grid, a + b == s.
     while True:
         for a in range(0, s + 1):
             yield a, s - a
@@ -205,9 +208,6 @@ def stutter(seq, k):
 
 
 def __demo():
-    # Constructing the shortest possible sequence that contains all
-    # permutations of {0, ..., n-1} is an unsolved mathematical problem.
-    # Google "greg egan haruhi superpermutation" for an interesting story.
 
     # Functions every_kth and stutter cancel each other out.
     print("Collatz sequence starting from 12345 is:")
@@ -236,20 +236,19 @@ def __demo():
     print(", ".join((str(x) for x in islice(scale_random(123, 5, 10), 100))))
 
     print("Let us examine Theon's ladder for square root of 7.")
-    for i, (a, b) in enumerate(islice(theons_ladder(7), 30)):
-        f = Fraction(a, b)
-        f = f * f
-        print(f"{i}: a = {a}, b = {b} error = {float(7 - f):.11}")
+    for i, f in enumerate(islice(theons_ladder(7), 50)):
+        print(f"{i}: a = {f.numerator}, b = {f.denominator} error = {float(7 - f*f):.11}")
 
     print("For c = 2, terms in even positions of Theon's ladder give precisely")
     print("the Pythagorean triples whose legs differ by exactly one:")
-    for (a, b) in islice(theons_ladder(2), 0, 40, 2):
+    for f in islice(theons_ladder(2), 0, 40, 2):
+        a, b = f.numerator, f.denominator
         h, s, e = b, 1, b
         while s < e:
-            m = (s + e) // 2
+            m = (s+e) // 2
             v = m**2 + (m+1)**2
-            if v < h * h:
-                s = m + 1
+            if v < h*h:
+                s = m+1
             else:
                 e = m
         print(f"({s}, {s+1}, {h})", end=" ")
@@ -271,13 +270,13 @@ def __demo():
     n = 4   # Try also 5 or 6.
 
     print(f"Here are all possible permutations of {list(range(1, n+1))}.")
-    print(list(permutations(range(1, n + 1))))
+    print(list(permutations(range(1, n+1))))
 
     print(f"Here are all possible 3-combinations of {list(range(1, n+1))}.")
-    print(list(combinations(range(1, n + 1), 3)))
+    print(list(combinations(range(1, n+1), 3)))
 
     print(f"Here are all possible 3-multicombinations of {list(range(1, n+1))}.")
-    print(list(combinations_with_replacement(range(1, n + 1), 3)))
+    print(list(combinations_with_replacement(range(1, n+1), 3)))
 
 
 # For good examples of iterators and generators in action, check
