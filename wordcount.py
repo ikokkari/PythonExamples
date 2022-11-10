@@ -45,18 +45,21 @@ with open('warandpeace.txt', encoding="utf-8") as wap:
         # Raw strings are handy for regexes.
         line = re.sub(r"'s\b", "", line)
         line = re.sub(r"'ll\b", " will", line)
+        line = re.sub(r"'t\b", "", line)
         # Process the individual words in the line.
         for word in word_separators.split(line):
             if len(word) > 0:
                 words[word] = words.get(word, 0) + 1
 
-print("Here are some individual word counts.")
-for w in ('prince', 'russia', 'you', 'supercalifragilisticexpialidocious'):
-    print(f"The word {w!r} occurs {words.get(w, 0)} times.")
+print(f"Found {len(words)} distinct words.\n")
+
+print("Some occurrence counts are:")
+for word in ('chicken', 'prince', 'russia', 'train', 'i', 'supercalifragilisticexpialidocious'):
+    print(f"{word}: {words.get(word, 0)}")
 
 # Turn a dictionary into a list of its items as (value, key) tuples.
 # Dictionary method items() produces sequence of (key, value) pairs,
-# but swapping these is trivial with a list comprehension.
+# but swapping these components is trivial with a list comprehension.
 
 words_list_f = [(c, w) for (w, c) in words.items()]
 
@@ -70,7 +73,7 @@ words_list_f = sorted(words_list_f, reverse=True)
 # Extract the sorted words into a separate list, dropping the counts.
 words_list = [w for (c, w) in words_list_f]
 
-print("\nThe 300 most frequent words in War and Peace are:")
+print("\nThe three hundred most frequent words in War and Peace are:")
 print(", ".join(words_list[:300]))
 
 once = list(reversed([w for w in words_list if words[w] == 1]))
