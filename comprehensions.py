@@ -58,7 +58,7 @@ print(e[5], e[55])
 
 # Squares of the first googol integers.
 
-h = (x * x for x in range(10 ** 100))
+h = (x*x for x in range(10 ** 100))
 
 # Notice how we didn't run out of memory. Many functions that operate
 # on iterators are smart enough to stop once they know the answer, so
@@ -85,10 +85,10 @@ words = ["hello", "ilkka"]
 print(list(five))  # ['hello']
 
 # The Python functions all and any can be used to check if any or
-# all elements of a sequence, produced either with comprehension
-# or not, have some desired property. (Note that for empty sequence,
-# all is trivially true, and any is trivially false, regardless of
-# the condition used.)
+# all elements of a sequence, produced either with a comprehension
+# or something else, have some desired property. (Note that for empty
+# sequence, all is trivially true, and any is trivially false,
+# regardless of the condition used.)
 
 print(f"Is the number 29 a prime number? {not any(g1)}")
 print(f"Is the number 45 a prime number? {not any (g2)}")
@@ -100,7 +100,7 @@ print(f"Does the string {text!r} contain any spaces? {any(s)}")
 # An inner comprehension can be nested inside the evaluation of an outer
 # comprehension, to produce a sequence whose elements are sequences.
 
-u1 = [[x for x in range(n + 1)] for n in range(10)]
+u1 = [[x for x in range(n+1)] for n in range(10)]
 print(u1)
 
 # This technique allows us to partition a sequence into another sequence
@@ -108,12 +108,10 @@ print(u1)
 
 # Overlapping sequences of 3 consecutive elements by having the range
 # of n skip by default 1.
-u2 = [" ".join([words[x] for x in range(n, n + 3)])
-      for n in range(len(words) - 2)]
+u2 = [" ".join([words[x] for x in range(n, n+3)]) for n in range(len(words)-2)]
 print(u2)
 
 # Non-overlapping sequences of 3 consecutive elements by having the
 # range of n skip by 3.
-u3 = [" ".join([words[x] for x in range(n, n + 3)])
-      for n in range(0, len(words) - 2, 3)]
+u3 = [" ".join([words[x] for x in range(n, n+3)]) for n in range(0, len(words)-2, 3)]
 print(u3)

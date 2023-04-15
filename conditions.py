@@ -72,12 +72,17 @@ def is_leap_year_with_logic(y):
     return y % 4 == 0 and (y % 100 != 0 or y % 400 == 0)
 
 
+# Sneak preview of for-loops to iterate through the elements of the given
+# sequence. Verify that all three functions for leap year testing give the
+# same answer to all years ranging between those mentioned in the famous
+# song "In the year 2525" by Zager & Evans.
+
 def test_leap_year():
     for y in range(2525, 9596):
         a1 = is_leap_year(y)
         a2 = is_leap_year_another_way(y)
         a3 = is_leap_year_with_logic(y)
-        # Chaining comparison operators works also for equality.
+        # Chaining comparison operators works for equality just as well.
         if not (a1 == a2 == a3):  # a1 != a2 or a2 != a3:
-            return False  # Tear it down and start again.
-    return True           # I am pleased where man has been.
+            return False  # "Tear it down and start again."
+    return True           # "I am pleased where man has been."

@@ -1,4 +1,3 @@
-from math import sqrt
 from fractions import Fraction
 import heapq
 
@@ -43,8 +42,8 @@ def partition_in_place(s, pred):
     # Elements from position i to j, inclusive, can be anything.
     # Anything to left of i is acceptable, anything to the right
     # of j is unacceptable. When i == j, all is well.
-    i, j = 0, len(s) - 1
-    # Each round, one of the indices takes a step towards other.
+    i, j = 0, len(s)-1
+    # Each round, one of the indices takes a step towards the other.
     while i < j:
         # If s[i1] satisfies the predicate, leave it be...
         if pred(s[i]):

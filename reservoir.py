@@ -1,5 +1,4 @@
-from random import randint, shuffle
-
+from random import Random
 
 # Randomly choose k elements from given sequence. This algorithm
 # proceeds in "online" fashion in that it looks each element of
@@ -10,18 +9,23 @@ from random import randint, shuffle
 # of elements in such small memory space, and yet here we are.
 
 # Sequence can be either eager or lazy: since we only access it
-# with for-loop, either way works and we don't need anything else.
+# with for-loop, either way works, and we don't need anything else.
 
-def reservoir(seq, k):
+
+def reservoir(seq, k, rng=None, shuffle=True):
+    # When using random numbers, hardcode the seed to make results reproducible.
+    if not rng:
+        rng = Random(12345)
     lounge = []
     for (count, v) in enumerate(seq):
         if count < k:  # First k elements build up the reservoir.
             lounge.append(v)
         else:
-            idx = randint(0, count)  # Others take a random shot.
+            idx = rng.randint(0, count)  # Others take a random shot.
             if idx < k:  # The new element hits the reservoir.
                 lounge[idx] = v  # Displace some previous element.
-    shuffle(lounge)  # Shuffle the buffer in place.
+    if shuffle:
+        rng.shuffle(lounge)  # Shuffle the buffer in place.
     yield from lounge  # All done, so emit the reservoir.
 
 
@@ -32,8 +36,7 @@ def reservoir(seq, k):
 def __demo():
     print("Here are 20 random non-short lines from 'War and Peace':")
     with open('warandpeace.txt', encoding='utf-8') as wap:
-        chosen = enumerate(reservoir((line for line in wap if len(line) > 60), 20))
-        for (idx, line) in chosen:
+        for (idx, line) in enumerate(reservoir((line for line in wap if len(line) > 60), 20)):
             print(f"{idx:2}: {line}", end='')
 
 

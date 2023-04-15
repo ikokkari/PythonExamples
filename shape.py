@@ -1,16 +1,17 @@
 from abc import ABC, abstractmethod
 from math import pi
-from random import randint
+from random import Random
 
 # Making your class extend ABC forbids creation of objects. This
 # type serves as abstract superclass that guarantees that every
 # subclass that will ever exist will have certain methods in them.
 
 # Shape hierarchy is a standard example of class inheritance, other
-# than the Animal class hierarchy, both quite a bit cliched. But all
-# cliches became cliches in the first place by being so good that
+# than the Animal class hierarchy, both quite a bit clichéd. But all
+# clichés became clichés in the first place by being so good that
 # everybody and their brother kept using them!
 
+rng = Random(12345)
 
 class Shape(ABC):
 
@@ -148,7 +149,7 @@ def __demo():
     # Lambdas can be defined to take no parameters, thus behaving
     # essentially as data.
     c.name = lambda: "Bob"
-    c.area = lambda: randint(1, 100)
+    c.area = lambda: rng.randint(1, 100)
     print(f"\nObject c is now: {c}")  # Bob
     print(f"Object d is now: {d}")    # behaves normally
 

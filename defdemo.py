@@ -1,6 +1,6 @@
 from itertools import accumulate
 from math import log
-import random
+from random import Random
 
 # When we are building complex programs, or just a library of
 # useful code for other programmers to use as part of their
@@ -8,6 +8,11 @@ import random
 # function of your own, you have to define the parameters it
 # expects, followed by a code block telling what you do with
 # those parameters.
+
+# When using random numbers, hardcode the seed to make results reproducible.
+
+rng = Random(12345)
+
 
 # Factorial of n is the product of positive integers up to n.
 
@@ -17,7 +22,7 @@ def factorial(n):
     n -- The positive integer whose factorial is computed.
     """
     total = 1
-    for i in range(2, n + 1):
+    for i in range(2, n+1):
         total *= i
     return total
 
@@ -28,9 +33,9 @@ def factorial(n):
 # had been extended to have the factorial function:
 
 
-print(factorial(5))
-print(factorial(10))
-print(factorial(100))
+print(f"Factorial of 5 equals {factorial(5)}")
+print(f"Factorial of 20 equals {factorial(20)}")
+print(f"Factorial of 100 equals {factorial(100)}")
 
 # docstring is automatically placed in object under name __doc__
 print(factorial.__doc__)
@@ -43,12 +48,11 @@ print(factorial.__doc__)
 # assigned to point some place else.
 
 f = factorial    # copy a reference to the function object
-factorial_30 = f(30)   # make an actual function call
-print(factorial_30)    # 265252859812191058636308480000000
+print(f"Factorial of 30 equals {f(30)}")
 
 # All right, that out of the way, let's write some more functions that
 # operate on lists. First, find the largest element in the list. We do
-# this by iterating over the elements of the list
+# this first by explicitly iterating over the elements of the list.
 
 
 def maximum(seq):
@@ -115,7 +119,7 @@ print(select_upsteps([4, 8, 3, 7, 9, 1, 2, 5, 6]))
 def leading_digit_list(n):
     prod = 1  # The current factorial
     digits = [0] * 10  # Create a list full of zeros
-    for i in range(1, n + 1):
+    for i in range(1, n+1):
         lead = int(str(prod)[0])  # Extract highest order digit
         digits[lead] += 1
         prod = prod * i  # Next factorial, from the current one
@@ -188,7 +192,7 @@ def roll_dice(rolls, faces=6):
     """
     total = 0
     for x in range(rolls):
-        total += random.randint(1, faces)
+        total += rng.randint(1, faces)
     return total
 
 

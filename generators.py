@@ -1,4 +1,4 @@
-import random
+from random import Random
 from fractions import Fraction
 
 # For the Aronson sequence below
@@ -8,8 +8,7 @@ from int_to_english import int_to_english
 # The itertools module defines tons of handy functions to perform
 # computations on existing iterators, to be combined arbitrarily.
 
-from itertools import takewhile, islice, permutations,\
-     combinations, combinations_with_replacement
+from itertools import takewhile, islice, permutations, combinations, combinations_with_replacement
 
 # The "double-ended queue" or "deque" allows efficient push
 # and pop operations from both ends of the queue, whereas a
@@ -73,7 +72,7 @@ def collatz(start):
             start = 3 * start + 1
 
 
-# A generator that produces random integers with an ever increasing
+# A generator that produces random integers with an ever-increasing
 # scale. Handy for generating random test cases in tester.py that
 # produce test cases from all scales so that the first test cases
 # are guaranteed to be small. The scale determines how wide range
@@ -85,7 +84,7 @@ def collatz(start):
 
 def scale_random(seed, scale, skip):
     # The seed value determines the future random sequence.
-    rng = random.Random(seed)
+    rng = Random(seed)
     curr, count, orig = 1, 0, scale
     while True:
         curr += rng.randint(1, scale)
@@ -130,7 +129,7 @@ def theons_ladder(n=2, a=1, b=1):
         # Let the Fraction class simplify these numbers.
         a, b = f.numerator, f.denominator
         # Original Theon's ladder was just n = 2.
-        a, b = a + n * b, a + b
+        a, b = a + n * b, a+b
 
 
 # The next technique comes handy sometimes. Iterate through all integer
@@ -138,10 +137,10 @@ def theons_ladder(n=2, a=1, b=1):
 # that every such pair is visited exactly once.
 
 def all_pairs():
-    s = 0  # In each antidiagonal of the infinite 2D grid, a + b == s.
+    s = 0  # In each anti-diagonal of the infinite 2D grid, a+b == s.
     while True:
         for a in range(0, s + 1):
-            yield a, s - a
+            yield a, s-a
         s += 1
 
 # That one is handy when you need to loop through the infinite
@@ -166,7 +165,7 @@ def kolakoski(n=2):
     while True:
         v = q.popleft()
         yield v
-        prev = prev + 1 if prev < n else 1
+        prev = prev+1 if prev < n else 1
         for i in range(v):
             q.append(prev)
 
@@ -177,7 +176,7 @@ def aronson(letter='t'):
     n, tees, curr = 1, [], f'Letter {letter} is in positions '
     while True:
         yield from curr
-        tees.extend([i + n for (i, c) in enumerate(curr) if c == letter])
+        tees.extend([i+n for (i, c) in enumerate(curr) if c == letter])
         n += len(curr)
         curr, tees = int_to_english(tees[0]) + ', ', tees[1:]
 
@@ -213,7 +212,7 @@ def __demo():
     print("Collatz sequence starting from 12345 is:")
     print(list(every_kth(stutter(collatz(12345), 3), 3)))
 
-    # Take primes until they become greater than thousand.
+    # Take primes until they become greater than one thousand.
     print("Here is every seventh prime number up to one thousand:")
     print(list(takewhile((lambda x: x <= 1000), every_kth(primes(), 7))))
 

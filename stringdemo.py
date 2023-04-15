@@ -10,11 +10,11 @@ s2 = ""
 
 # Python 3 strings are sequences of arbitrary Unicode characters.
 
-for c in range(100, 10100, 500):
-    cc = chr(c)
+for code in range(100, 10100, 500):
+    cc = chr(code)
     s2 += cc
     name, cat = uu.name(cc), uu.category(cc)
-    print(f"Character {cc} is {name}, in category {cat}.")
+    print(f"Character {cc} at code point {code} is {name}, in category {cat}.")
 
 # Old time byte strings can contain only ASCII characters 0-127.
 
@@ -87,7 +87,7 @@ print(s5)
 s6 = u'noe\u0308l'
 print(s6)
 print("".join(reversed(s6)))  # reversing unicode is tricksy
-print(s6[::-1])  # clever indexing reverse taken from Stack Overflow
+print(s6[::-1])  # how to reverse a Python string
 
 # Taken from "WTF Python". What is going on here?
 value = 11

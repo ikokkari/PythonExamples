@@ -1,5 +1,5 @@
 from fractions import Fraction
-import random
+from random import Random
 
 
 # The oldest algorithm in recorded history, Euclid's algorithm
@@ -26,7 +26,7 @@ def collatz(start):
         return []
     while curr > 1:
         result.append(curr)
-        curr = curr // 2 if curr % 2 == 0 else 3 * curr + 1
+        curr = curr // 2 if curr % 2 == 0 else 3 * curr+1
     result.append(1)
     return result
 
@@ -44,7 +44,7 @@ def iterate_diff(items, verbose=False):
     while not all(e == items[0] for e in items):
         new, prev = [], items[-1]
         for e in items:
-            new.append(abs(e - prev))
+            new.append(abs(e-prev))
             prev = e
         items = new
         if verbose:
@@ -119,17 +119,17 @@ def integer_root(n, k=2):
     # always better to keep these numbers and the count of operations
     # as small as possible.
     while b**k < n:
-        a, b = b, b * 10  # Exponential growth for b
+        a, b = b, b*10  # Exponential growth for b
     # Pinpoint the actual integer root with repeated halving.
     while a < b:
-        m = (a + b) // 2  # Careful to use // instead of / here.
+        m = (a+b) // 2  # Careful to use // instead of / here.
         # Also, be careful with the asymmetry a <= m < b. This
         # has caught many a programmer unaware. When a + 1 == b,
         # also m == a then, and assigning a = m would do nothing!
         if (m+1)**k > n:
             b = m  # Since m < b, this advances for sure.
         else:
-            a = m + 1  # Since a <= m < m+1, this advances for sure.
+            a = m+1  # Since a <= m < b, this advances for sure.
         # Either way, the interval from a to b is cut in half.
         # When a and b are integers, they will eventually meet.
         # When a and b are fractions or such, stop once b - a is
@@ -159,9 +159,8 @@ def heron_root(x):
 # and dictionaries.
 
 symbols_encode = [
-    (1000, 'M'), (900, 'CM'), (500, 'D'), (400, 'CD'), (100, 'C'),
-    (90, 'XC'), (50, 'L'), (40, 'XL'), (10, 'X'), (9, 'IX'),
-    (5, 'V'), (4, 'IV'), (1, 'I')
+    (1000, 'M'), (900, 'CM'), (500, 'D'), (400, 'CD'), (100, 'C'), (90, 'XC'),
+    (50, 'L'), (40, 'XL'), (10, 'X'), (9, 'IX'), (5, 'V'), (4, 'IV'), (1, 'I')
 ]
 
 
@@ -216,9 +215,9 @@ def __demo():
     print(f"Continued fraction for {a}/{b} is {f_to_cf(a, b, True)}.")
 
     print("Here are the convergences of some four-lists:")
-    random.seed(12345)  # Fixed seed always generates same random numbers
+    rng = Random(12345)
     for i in range(50):
-        items = [random.randint(1, 10 + 10 * i) for _ in range(4)]
+        items = [rng.randint(1, 10 + 10 * i) for _ in range(4)]
         (n, c) = iterate_diff(items, False)
         print(f"{items} converges to {n} in {c} steps.")
 

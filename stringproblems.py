@@ -3,7 +3,7 @@
 from string import ascii_letters as letters
 from string import ascii_uppercase as au
 from string import ascii_lowercase as al
-from random import choice
+from random import Random
 
 
 # Convert words in the text to title case. (Not same as uppercase.)
@@ -47,10 +47,8 @@ def unique_chars(text):
 
 def are_anagrams(word1, word2):
     # A quick rejection test to avoid the expensive operation.
-    if len(word1) != len(word2):
-        return False
     # Perform the expensive operation to find out the truth.
-    return sorted(word1) == sorted(word2)
+    return len(word1) == len(word2) and sorted(word1) == sorted(word2)
 
 
 # Obfuscate the given text using the ROT-13 encoding:
@@ -164,7 +162,9 @@ def tutnese(sentence):
             "y": ["yub", "yuck"],
             "z": ["zub", "zug"]}
 
-    def trans(word):
+    def trans(word, rng=None):
+        if not rng:
+            rng = Random(12345)
         result, skip = '', False
         for (idx, c) in enumerate(word):
             if skip:
@@ -182,7 +182,7 @@ def tutnese(sentence):
                 skip = True  # skip the duplicate after this one
             else:
                 if c in reps:
-                    rep = choice(reps[c])
+                    rep = rng.choice(reps[c])
                     if word[idx].isupper():
                         rep = rep[0].upper() + rep[1:]
                     result += rep

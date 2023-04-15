@@ -13,9 +13,9 @@ def factorial(n, verbose=False):
     if verbose:
         print(f"enter with n = {n}")
     if n < 2:
-        result = 1                      # base case
+        result = 1                             # base case
     else:
-        result = n * factorial(n - 1, verbose)   # linear recursive call
+        result = n * factorial(n-1, verbose)   # linear recursive call
     if verbose:
         print(f"Returning {result} from {n}")
     return result
@@ -33,14 +33,14 @@ def factorial(n, verbose=False):
 def hanoi(src, tgt, n):
     if n < 1:
         return None
-    mid = 6 - src - tgt
-    hanoi(src, mid, n - 1)
+    mid = 6-src-tgt
+    hanoi(src, mid, n-1)
     print(f"Move top disk from peg {src} to peg {tgt}.")
-    hanoi(mid, tgt, n - 1)
+    hanoi(mid, tgt, n-1)
 
 
 # For computing high integer powers, binary power is more efficient
-# than repeated multiplication n - 1 times.
+# than repeated multiplication n-1 times.
 
 def binary_power(a, n, verbose=False):
     if verbose:
@@ -52,7 +52,7 @@ def binary_power(a, n, verbose=False):
     elif n % 2 == 0:
         result = binary_power(a * a, n // 2, verbose)
     else:
-        result = a * binary_power(a * a, (n - 1) // 2, verbose)
+        result = a * binary_power(a * a, (n-1) // 2, verbose)
     if verbose:
         print(f"Exiting binary_power({n}) with {result}.")
     return result
@@ -87,14 +87,16 @@ def subset_sum(items, goal):
         return []
     if len(items) == 0 or goal < 0:
         return None
+    # Extract the last item.
     last = items.pop()
-    # Take the last element into chosen subset
-    answer = subset_sum(items, goal - last)
+    # Try taking the last item into chosen subset.
+    answer = subset_sum(items, goal-last)
     if answer is not None:
         answer.append(last)
     else:
-        # Try not taking last element into subset
+        # Try not taking the last item into subset.
         answer = subset_sum(items, goal)
+    # Restore the last item back to the items.
     items.append(last)
     return answer
 
@@ -107,7 +109,7 @@ def hof_q(n):
     if n < 3:
         return 1
     else:
-        return hof_q(n - hof_q(n - 1)) + hof_q(n - hof_q(n - 2))
+        return hof_q(n - hof_q(n-1)) + hof_q(n - hof_q(n-2))
 
 
 # The famous Thue-Morse sequence for "fairly taking turns". To
@@ -124,7 +126,7 @@ def thue_morse(n, sign):
     if n < 2:
         return f"{str(sign)}"
     else:
-        return thue_morse(n - 1, sign) + thue_morse(n - 1, 1 - sign)
+        return thue_morse(n-1, sign) + thue_morse(n-1, 1-sign)
 
 
 # An interesting problem from "Concrete Mathematics". A row of aging
@@ -136,7 +138,7 @@ def thue_morse(n, sign):
 
 @lru_cache(maxsize=10000)
 def wine(barrel, age, year, pour=Fraction(1, 2)):
-    # Imaginary "zero" barrel to represent incoming flow of new wine.
+    # Imaginary "zero" barrel to represent incoming flow of new grape juice.
     if barrel == 0:
         return Fraction(1) if age == 0 else 0
     # In the initial state, all barrels consist of new wine.
@@ -144,8 +146,7 @@ def wine(barrel, age, year, pour=Fraction(1, 2)):
         return 1 if age == 0 else 0
     # Recursive formula for proportion of wine of age a.
     else:
-        return (1 - pour) * wine(barrel, age - 1, year - 1) +\
-               pour * wine(barrel - 1, age - 1, year - 1)
+        return (1-pour) * wine(barrel, age-1, year-1) + pour * wine(barrel-1, age-1, year-1)
 
 
 # The knight's tour problem is another classic. Given an n*n chessboard,
@@ -156,12 +157,11 @@ def wine(barrel, age, year, pour=Fraction(1, 2)):
 
 def knight_tour(n=8, sx=1, sy=1):
     # List to accumulate the moves during the recursion.
-    result = []
+    moves = []
     # Squares that the tour has already visited.
     visited = set()
     # Eight possible moves of a chess knight.
-    moves = ((2, 1), (1, 2), (2, -1), (-1, 2),
-             (-2, 1), (1, -2), (-2, -1), (-1, -2))
+    moves = ((2, 1), (1, 2), (2, -1), (-1, 2), (-2, 1), (1, -2), (-2, -1), (-1, -2))
 
     # Test whether square (x, y) is inside the chessboard. We use
     # the 1-based indexing here, as is normally done by humans.
@@ -170,26 +170,25 @@ def knight_tour(n=8, sx=1, sy=1):
 
     # Find all the unvisited neighbours of square (x, y).
     def neighbours(x, y):
-        return [(x+dx, y+dy) for (dx, dy) in moves
-                if inside(x+dx, y+dy)
-                and (x+dx, y+dy) not in visited]
+        return [(x+dx, y+dy) for (dx, dy) in moves if inside(x+dx, y+dy) and (x+dx, y+dy) not in visited]
 
     # Try to generate the rest of the tour from square (cx, cy).
     def generate_tour(cx, cy):
-        result.append((cx, cy))
-        if len(result) == n*n:
+        # Add the square (cx, cy) to the moves
+        moves.append((cx, cy))
+        if len(moves) == n*n:
             # The tour must be closed to be considered success.
-            return (sx - cx, sy - cy) in moves
+            return (sx-cx, sy-cy) in moves
         visited.add((cx, cy))
         for (nx, ny) in neighbours(cx, cy):
             if generate_tour(nx, ny):
                 return True
         # Undo the current move
-        result.pop()
+        moves.pop()
         visited.remove((cx, cy))
         return False
     if generate_tour(sx, sy):
-        return result
+        return moves
     else:
         return None
 
@@ -202,11 +201,14 @@ def knight_tour(n=8, sx=1, sy=1):
 
 def ackermann(m, n):
     if m == 0:
-        return n + 1
+        return n+1
     elif m > 0 and n == 0:
-        return ackermann(m - 1, 1)
+        return ackermann(m-1, 1)
     else:
-        return ackermann(m - 1, ackermann(m, n - 1))
+        return ackermann(m-1, ackermann(m, n-1))
+
+# Look at that function, trying to look so innocent there as
+# if were like any other three-step if-else ladder...
 
 
 def __demo():
@@ -251,7 +253,7 @@ def __demo():
     year = 10
     print(f"\nAfter year {year}, the wine barrels consist of (year:portion):")
     for b in range(1, 6):
-        comps = [f"{a}:{wine(b, a, year)}" for a in range(1, year + 1)]
+        comps = [f"{a}:{wine(b, a, year)}" for a in range(1, year+1)]
         print(f"Barrel {b}: {', '.join(comps)}.")
 
     print("\nThe Thue-Morse sequences from 2 to 10 are:")

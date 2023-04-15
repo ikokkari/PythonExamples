@@ -1,5 +1,9 @@
-from random import choice
+from random import Random
 from itertools import combinations
+
+# When using random numbers, hardcode the seed to make results reproducible.
+
+rng = Random(12345)
 
 # Define the suits and ranks that a deck of playing cards is made of.
 
@@ -14,13 +18,13 @@ def deal_hand(n, taken=None):
     """Deal a random hand with n cards, without replacement."""
     result, taken = [], taken if taken else []
     while len(result) < n:
-        c = choice(deck)
+        c = rng.choice(deck)
         if c not in result and c not in taken:
             result.append(c)
     return result
 
 # If we don't care about taken, this could be one-liner:
-# return random.sample(deck, n)
+# return rng.sample(deck, n)
 
 
 def gin_count_deadwood(hand):
@@ -41,17 +45,17 @@ def blackjack_count_value(hand):
     for (rank, suit) in hand:
         v = ranks[rank]
         if v == 14:  # Treat every ace as 11 to begin with
-            total, soft = total + 11, soft + 1
+            total, soft = total+11, soft+1
         else:
             total += min(10, v)  # All face cards are treated as tens
         if total > 21:
-            if soft > 0:  # Saved by the soft ace
-                soft, total = soft - 1, total - 10
+            if soft:  # Saved by the soft ace
+                soft, total = soft-1, total-10
             else:
                 return 'bust'
     if total == 21 and len(hand) == 2:
         return 'blackjack'
-    return f"{'soft' if soft > 0 else 'hard'} {total}"
+    return f"{'soft' if soft else 'hard'} {total}"
 
 
 def poker_has_flush(hand):
@@ -116,10 +120,10 @@ def poker_has_straight(hand):
             return True  # AKQJT
         return all(rank in hand_ranks for rank in [2, 3, 4, 5])  # A2345
     else:
-        return max_rank - min_rank == 4
+        return max_rank-min_rank == 4
 
 
-# Straight flushes complicate the hand rankings a little bit.
+# Straight flushes complicate the hand rankings a bit.
 
 
 def poker_flush(hand):
@@ -167,7 +171,7 @@ def bridge_score(suit, level, vul, dbl, made):
     score, bonus = 0, 0
 
     # Add up the values of individual tricks.
-    for trick in range(1, made + 1):
+    for trick in range(1, made+1):
         # Raw points for this trick.
         if suit == 'clubs' or suit == 'diamonds':
             pts = 20
