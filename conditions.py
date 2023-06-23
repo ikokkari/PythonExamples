@@ -38,38 +38,40 @@ def median_using_arithmetic(a, b, c):
 
 # Determine how many days there are in the given month.
 
-def days_in_month(m, leap_year=False):
-    if m < 1 or m > 12:
+def days_in_month(month, leap_year=False):
+    if month < 1 or month > 12:
         return 0
-    elif m == 2:
+    elif month == 2:
         # One-liner choice between two values
         return 29 if leap_year else 28
     else:
         # Canonical way to check if m is member of a known handful
-        return 30 if m in (4, 6, 9, 11) else 31
+        return 30 if month in (4, 6, 9, 11) else 31
 
 
 # Three functions to solve the same problems of determining
 # whether the given year is a leap year.
 
-def is_leap_year(y):
-    if y % 4 != 0:
+def is_leap_year(year):
+    if year % 4 != 0:
         return False
-    elif y % 100 != 0:
+    elif year % 100 != 0:
         return True
-    return y % 400 == 0
+    else:
+        return year % 400 == 0
 
 
-def is_leap_year_another_way(y):
-    if y % 400 == 0:
+def is_leap_year_another_way(year):
+    if year % 400 == 0:
         return True
-    if y % 100 == 0:
+    elif year % 100 == 0:
         return False
-    return y % 4 == 0
+    else:
+        return year % 4 == 0
 
 
-def is_leap_year_with_logic(y):
-    return y % 4 == 0 and (y % 100 != 0 or y % 400 == 0)
+def is_leap_year_with_logic(year):
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
 
 
 # Sneak preview of for-loops to iterate through the elements of the given
@@ -78,10 +80,10 @@ def is_leap_year_with_logic(y):
 # song "In the year 2525" by Zager & Evans.
 
 def test_leap_year():
-    for y in range(2525, 9596):
-        a1 = is_leap_year(y)
-        a2 = is_leap_year_another_way(y)
-        a3 = is_leap_year_with_logic(y)
+    for year in range(2525, 9596):
+        a1 = is_leap_year(year)
+        a2 = is_leap_year_another_way(year)
+        a3 = is_leap_year_with_logic(year)
         # Chaining comparison operators works for equality just as well.
         if not (a1 == a2 == a3):  # a1 != a2 or a2 != a3:
             return False  # "Tear it down and start again."
