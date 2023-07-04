@@ -1,9 +1,11 @@
-import random
+from random import Random
+
+rng = Random()
 
 
 def hangman(wordlist, blank='*'):
     misses, guesses = 0, []
-    secret = random.choice(wordlist)
+    secret = rng.choice(wordlist)
     displayed = [blank for _ in secret]
     print("Let us play a game of Hangman.")
     while blank in displayed:
