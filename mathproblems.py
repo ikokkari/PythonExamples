@@ -1,4 +1,3 @@
-from fractions import Fraction
 from random import Random
 
 
