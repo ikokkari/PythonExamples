@@ -60,40 +60,6 @@ def iterate_diff(items, verbose=False):
 # this system still be guaranteed? Curious students might want
 # to investigate this phenomenon.
 
-# Continued fractions are an alternative way to represent integer
-# fractions as a sequence of smallish integers. If a/b is rational,
-# the resulting continued fraction is finite. For irrational numbers
-# the continued fraction is infinite, but for some numbers such as
-# the golden ratio have a nice continued fraction form that can be
-# used to approximate that irrational number to any precision.
-# https://en.wikipedia.org/wiki/Continued_fraction
-
-# This assumes that 0 < a < b. To work for all rational numbers,
-# the whole integer part must be encoded separately, and the
-# actual continued fraction merely handles the fractional part.
-
-def f_to_cf(a, b, verbose=False):
-    result = []
-    while a > 0 and b > 1:
-        # As we see, the core operation is same as in euclid_gcd.
-        if verbose:
-            print(f"a={a}, b={b}")
-        q, r = b // a, b % a
-        result.append(q)  # This time we store the quotient info
-        a, b = r, a
-    return result
-
-
-# Converting a continued fraction into an ordinary fraction is
-# best done "inside out", a principle that works for many other
-# problems also. It is how expressions are evaluated, after all.
-
-def cf_to_f(items):
-    result = None
-    for e in reversed(items):
-        result = e + (0 if result is None else Fraction(1, result))
-    return result
-
 
 # Whenever a problem is stated in terms of integers, you should aim
 # to solve it with integer arithmetic, and use floating point values
@@ -209,19 +175,21 @@ def __demo():
     a, b = 2*3*3*13*17*49, 3*5*5*7*33*19
     print(f"Greatest common divisor of {a} and {b}, visualized:")
     euclid_gcd(a, b, verbose=True)
-    print(f"Roman numbers conversion works? {test_roman()}")
-    print(f"Heron square root of 2 equals {heron_root(2)}.")
+    print(f"\nRoman numbers conversion works? {test_roman()}")
+    print(f"\nHeron square root of 2 equals {heron_root(2)}.")
 
-    print(f"Continued fraction for {a}/{b} is {f_to_cf(a, b, True)}.")
+    print("\nHere are some Collatz sequences.")
+    for n in [17, 100, 1234567]:
+        print(f"{n} goes to 1 with {collatz(n)}")
 
-    print("Here are the convergences of some four-lists:")
+    print("\nHere are the convergences of some four-lists:")
     rng = Random(12345)
     for i in range(50):
         items = [rng.randint(1, 10 + 10 * i) for _ in range(4)]
         (n, c) = iterate_diff(items, False)
         print(f"{items} converges to {n} in {c} steps.")
 
-    print("Next, some integer square roots.")
+    print("\nNext, some integer square roots.")
     for n in [49, 50, 1234567, 10**10]:
         s = integer_root(n)
         print(f"Integer square root of {n} equals {s}.")
@@ -235,19 +203,7 @@ def __demo():
     # How many numbers are longer written in Arabic than in Roman?
     shorter = [x for x in range(1, 5000) if len(str(x)) > len(roman_encode(x))]
     shorter = ', '.join([f"{x} ({roman_encode(x)})" for x in shorter])
-    print(f"Numbers longer in Arabic than Roman: {shorter}")
-
-    # Let us approximate the Golden Ratio using the first 50 terms
-    # from its infinitely long continued fraction representation.
-    # https://en.wikipedia.org/wiki/Golden_ratio
-    grf = cf_to_f([1] * 150)  # Create a list of identical items
-    from decimal import getcontext, Decimal
-    getcontext().prec = 50   # Number of decimal places used in Decimal
-    grd = Decimal(grf.numerator) / Decimal(grf.denominator)
-    print("The Golden Ratio to 50 decimal places equals:")
-    print(f"{grd}")
-    # Correct answer copied from Wolfram Alpha as the gold standard:
-    # print("1.6180339887498948482045868343656381177203091798058")
+    print(f"\nNumbers longer in Arabic than Roman: {shorter}")
 
 
 if __name__ == "__main__":
