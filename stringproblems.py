@@ -62,12 +62,12 @@ def rot13(text):
     return "".join([rot.get(c, c) for c in text])
 
 
-# Given a sentence and a function wf that converts one word, translate
-# the entire sentence. Since whitespace and punctuation must be kept
+# Translate the entire sentence given a function word_func that converts
+# one word. Since whitespace and punctuation characters must be kept
 # as they were in the original sentence, we can't just use "split" to
 # separate the sentence into words, since this would lose the track
 # of what the whitespace and punctuation were in the original text.
-# Instead, break the sentence into words the hard way.
+# Instead, we have to break the sentence into words the hard way.
 
 def translate_words(sentence, word_func):
     result, word = '', ''
