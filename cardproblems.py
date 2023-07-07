@@ -16,12 +16,12 @@ deck = [(rank, suit) for suit in suits for rank in ranks]
 
 def deal_hand(n, taken=None):
     """Deal a random hand with n cards, without replacement."""
-    result, taken = [], taken if taken else []
-    while len(result) < n:
+    hand, taken = [], taken if taken else []
+    while len(hand) < n:
         c = rng.choice(deck)
-        if c not in result and c not in taken:
-            result.append(c)
-    return result
+        if c not in hand and c not in taken:
+            hand.append(c)
+    return hand
 
 # If we don't care about taken, this could be one-liner:
 # return rng.sample(deck, n)
@@ -30,7 +30,7 @@ def deal_hand(n, taken=None):
 def gin_count_deadwood(hand):
     """Count the deadwood points of leftover cards in gin rummy."""
     total = 0
-    for (suit, rank) in hand:
+    for (_, rank) in hand:
         total += 1 if ranks[rank] == 14 else min(ranks[rank], 10)
     return total
 
@@ -42,7 +42,7 @@ def blackjack_count_value(hand):
     soft or hard."""
     total = 0  # Current point total of the hand
     soft = 0   # Number of soft aces in the hand
-    for (rank, suit) in hand:
+    for (rank, _) in hand:
         v = ranks[rank]
         if v == 14:  # Treat every ace as 11 to begin with
             total, soft = total+11, soft+1
@@ -62,10 +62,11 @@ def poker_has_flush(hand):
     """Determine if the five card poker hand has a flush."""
     look_for = None
     for (_, suit) in hand:
-        if look_for is None:
+        if look_for is None:  # First card in the hand determines suit
             look_for = suit
-        elif look_for != suit:
+        elif look_for != suit:  # Other cards must be same suit
             return False
+    # We can't return True until we have looked at every card in hand.
     return True
 
 
@@ -77,7 +78,8 @@ def count_rank_pairs(hand):
     itertools.combinations for brevity and clarity."""
     count = 0
     for ((r1, _), (r2, _)) in combinations(hand, 2):
-        count += int(r1 == r2)  # Truth value becomes 0 or 1
+        if r1 == r2:
+            count += 1
     return count
 
 
@@ -112,13 +114,13 @@ def poker_has_straight(hand):
     # If a hand has any pairs, it is not a straight.
     if count_rank_pairs(hand) > 0:
         return False
-    # We know now that the hand has no pairs.
+    # After that hurdle, we know that the hand has no pairs.
     hand_ranks = [ranks[rank] for (rank, _) in hand]
     min_rank, max_rank = min(hand_ranks), max(hand_ranks)
-    if max_rank == 14:  # Special cases for ace straights
+    if max_rank == 14:  # Special cases for straights with an ace
         if min_rank == 10:
-            return True  # AKQJT
-        return all(rank in hand_ranks for rank in [2, 3, 4, 5])  # A2345
+            return True  # AKQJT, Broadway straight
+        return sorted(hand) == [2, 3, 4, 5, 14]  # A2345, bicycle straight
     else:
         return max_rank-min_rank == 4
 
@@ -152,15 +154,13 @@ def poker_high_card(hand):
 def evaluate_all_poker_hands():
     funcs = [poker_one_pair, poker_two_pair, poker_three_of_kind,
              poker_straight, poker_flush, poker_full_house,
-             poker_four_of_kind, poker_straight_flush]
+             poker_four_of_kind, poker_straight_flush, poker_high_card]
     counters = [0 for _ in funcs]
     for hand in combinations(deck, 5):
         for (i, f) in enumerate(funcs):
             if f(hand):
                 counters[i] += 1
                 break  # No point looking for more for this hand
-        else:  # else-block after loop is executed if no break occurs
-            counters[-1] += 1  # None of the above, therefore high card
     return [(f.__name__, counters[i]) for (i, f) in enumerate(funcs)]
 
 
