@@ -56,7 +56,9 @@ def are_anagrams(word1, word2):
 # https://en.wikipedia.org/wiki/ROT13
 
 def rot13(text):
+    # Conversion dictionary for characters.
     rot = {a: b for (a, b) in zip(au + al, au[13:] + au[:13] + al[13:] + al[:13])}
+    # Convert to ROT-13 by converting characters separately.
     return "".join([rot.get(c, c) for c in text])
 
 
@@ -67,19 +69,19 @@ def rot13(text):
 # of what the whitespace and punctuation were in the original text.
 # Instead, break the sentence into words the hard way.
 
-def translate_words(sentence, wf):
+def translate_words(sentence, word_func):
     result, word = '', ''
     for c in sentence:
         is_letter = c in letters
         if is_letter:  # add the letters into the current word
             word += c
         elif len(word) > 0 and not is_letter:  # non-letter ends word
-            result += wf(word) + c  # add the translated word
+            result += word_func(word) + c  # add the translated word
             word = ''  # and start the next word from empty
         else:
             result += c  # non-letters added to result as is
     if len(word) > 0:  # the possibly remaining word at end of sentence
-        result += wf(word)
+        result += word_func(word)
     return result
 
 
