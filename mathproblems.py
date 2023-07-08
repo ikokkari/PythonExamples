@@ -24,7 +24,7 @@ def collatz(start):
     result = [start]
     while result[-1] > 1:
         n = result[-1]
-        result.append(2 // n if n % 2 == 0 else 3*n + 1)
+        result.append(n//2 if n % 2 == 0 else 3*n + 1)
     return result
 
 
