@@ -144,7 +144,7 @@ def wine(barrel, age, year, pour=Fraction(1, 2)):
     # In the initial state, all barrels consist of new wine.
     elif year == 0:
         return 1 if age == 0 else 0
-    # Recursive formula for proportion of wine of age a.
+    # Recursive formula for proportion of wine of given age.
     else:
         return (1-pour) * wine(barrel, age-1, year-1) + pour * wine(barrel-1, age-1, year-1)
 
@@ -161,7 +161,7 @@ def knight_tour(n=8, sx=1, sy=1):
     # Squares that the tour has already visited.
     visited = set()
     # Eight possible moves of a chess knight.
-    moves = ((2, 1), (1, 2), (2, -1), (-1, 2), (-2, 1), (1, -2), (-2, -1), (-1, -2))
+    dirs = ((2, 1), (1, 2), (2, -1), (-1, 2), (-2, 1), (1, -2), (-2, -1), (-1, -2))
 
     # Test whether square (x, y) is inside the chessboard. We use
     # the 1-based indexing here, as is normally done by humans.
@@ -170,7 +170,7 @@ def knight_tour(n=8, sx=1, sy=1):
 
     # Find all the unvisited neighbours of square (x, y).
     def neighbours(x, y):
-        return [(x+dx, y+dy) for (dx, dy) in moves if inside(x+dx, y+dy) and (x+dx, y+dy) not in visited]
+        return [(x+dx, y+dy) for (dx, dy) in dirs if inside(x+dx, y+dy) and (x+dx, y+dy) not in visited]
 
     # Try to generate the rest of the tour from square (cx, cy).
     def generate_tour(cx, cy):
@@ -225,8 +225,8 @@ def __demo():
     print("\nFlattening the list produces the following:")
     print(flatten([1, (42, 99), [2, [3, [4, [5], 6], 7], 8], 9]))
 
-    print("\nHere is a closed knights tour on a 6-by-6 chessboard:")
-    print(knight_tour(6, 1, 1))
+    print("\nHere is a closed knights tour on a 5-by-5 chessboard:")
+    print(knight_tour(5, 1, 1))
 
     print(f"\nAckermann(3, 3) = {ackermann(3, 3)}.")
     print(f"Ackermann(3, 4) = {ackermann(3, 4)}.")
