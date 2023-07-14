@@ -8,7 +8,6 @@ from fractions import Fraction
 # whose formula n! = 1 * 2 * ... * (n-1) * n is self-similar.
 
 
-@lru_cache()
 def factorial(n, verbose=False):
     if verbose:
         print(f"enter with n = {n}")
@@ -31,12 +30,11 @@ def factorial(n, verbose=False):
 # http://en.wikipedia.org/wiki/Towers_of_Hanoi
 
 def hanoi(src, tgt, n):
-    if n < 1:
-        return None
-    mid = 6-src-tgt
-    hanoi(src, mid, n-1)
-    print(f"Move top disk from peg {src} to peg {tgt}.")
-    hanoi(mid, tgt, n-1)
+    if n > 1:
+        mid = 6-src-tgt
+        hanoi(src, mid, n-1)
+        print(f"Move top disk from peg {src} to peg {tgt}.")
+        hanoi(mid, tgt, n-1)
 
 
 # For computing high integer powers, binary power is more efficient
@@ -49,10 +47,8 @@ def binary_power(a, n, verbose=False):
         raise ValueError(f"Negative exponent {n} not allowed.")
     elif n == 0:
         result = 1
-    elif n % 2 == 0:
-        result = binary_power(a * a, n // 2, verbose)
     else:
-        result = a * binary_power(a * a, (n-1) // 2, verbose)
+        result = binary_power(a * a, n // 2, verbose) * (a if n % 2 == 1 else 1)
     if verbose:
         print(f"Exiting binary_power({n}) with {result}.")
     return result
