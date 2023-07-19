@@ -1,4 +1,4 @@
-from random import sample
+from random import Random
 
 # https://en.wikipedia.org/wiki/Morse_code
 
@@ -81,13 +81,14 @@ def __demo():
     # Convert to set for a quick lookup of individual words.
     words = set(wordlist)
 
-    for text in sample(wordlist, 20):
-        enc = encode_morse(text)
-        print(f'The word {text!r} encodes in Morse to {enc!r}.')
-        print(f'The Morse code message {enc!r} decodes to words:')
+    rng = Random(12345)
+
+    for text in rng.sample(wordlist, 20):
+        encoded = encode_morse(text)
+        print(f'The word {text!r} encodes in Morse to {encoded!r}.')
+        print(f'The Morse code message {encoded!r} decodes to words:')
         # We are interested only in actual words.
-        dec = [word for word in decode_morse(enc) if word in words]
-        for word in dec:
+        for word in (word for word in decode_morse(encoded) if word in words):
             print(f"{word!r} split as {encode_morse(word, '|')}")
         print('')
 
@@ -112,6 +113,6 @@ if __name__ == '__main__':
 # be encoded separately. More advanced compression methods can and
 # will automatically exploit the conditional probabilities between
 # consecutive letters. For example, after seeing "qui", letters p,
-# t and z suddenly become more likely, compared to their baseline
+# t and z suddenly become more likely compared to their baseline
 # probabilities in English when every letter must be encoded on its
 # own, separated from its surrounding context...

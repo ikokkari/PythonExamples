@@ -58,10 +58,8 @@ for word in ('chicken', 'prince', 'russia', 'train', 'i', 'supercalifragilistice
     print(f"{word}: {words.get(word, 0)}")
 
 # Turn a dictionary into a list of its items as (value, key) tuples.
-# Dictionary method items() produces sequence of (key, value) pairs,
-# but swapping these components is trivial with a list comprehension.
 
-words_list_f = [(c, w) for (w, c) in words.items()]
+words_list_f = [(words[word], word) for word in words]
 
 # Sorting the list of pairs of the form (count, word). Python tuple
 # comparison happens lexicographically, so the primary sorting criteria
@@ -76,6 +74,6 @@ words_list = [w for (c, w) in words_list_f]
 print("\nThe three hundred most frequent words in War and Peace are:")
 print(", ".join(words_list[:300]))
 
-once = list(reversed([w for w in words_list if words[w] == 1]))
+once = list(reversed([word for word in words_list if words[word] == 1]))
 print(f"\n{len(once)} words occur exactly once in War and Peace:")
 print(", ".join(once))

@@ -19,27 +19,31 @@ def histogram(words):
 # Find all words that are palindromes.
 
 def palindromes(words):
-    return [w for w in words if w == w[::-1]]
+    return [word for word in words if word == word[::-1]]
 
 
 # Find all words that are a different word when read backwards.
 
 def semordnilap(words):
-    wset = set(words)
-    return [w for w in words if w != w[::-1] and w[::-1] in wset]
+    word_set = set(words)
+    return [word for word in words if word != word[::-1] and word[::-1] in word_set]
 
 
 # Find all the rotodromes, words that become other words when rotated.
 
 def rotodromes(words):
-    def is_rotodrome(word, wset):
+    # Sets allow rapid lookup of element membership.
+    w_set = set(words)
+
+    # Define a nested helped function to perform the filtering.
+    def is_rotodrome(word):
         for i in range(1, len(word)):
             w2 = word[i:] + word[:i]
-            if word != w2 and w2 in wset:
+            if word != w2 and w2 in w_set:
                 return True
         return False
-    w_set = set(words)
-    return [w for w in words if is_rotodrome(w, w_set)]
+
+    return [word for word in words if is_rotodrome(word)]
 
 
 # Find the "almost palindromes", words that become palindromes when
@@ -51,11 +55,12 @@ def almost_palindromes(words):
         if word != word[::-1]:
             # Loop through the positions to remove a character.
             for i in range(len(word)):
-                w2 = word[:i] + word[i+1:]
+                w2 = word[:i] + word[i + 1:]
                 if w2 == w2[::-1]:
                     return True
         return False
-    return [w for w in words if len(w) > 2 and almost(w)]
+
+    return [word for word in words if len(word) > 2 and almost(word)]
 
 
 # Rotate the consonants of the text cyclically, keeping the rest of
@@ -80,7 +85,8 @@ def rotate_consonants(text, off=1):
             # Maintain the capitalization.
             result += sc.upper() if c.isupper() else sc.lower()
             # Next consonant and incoming consonant advance in lockstep.
-            pos = (pos + 1) % len(cons_pos)
+            # pos = (pos + 1) % len(cons_pos)
+            pos += 1
         else:
             # Take the character into result as is.
             result += c
@@ -90,7 +96,25 @@ def rotate_consonants(text, off=1):
 # Find the words that contain at least three duplicated letters.
 
 def triple_duplicate(words):
-    return [x for x in words if len(re.findall(r'(.)\1', x)) >= 3]
+    return [word for word in words if len(re.findall(r'(.)\1', word)) >= 3]
+
+
+# Solution without regular expressions is more tedious.
+
+def triple_duplicate_hard_way(words):
+    result = []
+    for word in words:
+        count = 0
+        prev = '$'
+        for c in word:
+            if c == prev:
+                count += 1
+                prev = '$'
+            else:
+                prev = c
+        if count > 2:
+            result.append(word)
+    return result
 
 
 # Find the words that contain three duplicated letters all together.
@@ -103,12 +127,14 @@ def consec_triple_duplicate(words):
 # How many words can be spelled out using only given characters?
 
 def limited_alphabet(words, chars):
-    # def limited(word, chars):
-    #     return all(c in chars for c in word)
     # A regular expression used many times is good to precompile
     # into the matching machine for speed and efficiency.
     pat = re.compile('^[' + chars + ']+$')
     return [word for word in words if pat.match(word)]
+
+
+def limited_alphabet_hard_way(words, chars):
+    return [word for word in words if all(c in chars for c in word)]
 
 
 # From Programming Praxis. Given text string and integer k,
@@ -175,6 +201,7 @@ def word_chain(words, first, k=1, len_=3):
                 chain.pop()
 
         return None
+
     return backtrack(first)
 
 
@@ -185,21 +212,21 @@ def word_chain(words, first, k=1, len_=3):
 
 def remain_words(words):
     result = [[], [x for x in words if len(x) == 1]]
-    wl = 2
+    word_length = 2
     while True:
         next_level, has_words = {}, False
-        for w in (x for x in words if len(x) == wl):
+        for w in (x for x in words if len(x) == word_length):
             shorter = []
-            for i in range(0, wl - 1):
-                ww = w[:i] + w[i+1:]  # word with i:th letter removed
-                if ww in result[wl - 1]:
+            for i in range(0, word_length - 1):
+                ww = w[:i] + w[i + 1:]  # word with i:th letter removed
+                if ww in result[word_length - 1]:
                     shorter.append(ww)
             if len(shorter) > 0:
                 next_level[w] = shorter
                 has_words = True
         if has_words:
             result.append(next_level)
-            wl += 1
+            word_length += 1
         else:
             return result
 
@@ -207,15 +234,17 @@ def remain_words(words):
 # Generate a table of all anagrams from the given word list.
 
 # The first 26 prime numbers, one for each letter from a to z.
-__primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43,
-            47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101]
+
+__primes = {'a': 2, 'b': 3, 'c': 5, 'd': 7, 'e': 11, 'f': 13, 'g': 17,
+            'h': 19, 'i': 23, 'j': 29, 'k': 31, 'l': 37, 'm': 41, 'n': 43,
+            'o': 47, 'p': 53, 'q': 59, 'r': 61, 's': 67, 't': 71, 'u': 73,
+            'v': 79, 'w': 83, 'x': 89, 'y': 97, 'z': 101}
 
 
 def prime_code(word):
     code = 1
     for c in word:
-        # ord(c) gives the Unicode integer codepoint of c.
-        code *= __primes[ord(c) - ord('a')]
+        code *= __primes.get(c, 1)
     return code
 
 
@@ -280,9 +309,9 @@ def __demo():
     print(", ".join(sample(almost, 10)))
 
     print("\nLet us next look for some rotodromes.")
-    for i in range(2, 13):
-        rotos = rotodromes([w for w in words if len(w) == i])
-        print(f"There are {len(rotos)} rotodromes of length {i}.")
+    for n in range(2, 13):
+        rotos = rotodromes([word for word in words if len(word) == n])
+        print(f"There are {len(rotos)} rotodromes of length {n}.")
         print(f"Some of these rotodromes are:")
         print(f"{', '.join(sample(rotos, min(10, len(rotos))))}.")
 
@@ -344,7 +373,7 @@ def __demo():
     print("\nSome letter eliminations:")
     elim_dict_list = remain_words(words)
     start_words = list(elim_dict_list[8])
-    for i in range(10):
+    for n in range(10):
         word = choice(start_words)
         while len(word) > 1:
             print(word, end=" -> ")
@@ -356,8 +385,8 @@ def __demo():
     anagrams = all_anagrams(word for word in words if len(word) == N)
     print(f"The anagram groups with {M} or more members are:\n")
 
-    # Note that anagrams is a dictionary that maps prime codes to
-    # lists of words that all have that same prime code.
+    # Note that anagrams is a dictionary that maps each prime codes
+    # to lists of words that all share that same prime code.
     for code in (c for c in anagrams if len(anagrams[c]) >= M):
         print(", ".join(anagrams[code]))
 
