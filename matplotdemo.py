@@ -29,15 +29,15 @@ with plt.xkcd():  # Cueball: "Why?"  Black hat: "Why not?"
     print("Histogram of the heights of named mountains.")
     plt.xlabel("Mountain height")
     plt.ylabel("Mountain count")
-    plt.show(1)
+    plt.show()
 
 # Ordinary data plot of mountain heights.
 
 plt.figure(2)
 pef = [path_effects.SimpleLineShadow(), path_effects.Normal()]
-plt.plot(np.sort(hts), '--', path_effects=pef)
+plt.plot(np.sort(hts), '-', path_effects=pef)
 print("Heights of the mountains of the world.")
-plt.show(2)
+plt.show()
 
 with open('countries.json', encoding="utf-8") as data_file:
     countries = json.load(data_file)
@@ -54,7 +54,7 @@ plt.autoscale(enable=True, axis='x', tight=False)
 plt.scatter(pops_log, gdppc, c='g', marker='.')
 plt.xlabel('Population ($10^k$)')  # LaTeX-style math markup
 plt.ylabel('GDP / person')
-plt.show(3)
+plt.show()
 print("Scatterplot of countries GDP/Person and population.")
 
 # Compute the total population of each continent.
@@ -71,8 +71,7 @@ cp = np.array([continental_pops[continent] for continent in keys])
 # Pie plot of continental populations.
 
 plt.figure(4)
-plt.axes([1, 1, 1, 1])
-plt.pie(cp, labels=keys, explode=[0, 0, .1, 0, 0, .3])
+plt.pie(cp, labels=keys, explode=[0, 0, .1, -.1, 0, .3])
 print("Portion of world's population in each continent.")
-plt.show(4)
+plt.show()
 # plt.savefig("continental_pie.svg")
