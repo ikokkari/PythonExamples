@@ -20,10 +20,10 @@ def factorial(n):
     """Return the factorial of a positive integer.
     n -- The positive integer whose factorial is computed.
     """
-    total = 1
+    result = 1
     for i in range(2, n+1):
-        total *= i
-    return total
+        result *= i
+    return result
 
 # The return statement at the end of the function is used to
 # tell what the function gives back to whoever calls it. Now
@@ -33,19 +33,19 @@ def factorial(n):
 
 
 # All right, that out of the way, let's write some more functions that
-# operate on lists. First, find the largest element in the list. We do
-# this first by explicitly iterating over the elements of the list.
+# operate on lists. First, find the largest element in the list, same
+# as the Python built-in function max.
 
 
 def maximum(items):
     """ Return the largest item in the given items."""
     if not items:  # Testing whether the sequence is empty
-        # This is how you make a function crash when its arguments are invalid.
+        # This is how you make a function crash for invalid arguments.
         raise ValueError("Empty list has no maximum")
     king = None
-    for x in items:
-        if king is None or x > king:
-            king = x
+    for e in items:
+        if king is None or e > king:
+            king = e
     return king
 
 
@@ -53,24 +53,23 @@ def maximum(items):
 # each element equals the sum of the elements in the original
 # list up to that index.
 
-def accumulate(seq):
-    result = []
-    total = 0
-    for x in seq:
-        total += x
+def accumulate(items):
+    result, total = [], 0
+    for e in items:
+        total += e
         result.append(total)
     return result
 
 
 # Select precisely the elements that are larger than their predecessor.
 
-def select_upsteps(seq):
-    prev = None
-    result = []
-    for x in seq:
-        if prev is None or x > prev:
-            result.append(x)
-        prev = x
+def select_upsteps(items):
+    prev, result = None, []
+    for e in items:
+        if prev is None or e > prev:
+            result.append(e)
+        # The current element becomes previous element for the next round.
+        prev = e
     return result
 
 
@@ -130,10 +129,10 @@ def fizzbuzz_translate(n):
         return str(n)
 
 
-def fizzbuzz(start=1, end=100):
-    """Play the game of fizzbuzz from start to end, inclusive."""
+def fizzbuzz(start=1, end=101):
+    """Play the game of fizzbuzz from start to end, exclusive."""
     result = []
-    for n in range(start, end+1):
+    for n in range(start, end):
         result.append(fizzbuzz_translate(n))
     result = ", ".join(result)
     return result
