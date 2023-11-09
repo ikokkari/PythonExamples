@@ -62,14 +62,12 @@ def pyramid_series():
 # produces is finite or infinite.
 
 def collatz(start):
+    curr = start
     while True:
-        yield start
-        if start == 1:
+        yield curr
+        if curr == 1:
             break
-        elif start % 2 == 0:
-            start = start // 2
-        else:
-            start = 3 * start + 1
+        curr = curr // 2 if curr % 2 == 0 else 3 * curr + 1
 
 
 # A generator that produces random integers with an ever-increasing
@@ -100,16 +98,17 @@ def scale_random(seed, scale, skip):
 # only by the smaller primes found so far.
 
 def primes():
-    _primes = [2, 3, 5, 7, 11, 13]
+    # Collect the primes that we discover into primes list.
+    primes_ = [2, 3, 5, 7, 11, 13]
     # Handy syntactic sugar for yield inside for-loop
-    yield from _primes
+    yield from primes_
     curr = 17
     while True:
-        for divisor in _primes:
+        for divisor in primes_:
             if curr % divisor == 0:
                 break
             if divisor * divisor > curr:
-                _primes.append(curr)
+                primes_.append(curr)
                 yield curr
                 break
         curr += 2
@@ -173,12 +172,12 @@ def kolakoski(n=2):
 # Another cute self describing sequence, this one with words.
 
 def aronson(letter='t'):
-    n, tees, curr = 1, [], f'Letter {letter} is in positions '
+    n, owed, curr = 1, [], f'Letter {letter} is in positions '
     while True:
         yield from curr
-        tees.extend([i+n for (i, c) in enumerate(curr) if c == letter])
+        owed.extend([i+n for (i, c) in enumerate(curr) if c == letter])
         n += len(curr)
-        curr, tees = int_to_english(tees[0]) + ', ', tees[1:]
+        curr, owed = int_to_english(owed[0]) + ', ', owed[1:]
 
 
 # Since a generator can take parameters, we can write a iterator

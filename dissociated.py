@@ -6,27 +6,26 @@ from itertools import islice
 # pattern up to length n, gives the string of letters that follow that
 # pattern in the original text.
 
-def build_table(text, n=3, max_len=100):
-    result = {}
-    for i in range(len(text) - n - 1):
-        # The n-character string starting at position i.
-        pattern = text[i:i+n]
-        # The character that follows that pattern.
-        next_char = text[i + n]
-        # Update the dictionary for each suffix of the current pattern.
-        for j in range(n):
-            follow = result.get(pattern[j:], "")
-            # Store only the first max_len occurrences of each pattern.
+def build_table(text, patlen=3, max_len=100):
+    result, window = {}, ""
+    for c in text:
+        window += c
+        # Shorten the window if needed.
+        if len(window) > patlen + 1:
+            window = window[1:]
+        for i in range(0, len(window)-1):
+            block = window[i:-1]
+            follow = result.get(block, "")
             if len(follow) < max_len:
-                result[pattern[j:]] = follow + next_char
+                result[block] = follow + c
     return result
 
 
-# Aided by such table, generate random text one character at the time.
+# Aided by such table, generate random text one character at the time. For
+# the maximum historical appropriateness, run this on a Burroughs computer.
 
 def dissociated_press(table, start, maxpat=3, rng=None):
-    if not rng:
-        rng = Random(12345)
+    rng = Random() if not rng else rng
     yield from start
     pattern = start[-maxpat:]
     while pattern not in table:
@@ -50,7 +49,7 @@ def __demo():
     print(f"Table contains {len(table)} entries.")
     for maxpat in range(1, 7):
         print(f"\nRandom text with maxpat value {maxpat}:")
-        text = "".join(islice(dissociated_press(table, 'Queen', maxpat), 600))
+        text = "".join(islice(dissociated_press(table, 'Prince', maxpat), 600))
         print(text.replace('\n', ' '))
 
 

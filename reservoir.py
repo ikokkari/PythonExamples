@@ -14,8 +14,7 @@ from random import Random
 
 def reservoir(seq, k, rng=None, shuffle=True):
     # When using random numbers, hardcode the seed to make results reproducible.
-    if not rng:
-        rng = Random(12345)
+    rng = Random(12345) if not rng else rng
     lounge = []
     for (count, v) in enumerate(seq):
         if count < k:  # First k elements build up the reservoir.
@@ -23,15 +22,16 @@ def reservoir(seq, k, rng=None, shuffle=True):
         else:
             idx = rng.randint(0, count)  # Others take a random shot.
             if idx < k:  # The new element hits the reservoir.
-                lounge[idx] = v  # Displace some previous element.
+                lounge[idx] = v  # Displace a previous element.
+    # Shuffle the buffer in place in the end.
     if shuffle:
-        rng.shuffle(lounge)  # Shuffle the buffer in place.
+        rng.shuffle(lounge)
     yield from lounge  # All done, so emit the reservoir.
 
 
 # The shuffling step in the end can be removed if we don't care
-# about the order of elements inside the sample, only about the
-# subset of elements that were chosen to the sample.
+# about the order of elements inside the sample, but only care about
+# the subset of elements that were chosen to the sample.
 
 def __demo():
     print("Here are 20 random non-short lines from 'War and Peace':")
