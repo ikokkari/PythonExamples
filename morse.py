@@ -44,12 +44,17 @@ def encode_morse(text, sep=''):
 # To filter out decoded words that are actual words, utility
 # function using bisection method.
 
-def is_word_prefix(so_far, words):
+def is_legal_word_prefix(word, words):
     # Find the first word in wordlist that is lexicographically
     # at least as large as the given prefix.
-    idx = bisect_left(words, so_far)
+    idx = bisect_left(words, word)
     # Check that that word starts with the given prefix.
-    return idx < len(words) and words[idx].startswith(so_far)
+    return idx < len(words) and words[idx].startswith(word)
+
+
+def is_legal_word(word, words):
+    idx = bisect_left(words, word)
+    return idx < len(words) and words[idx] == word
 
 
 # A recursive generator that yields all possible ways to
@@ -58,17 +63,15 @@ def is_word_prefix(so_far, words):
 
 def decode_morse(message, words, word=""):
     if message == "":
-        # Yield the complete word, provided that it is legal.
-        idx = bisect_left(words, word)
-        if idx < len(words) and words[idx] == word:
+        if is_legal_word(word, words):
             yield word
     else:
         # Complete the current word from the remaining message.
         for prefix in codes:
             if message.startswith(prefix):
-                new_far = word + codes[prefix]
-                if is_word_prefix(new_far, words):
-                    yield from decode_morse(message[len(prefix):], words, new_far)
+                new_word = word + codes[prefix]
+                if is_legal_word_prefix(new_word, words):
+                    yield from decode_morse(message[len(prefix):], words, new_word)
 
 
 # To paraphrase that Heath Ledger Joker meme, nobody has a
