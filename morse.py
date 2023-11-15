@@ -56,13 +56,17 @@ def is_word_prefix(so_far, words):
 # decode the given Morse code message back to letters so that
 # only actual words are generated.
 
-def decode_morse(message, words, so_far=""):
+def decode_morse(message, words, word=""):
     if message == "":
-        yield so_far
+        # If the current word is in words, yield it.
+        idx = bisect_left(words, word)
+        if idx < len(words) and words[idx] == word:
+            yield word
     else:
+        # Complete the current word from the remaining message.
         for prefix in codes:
             if message.startswith(prefix):
-                new_far = so_far + codes[prefix]
+                new_far = word + codes[prefix]
                 if is_word_prefix(new_far, words):
                     yield from decode_morse(message[len(prefix):], words, new_far)
 
@@ -90,13 +94,10 @@ def __demo():
 
     for text in rng.sample(words, 20):
         encoded = encode_morse(text)
-        print(f'The word {text!r} encodes in Morse to {encoded!r}.')
+        print(f'The word {text!r} encodes in Morse to {encoded!r}')
         print(f'The Morse code message {encoded!r} decodes to words:')
-        # We are interested only in actual words.
         for word in decode_morse(encoded, words, ""):
-            idx = bisect_left(words, word)
-            if idx < len(words) and words[idx] == word:
-                print(f"{word!r} split as {encode_morse(word, ' ')}")
+            print(f"{word!r} split as {encode_morse(word, ' ')}")
         print('')
 
 
