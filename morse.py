@@ -58,7 +58,7 @@ def is_word_prefix(so_far, words):
 
 def decode_morse(message, words, word=""):
     if message == "":
-        # If the current word is in words, yield it.
+        # Yield the complete word, provided that it is legal.
         idx = bisect_left(words, word)
         if idx < len(words) and words[idx] == word:
             yield word
@@ -93,10 +93,10 @@ def __demo():
     rng = Random(12345)
 
     for text in rng.sample(words, 20):
-        encoded = encode_morse(text)
-        print(f'The word {text!r} encodes in Morse to {encoded!r}')
-        print(f'The Morse code message {encoded!r} decodes to words:')
-        for word in decode_morse(encoded, words, ""):
+        message = encode_morse(text)
+        print(f'The word {text!r} encodes in Morse to {message!r}')
+        print(f'The Morse code message {message!r} decodes to words:')
+        for word in decode_morse(message, words, ""):
             print(f"{word!r} split as {encode_morse(word, ' ')}")
         print('')
 
