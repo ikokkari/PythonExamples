@@ -1,5 +1,6 @@
 from functools import lru_cache
 from fractions import Fraction
+from itertools import islice
 
 # Many problems can be solved surprisingly easily by first
 # solving a smaller version of that problem, whose result is
@@ -10,13 +11,13 @@ from fractions import Fraction
 
 def factorial(n, verbose=False):
     if verbose:
-        print(f"enter with n = {n}")
+        print(f"Enter with {n=}.")
     if n < 2:
         result = 1                             # base case
     else:
         result = n * factorial(n-1, verbose)   # linear recursive call
     if verbose:
-        print(f"Returning {result} from {n}")
+        print(f"Returning {result} from {n}.")
     return result
 
 
@@ -30,27 +31,29 @@ def factorial(n, verbose=False):
 # http://en.wikipedia.org/wiki/Towers_of_Hanoi
 
 def hanoi(src, tgt, n):
-    if n > 1:
-        mid = 6-src-tgt
+    if n > 0:
+        mid = 6 - src - tgt  # Arithmetic does the job of if-else ladder.
         hanoi(src, mid, n-1)
         print(f"Move top disk from peg {src} to peg {tgt}.")
         hanoi(mid, tgt, n-1)
 
 
 # For computing high integer powers, binary power is more efficient
-# than repeated multiplication n-1 times.
+# than repeated multiplication n-1 times. The same idea can be used
+# to compute high powers of large matrices where each individual
+# matrix multiplication is expensive.
 
 def binary_power(a, n, verbose=False):
     if verbose:
         print(f"Entering binary_power({n}).")
     if n < 0:
-        raise ValueError(f"Negative exponent {n} not allowed.")
+        return Fraction(1, binary_power(a, -n, verbose))
     elif n == 0:
         result = 1
     else:
         result = binary_power(a * a, n // 2, verbose) * (a if n % 2 == 1 else 1)
     if verbose:
-        print(f"Exiting binary_power({n}) with {result}.")
+        print(f"Exiting binary_power({n}).")
     return result
 
 
@@ -79,8 +82,10 @@ def flatten(items):
 # items whose elements together add up exactly to the goal.
 
 def subset_sum(items, goal):
+    # Base case for success in this search branch.
     if goal == 0:
         return []
+    # Base case for failure in this search branch.
     if len(items) == 0 or goal < 0:
         return None
     # Extract the last item.
@@ -108,6 +113,21 @@ def hof_q(n):
         return hof_q(n - hof_q(n-1)) + hof_q(n - hof_q(n-2))
 
 
+# Alternatively, an implementation as a generator that builds up
+# the table of Q-values, in dynamic programming paradigm.
+
+def hof_q_gen():
+    # The list of results that we fill in as we go.
+    q = [1, 1, 1]
+    yield from q
+    n = 3
+    while True:
+        # Recursive calls are replaced by simple list lookups of earlier results.
+        q.append(q[n - q[n-1]] + q[n - q[n-2]])
+        yield q[-1]
+        n += 1
+
+
 # The famous Thue-Morse sequence for "fairly taking turns". To
 # illustrate the power of memoization, let's use a global count
 # of how many times the function has been called.
@@ -120,16 +140,16 @@ def thue_morse(n, sign):
     global __tm_call_count
     __tm_call_count += 1
     if n < 2:
-        return f"{str(sign)}"
+        return f"{sign}"
     else:
         return thue_morse(n-1, sign) + thue_morse(n-1, 1-sign)
 
 
 # An interesting problem from "Concrete Mathematics". A row of aging
-# barrels is filled with wine at year 0. After each year, a portion
-# of the aged wine from each barrel is poured in the next barrel from
-# end to beginning. The wine taken from last barrel is bottled for
-# sale, and the first barrel is refilled with new wine. What is the
+# barrels is filled with grape juice at year 0. After each year, a
+# portion of the aged wine from each barrel is poured in the next barrel
+# from end to beginning. The wine taken from the last barrel is bottled
+# for sale, and the first barrel is refilled with new juice. What is the
 # composition of the given barrel after the number of years?
 
 @lru_cache(maxsize=10000)
@@ -142,54 +162,12 @@ def wine(barrel, age, year, pour=Fraction(1, 2)):
         return 1 if age == 0 else 0
     # Recursive formula for proportion of wine of given age.
     else:
-        return (1-pour) * wine(barrel, age-1, year-1) + pour * wine(barrel-1, age-1, year-1)
+        remain = (1-pour) * wine(barrel, age-1, year-1)
+        enter = pour * wine(barrel-1, age-1, year-1)
+        return remain + enter
 
 
-# The knight's tour problem is another classic. Given an n*n chessboard,
-# and the start coordinates of the knight, find a way to visit every
-# square on the board exactly once, ending up in some neighbour of
-# the square that the knight started from.
-# http://en.wikipedia.org/wiki/Knight's_tour
-
-def knight_tour(n=8, sx=1, sy=1):
-    # List to accumulate the moves during the recursion.
-    moves = []
-    # Squares that the tour has already visited.
-    visited = set()
-    # Eight possible moves of a chess knight.
-    dirs = ((2, 1), (1, 2), (2, -1), (-1, 2), (-2, 1), (1, -2), (-2, -1), (-1, -2))
-
-    # Test whether square (x, y) is inside the chessboard. We use
-    # the 1-based indexing here, as is normally done by humans.
-    def inside(x, y):
-        return 0 < x <= n and 0 < y <= n
-
-    # Find all the unvisited neighbours of square (x, y).
-    def neighbours(x, y):
-        return [(x+dx, y+dy) for (dx, dy) in dirs if inside(x+dx, y+dy) and (x+dx, y+dy) not in visited]
-
-    # Try to generate the rest of the tour from square (cx, cy).
-    def generate_tour(cx, cy):
-        # Add the square (cx, cy) to the moves
-        moves.append((cx, cy))
-        if len(moves) == n*n:
-            # The tour must be closed to be considered success.
-            return (sx-cx, sy-cy) in moves
-        visited.add((cx, cy))
-        for (nx, ny) in neighbours(cx, cy):
-            if generate_tour(nx, ny):
-                return True
-        # Undo the current move
-        moves.pop()
-        visited.remove((cx, cy))
-        return False
-    if generate_tour(sx, sy):
-        return moves
-    else:
-        return None
-
-
-# Ackermann function is a function that grows fast. Really,
+# Ackermann's function is a function that grows fast. Really,
 # really, really fast. In fact, you could fill our universe
 # with the word "really", and that still wouldn't be enough
 # words "really" to describe its unimaginable growth.
@@ -221,9 +199,6 @@ def __demo():
     print("\nFlattening the list produces the following:")
     print(flatten([1, (42, 99), [2, [3, [4, [5], 6], 7], 8], 9]))
 
-    print("\nHere is a closed knights tour on a 5-by-5 chessboard:")
-    print(knight_tour(5, 1, 1))
-
     print(f"\nAckermann(3, 3) = {ackermann(3, 3)}.")
     print(f"Ackermann(3, 4) = {ackermann(3, 4)}.")
     # print(f"Ackermann(4, 4) = {ackermann(4, 4)}.")
@@ -244,7 +219,10 @@ def __demo():
     print(f"\n{b} raised to 100th power equals {binary_power(b, 100)}.")
 
     print("\nHere are the first 500 items of Hofstadter's Q-series:")
-    print(", ".join((str(hof_q(n)) for n in range(501))))
+    print(", ".join((str(hof_q(n)) for n in range(500))))
+
+    print("\nHere are those same items, from iterative generator.")
+    print(", ".join(str(q) for q in islice(hof_q_gen(), 500)))
 
     year = 10
     print(f"\nAfter year {year}, the wine barrels consist of (year:portion):")

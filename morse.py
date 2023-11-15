@@ -1,4 +1,5 @@
 from random import Random
+from bisect import bisect_left
 
 # https://en.wikipedia.org/wiki/Morse_code
 
@@ -24,7 +25,9 @@ codes = {
 # Construct a reverse dictionary from an existing dictionary
 # with this handy dictionary comprehension. If multiple keys
 # of the original map to the same value, only the last pair
-# of value and key is stored in the reverse dictionary.
+# of value and key is stored in the reverse dictionary. Here
+# this doesn't matter, since no two keys in codes map to the
+# same value.
 
 codes_r = {codes[k]: k for k in codes}
 
@@ -38,21 +41,32 @@ def encode_morse(text, sep=''):
     return sep.join((codes_r.get(c, '') for c in text.lower()))
 
 
+# To filter out decoded words that are actual words, utility
+# function using bisection method.
+
+def is_word_prefix(so_far, words):
+    # Find the first word in wordlist that is lexicographically
+    # at least as large as the given prefix.
+    idx = bisect_left(words, so_far)
+    # Check that the word starts with that prefix.
+    return idx < len(words) and words[idx].startswith(so_far)
+
+
 # A recursive generator that yields all possible ways to
 # decode the given Morse code message back to letters. This
 # generator is written recursively to find all the possible
 # first characters, followed by the recursive decoding of
 # the rest of the message.
 
-def decode_morse(message):
-    if message == '':
-        yield ''
+def decode_morse(message, words, so_far=""):
+    if message == "":
+        yield so_far
     else:
         for prefix in codes:
             if message.startswith(prefix):
-                head = codes[prefix]
-                for tail in decode_morse(message[len(prefix):]):
-                    yield head + tail
+                new_far = so_far + codes[prefix]
+                if is_word_prefix(new_far, words):
+                    yield from decode_morse(message[len(prefix):], words, new_far)
 
 
 # To paraphrase that Heath Ledger Joker meme, nobody has a
@@ -69,27 +83,22 @@ def decode_morse(message):
 # the number of different ways to decode a sequence of n
 # consecutive dots back to characters:
 
-# In [0]: [len(list(decode_morse('.'*n))) for n in range(1, 13)]
-# Out[0]: [1, 2, 4, 8, 15, 29, 56, 108, 208, 401, 773, 1490]
-
-
 def __demo():
     with open('words_sorted.txt', encoding='utf-8') as f:
-        wordlist = [word.strip() for word in f if len(word) < 8]
-    print(f'Read a list of {len(wordlist)} words.')
-
-    # Convert to set for a quick lookup of individual words.
-    words = set(wordlist)
+        words = [word.strip() for word in f if len(word) < 12]
+    print(f'Read a list of {len(words)} words.')
 
     rng = Random(12345)
 
-    for text in rng.sample(wordlist, 20):
+    for text in rng.sample(words, 20):
         encoded = encode_morse(text)
         print(f'The word {text!r} encodes in Morse to {encoded!r}.')
         print(f'The Morse code message {encoded!r} decodes to words:')
         # We are interested only in actual words.
-        for word in (word for word in decode_morse(encoded) if word in words):
-            print(f"{word!r} split as {encode_morse(word, '|')}")
+        for word in decode_morse(encoded, words, ""):
+            idx = bisect_left(words, word)
+            if idx < len(words) and words[idx] == word:
+                print(f"{word!r} split as {encode_morse(word, ' ')}")
         print('')
 
 
