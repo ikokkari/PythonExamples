@@ -48,15 +48,13 @@ def is_word_prefix(so_far, words):
     # Find the first word in wordlist that is lexicographically
     # at least as large as the given prefix.
     idx = bisect_left(words, so_far)
-    # Check that the word starts with that prefix.
+    # Check that that word starts with the given prefix.
     return idx < len(words) and words[idx].startswith(so_far)
 
 
 # A recursive generator that yields all possible ways to
-# decode the given Morse code message back to letters. This
-# generator is written recursively to find all the possible
-# first characters, followed by the recursive decoding of
-# the rest of the message.
+# decode the given Morse code message back to letters so that
+# only actual words are generated.
 
 def decode_morse(message, words, so_far=""):
     if message == "":
