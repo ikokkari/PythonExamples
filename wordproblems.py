@@ -1,9 +1,12 @@
 from random import choice, sample
 from bisect import bisect_left, bisect_right
 
-# Regular expressions can come handy in text problems.
 
-import re
+# Use binary search to determine if the given word is in the sorted wordlist.
+
+def is_legal_word(word, words):
+    idx = bisect_left(words, word)
+    return idx < len(words) and words[idx] == word
 
 
 # Compute a histogram of individual characters in words.
@@ -16,30 +19,27 @@ def histogram(words):
     return result
 
 
-# Find all words that are palindromes.
+# Find all words that are find_palindromes.
 
-def palindromes(words):
+def find_palindromes(words):
     return [word for word in words if word == word[::-1]]
 
 
 # Find all words that are a different word when read backwards.
 
-def semordnilap(words):
-    word_set = set(words)
-    return [word for word in words if word != word[::-1] and word[::-1] in word_set]
+def find_semordnilaps(words):
+    return [word for word in words if word != word[::-1] and is_legal_word(word[::-1], words)]
 
 
-# Find all the rotodromes, words that become other words when rotated.
+# Find all rotodromes, words that become other words when rotated.
 
-def rotodromes(words):
-    # Sets allow rapid lookup of element membership.
-    w_set = set(words)
+def find_rotodromes(words):
 
     # Define a nested helped function to perform the filtering.
     def is_rotodrome(word):
         for i in range(1, len(word)):
-            w2 = word[i:] + word[:i]
-            if word != w2 and w2 in w_set:
+            rotated_word = word[i:] + word[:i]
+            if word != rotated_word and is_legal_word(rotated_word, words):
                 return True
         return False
 
@@ -49,18 +49,18 @@ def rotodromes(words):
 # Find the "almost palindromes", words that become palindromes when
 # one letter is tactically removed.
 
-def almost_palindromes(words):
-    def almost(word):
+def find_almost_palindromes(words):
+    def is_almost_palindrome(word):
         # Words that are already palindromes don't count.
         if word != word[::-1]:
             # Loop through the positions to remove a character.
             for i in range(len(word)):
-                w2 = word[:i] + word[i + 1:]
-                if w2 == w2[::-1]:
+                removed_word = word[:i] + word[i + 1:]
+                if removed_word == removed_word[::-1]:
                     return True
         return False
 
-    return [word for word in words if len(word) > 2 and almost(word)]
+    return [word for word in words if len(word) > 2 and is_almost_palindrome(word)]
 
 
 # Rotate the consonants of the text cyclically, keeping the rest of
@@ -95,13 +95,7 @@ def rotate_consonants(text, off=1):
 
 # Find the words that contain at least three duplicated letters.
 
-def triple_duplicate(words):
-    return [word for word in words if len(re.findall(r'(.)\1', word)) >= 3]
-
-
-# Solution without regular expressions is more tedious.
-
-def triple_duplicate_hard_way(words):
+def triple_duplicates(words):
     result = []
     for word in words:
         count = 0
@@ -117,23 +111,9 @@ def triple_duplicate_hard_way(words):
     return result
 
 
-# Find the words that contain three duplicated letters all together.
-
-def consec_triple_duplicate(words):
-    regex = r'(.)\1(.)\2(.)\3'
-    return [x for x in words if len(re.findall(regex, x)) > 0]
-
-
 # How many words can be spelled out using only given characters?
 
 def limited_alphabet(words, chars):
-    # A regular expression used many times is good to precompile
-    # into the matching machine for speed and efficiency.
-    pat = re.compile('^[' + chars + ']+$')
-    return [word for word in words if pat.match(word)]
-
-
-def limited_alphabet_hard_way(words, chars):
     return [word for word in words if all(c in chars for c in word)]
 
 
@@ -294,23 +274,23 @@ def __demo():
     print("\nHistogram of letters sorted by their frequencies:")
     print(hist)
 
-    pals = palindromes(words)
-    print(f"\nThere are {len(pals)} palindromes. ", end="")
+    pals = find_palindromes(words)
+    print(f"\nThere are {len(pals)} find_palindromes. ", end="")
     print("Some of them are:")
     print(", ".join(sample(pals, 10)))
 
-    sems = semordnilap(words)
+    sems = find_semordnilaps(words)
     print(f"\nThere are {len(sems)} semordnilaps. Some of them are:")
     print(", ".join(sample(sems, 10)))
 
-    almost = almost_palindromes(words)
+    almost = find_almost_palindromes(words)
     print(f"\nThere are {len(almost)} almost palindromes. ", end="")
     print("Some of them are:")
     print(", ".join(sample(almost, 10)))
 
     print("\nLet us next look for some rotodromes.")
     for n in range(2, 13):
-        rotos = rotodromes([word for word in words if len(word) == n])
+        rotos = find_rotodromes([word for word in words if len(word) == n])
         print(f"There are {len(rotos)} rotodromes of length {n}.")
         print(f"Some of these rotodromes are:")
         print(f"{', '.join(sample(rotos, min(10, len(rotos))))}.")
@@ -319,14 +299,6 @@ def __demo():
     print(f"\nSome consonant rotations of {name!r}.")
     for off in range(-5, 6):
         print(f"{off:2}: {rotate_consonants(name, off)}")
-
-    print("\nWords that contain triple duplicate character:")
-    for word in triple_duplicate(words):
-        print(word, end=' ')
-
-    print("\n\nWords that contain consecutive triple duplicate:")
-    for word in consec_triple_duplicate(words):
-        print(word, end=' ')
 
     print("\n\nWords that contain only hexadecimal digits [a-f]:")
     for word in limited_alphabet(words, "abcdef"):
