@@ -50,19 +50,14 @@ def int_to_english(n):
     if n >= __googol:  # Huge numbers
         first = int_to_english(n // __googol)
         rest = int_to_english(n % __googol)
-        name = f"{first} googol"
-        if rest != "zero":
-            name += f" and {rest}"
-        return name
+        return f"{first} googol" + ("" if rest == "zero" else f" and {rest}")
     # Otherwise, break the number into blocks of three and convert.
     result, p = [], 0
     while n > 0:
-        trip, n = n % 1000, n // 1000
-        if trip > 0:
-            if p == 0:
-                result.append(__int_to_eng(trip))
-            else:
-                result.append(__int_to_eng(trip) + " " + __power_names[p])
+        last_three_digits = n % 1000
+        if last_three_digits > 0:
+            result.append(__int_to_eng(last_three_digits) + ("" if p == 0 else " " + __power_names[p]))
+        n = n // 1000
         p += 3
     return " ".join(reversed(result))
 
@@ -79,7 +74,7 @@ def __int_to_english_demo():
     print(alpha)
     print("\nIntegers 0-100 sorted by their name lengths:")
     print(by_length)
-    print("\nIntegers 0-1000 whose name does not contain letter 'o':")
+    print("\nIntegers 0-1000 whose name does not contain the letter 'o':")
     print(no_os)
 
 

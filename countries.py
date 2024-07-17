@@ -6,17 +6,15 @@ with open('countries.json', encoding='utf-8') as data_file:
 print(f"Read {len(countries)} countries from the JSON file.")
 
 continental_pops = {}
-total_pop = 0
 for country in countries:
     continent = country['Continent']
     pop = int(country['Population'].split()[0])
     continental_pops[continent] = continental_pops.get(continent, 0) + pop
-    total_pop += pop
 
 print('\nThe total population in each continent:')
 for continent in sorted(continental_pops, key=lambda c: continental_pops[c], reverse=True):
     print(f"{continent} has a total of {continental_pops[continent]} people.")
-print(f'That gives a total of {total_pop} people on Earth.')
+print(f'That gives a total of {sum(continental_pops[c] for c in continental_pops)} people on Earth.')
 
 hazard_table = {}
 for country in countries:

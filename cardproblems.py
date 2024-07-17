@@ -29,7 +29,7 @@ def deal_hand(n, taken=None):
 
 def gin_count_deadwood(deadwood):
     """Count the deadwood points of leftover cards in gin rummy."""
-    return sum(1 if rank == 'ace' else min(ranks[rank], 10) for (_, rank) in deadwood)
+    return sum(1 if rank == 'ace' else min(ranks[rank], 10) for (rank, _) in deadwood)
 
 
 def blackjack_count_value(hand):
@@ -57,14 +57,7 @@ def blackjack_count_value(hand):
 
 def poker_has_flush(hand):
     """Determine if the five card poker hand has a flush."""
-    flush_suit = None
-    for (_, suit) in hand:
-        if flush_suit is None:  # First card in the hand determines suit.
-            flush_suit = suit
-        elif flush_suit != suit:  # Other cards must then have the same suit.
-            return False
-    # We can't return True until we have looked at every card in hand.
-    return True
+    return all(suit == hand[0][1] for (_, suit) in hand)
 
 
 def count_rank_pairs(hand):
@@ -111,7 +104,7 @@ def poker_has_straight(hand):
     min_rank, max_rank = min(hand_ranks), max(hand_ranks)
     if max_rank == 14:  # Special cases for straights with an ace
         return min_rank == 10 or sorted(hand) == [2, 3, 4, 5, 14]
-    else:  # Hand has no aces, so it must be five consecutive ranks
+    else:  # Hand has no aces, so check if it is five consecutive ranks
         return max_rank-min_rank == 4
 
 
@@ -151,8 +144,9 @@ def evaluate_all_poker_hands():
             if f(hand):
                 counters[i] += 1
                 break  # No point looking for more for this hand
-    result = [(f.__name__, counters[i]) for (i, f) in enumerate(funcs)]
-    assert sum(c for (_, c) in result) == 2598960
+    result = [(f.__name__, count) for (f, count) in zip(funcs, counters)]
+    expected = [1098240, 123552, 54912, 9180, 5112, 3744, 624, 36, 1303560]
+    assert [count for (_, count ) in result] == expected
     return result
 
 

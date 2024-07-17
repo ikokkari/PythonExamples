@@ -16,7 +16,7 @@ import heapq
 # trivial base case.
 
 def two_summers(items, goal, i=0, j=None):
-    j = len(items)-1 if j is None else j
+    j = len(items) - 1 if j is None else j
     while i < j:
         x = items[i] + items[j]
         if x == goal:
@@ -27,43 +27,41 @@ def two_summers(items, goal, i=0, j=None):
             j -= 1  # Largest element can't be part of solution.
     return False
 
-# For more applications of the "two pointers" idea, see e.g.
-# https://codeforces.com/problemset/page/1?tags=two+pointers
 
 # In the graded labs, solve the classic problem of three_summers
 # where you need to find three elements that add up to the goal.
-
+# This function can use two_summers as a helper function.
 
 # Modify the list s in place so that all elements for which the
-# given predicate pred is true are in the front in some order,
-# followed by the elements for which pred is false, in some order.
+# given predicate is true are in the front in some order, followed
+# by the elements for which the predicate is false, in some order.
 
-def partition_in_place(s, pred):
+def partition_in_place(s, predicate):
     # Elements from position i to j, inclusive, can be anything.
     # Anything to left of i is acceptable, anything to the right
     # of j is unacceptable. When i == j, all is well.
-    i, j = 0, len(s)-1
+    i, j = 0, len(s) - 1
     # Each round, one of the indices takes a step towards the other.
     while i < j:
         # If s[i1] satisfies the predicate, leave it be...
-        if pred(s[i]):
+        if predicate(s[i]):
             i += 1
         else:
             # Otherwise, swap it to the end
             s[i], s[j] = s[j], s[i]
             j -= 1
-    # Note that for list of n elements, pred is called exactly
-    # n-1 times. This can be valuable if pred is expensive.
+    # Note that for list of n elements, the predicate is called exactly
+    # n - 1 times. This can be valuable if the predicate is expensive.
     return s
 
 
 # List comprehensions make this easier and stable, but at the cost
-# of calling pred twice for each element in the list. This version
-# maintains the mutual ordering of elements inside the left and
-# right partitions, though, thanks to list comprehensions.
+# of calling the predicate twice for each element in the list. This
+# version maintains the mutual ordering of elements inside the left
+# and right partitions, though, thanks to list comprehensions.
 
-def stable_partition(s, pred):
-    return [x for x in s if pred(x)] + [x for x in s if not pred(x)]
+def stable_partition(s, predicate):
+    return [x for x in s if predicate(x)] + [x for x in s if not predicate(x)]
 
 
 # There exist a multitude of dissimilarity metrics of how different
@@ -86,15 +84,15 @@ def dissimilarity(first, second, kind='yule'):
         if kind == 'yule':
             return (2 * (n10 + n01)) / (n11 * n00 + n01 * n10)
         elif kind == 'dice':
-            return (n10 + n01) / (2*n11 + n10 + n01)
+            return (n10 + n01) / (2 * n11 + n10 + n01)
         elif kind == 'sokal-sneath':
-            return (2 * (n10 + n01)) / (n11 + 2*(n10 + n01))
+            return (2 * (n10 + n01)) / (n11 + 2 * (n10 + n01))
         elif kind == 'jaccard':
             return (n10 + n01) / (n11 + n10 + n01)
         elif kind == 'matching':
             return (n10 + n01) / len(first)
         elif kind == 'rogers-tanimoto':
-            return (2 * (n10 + n01)) / (n11 + 2*(n10 + n01) + n00)
+            return (2 * (n10 + n01)) / (n11 + 2 * (n10 + n01) + n00)
         else:
             raise ValueError(f"Unknown dissimilarity metric {kind}")
     except ZeroDivisionError:
@@ -116,13 +114,13 @@ def apportion_congress_seats(seats, pop):
     # List of seats assigned to each state, initially one per state.
     result = [1 for _ in pop]
     # List of states and their current priorities.
-    pq = [(Fraction(-p*p, 2), i) for (i, p) in enumerate(pop)]
+    pq = [(Fraction(-p * p, 2), i) for (i, p) in enumerate(pop)]
     # Organize the list into a priority queue.
     heapq.heapify(pq)
     seats -= len(pop)
     # Give out the remaining seats one at the time.
     while seats > 0:
-        # Pop from priority queue the state with highest priority.
+        # Pop from priority queue the state with the highest priority.
         (priority, state) = heapq.heappop(pq)
         # That state receives one more seat.
         result[state] += 1
@@ -187,7 +185,7 @@ def __demo():
     print(f"\n\nFor comparison, rounded percentages of {pops}:")
     pct = apportion_congress_seats(1000, pops)
     # Rounded percentages are guaranteed to add up to exactly 100.
-    print(", ".join([f"{p/10:.1f}" for p in pct]))
+    print(", ".join([f"{p / 10:.1f}" for p in pct]))
 
 
 if __name__ == "__main__":

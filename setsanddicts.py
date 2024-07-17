@@ -12,9 +12,8 @@ names2 = {'Max', 'Lena', 'Larry', 'Billy', 'Tina'}
 
 # Membership check is done with the operators 'in' and 'not in'.
 
-print('Tony' in names1)        # False
-print('Mary' in names1)        # True
-print('Johnny' not in names1)  # False
+for name in ['Tony', 'Mary', 'Johnny']:
+    print(f"Is {name} in names1? {name in names1}")
 
 # The basic set theoretical operations are available as methods.
 

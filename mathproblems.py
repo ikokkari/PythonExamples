@@ -21,10 +21,10 @@ def euclid_gcd(a, b, verbose=False):
 # https://en.wikipedia.org/wiki/Collatz_conjecture
 
 def collatz(start):
-    result = [start]
-    while result[-1] > 1:
-        n = result[-1]
-        result.append(n//2 if n % 2 == 0 else 3*n + 1)
+    n, result = start, [start]
+    while n > 1:
+        n = n // 2 if n % 2 == 0 else 3 * n + 1
+        result.append(n)
     return result
 
 
