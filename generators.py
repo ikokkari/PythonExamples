@@ -172,12 +172,12 @@ def kolakoski(n=2):
 # Another cute self describing sequence, this one with words.
 
 def aronson(letter='t'):
-    n, owed, curr = 1, [], f'Letter {letter} is in positions '
+    n, owed, fragment = 1, [], f'Letter {letter} is in positions '
     while True:
-        yield from curr
-        owed.extend([i+n for (i, c) in enumerate(curr) if c == letter])
-        n += len(curr)
-        curr, owed = int_to_english(owed[0]) + ', ', owed[1:]
+        yield from fragment
+        owed.extend(i+n for (i, c) in enumerate(fragment) if c == letter)
+        n += len(fragment)
+        fragment, owed = int_to_english(owed[0]) + ', ', owed[1:]
 
 
 # Since a generator can take parameters, we can write a iterator
@@ -207,6 +207,16 @@ def stutter(seq, k):
 
 def __demo():
 
+    # Python built-in function next allows you to extract elements from a
+    # lazy sequence.
+
+    fib_list = []
+    fibs = fibonacci();
+    for _ in range(20):
+        fib_list.append(next(fibs))
+    print("First twenty Fibonacci numbers are:")
+    print(", ".join(str(f) for f in fib_list))
+
     # Functions every_kth and stutter cancel each other out.
     print("Collatz sequence starting from 12345 is:")
     print(list(every_kth(stutter(collatz(12345), 3), 3)))
@@ -216,10 +226,10 @@ def __demo():
     print(list(takewhile((lambda x: x <= 1000), every_kth(primes(), 7))))
 
     print("Here are the first 1000 elements of Kolakoski(2):")
-    print("".join((str(x) for x in islice(kolakoski(2), 1000))))
+    print("".join(str(x) for x in islice(kolakoski(2), 1000)))
 
     print("Here are the first 1000 elements of Kolakoski(3):")
-    print("".join((str(x) for x in islice(kolakoski(3), 1000))))
+    print("".join(str(x) for x in islice(kolakoski(3), 1000)))
 
     print("First 1000 characters of modified Aronson infinite t-sentence:")
     print("".join(islice(aronson(), 1000)))
@@ -228,10 +238,10 @@ def __demo():
     print("".join(islice(aronson('e'), 1000)))
 
     print("Here are 100 random numbers from increasing scales:")
-    print(", ".join((str(x) for x in islice(scale_random(123, 10, 5), 100))))
+    print(", ".join(str(x) for x in islice(scale_random(123, 10, 5), 100)))
 
     print("Here are 100 random numbers from another scale:")
-    print(", ".join((str(x) for x in islice(scale_random(123, 5, 10), 100))))
+    print(", ".join(str(x) for x in islice(scale_random(123, 5, 10), 100)))
 
     print("Let us examine Theon's ladder for square root of 7.")
     for i, f in enumerate(islice(theons_ladder(7), 50)):
