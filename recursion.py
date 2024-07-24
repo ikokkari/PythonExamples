@@ -49,7 +49,7 @@ def binary_power(a, n, unit=1, verbose=False):
     if n < 0:
         return Fraction(1, binary_power(a, -n, unit, verbose))
     elif n == 0:
-        result = 1
+        result = unit
     else:
         result = binary_power(a, n // 2, unit, verbose)
         result = result * result * (a if n % 2 == 1 else unit)
