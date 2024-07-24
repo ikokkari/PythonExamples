@@ -15,7 +15,7 @@ def factorial(n, verbose=False):
     if n < 2:
         result = 1                             # base case
     else:
-        result = n * factorial(n-1, verbose)   # linear recursive call
+        result = n * factorial(n - 1, verbose)   # linear recursive call
     if verbose:
         print(f"Returning {result} from {n}.")
     return result
@@ -32,7 +32,7 @@ def factorial(n, verbose=False):
 
 def hanoi(src, tgt, n):
     if n > 0:
-        mid = 6 - src - tgt  # Arithmetic does the job of if-else ladder.
+        mid = 6 - src - tgt  # Arithmetic does the job of an if-else ladder.
         hanoi(src, mid, n-1)
         print(f"Move top disk from peg {src} to peg {tgt}.")
         hanoi(mid, tgt, n-1)
@@ -43,17 +43,18 @@ def hanoi(src, tgt, n):
 # to compute high powers of large matrices where each individual
 # matrix multiplication is expensive.
 
-def binary_power(a, n, verbose=False):
+def binary_power(a, n, unit=1, verbose=False):
     if verbose:
-        print(f"Entering binary_power({n}).")
+        print(f"Entering binary_power({a}, {n}).")
     if n < 0:
-        return Fraction(1, binary_power(a, -n, verbose))
+        return Fraction(1, binary_power(a, -n, unit, verbose))
     elif n == 0:
         result = 1
     else:
-        result = binary_power(a * a, n // 2, verbose) * (a if n % 2 == 1 else 1)
+        result = binary_power(a, n // 2, unit, verbose)
+        result = result * result * (a if n % 2 == 1 else unit)
     if verbose:
-        print(f"Exiting binary_power({n}).")
+        print(f"Exiting binary_power({a}, {n}) with {result=}.")
     return result
 
 
@@ -61,16 +62,16 @@ def binary_power(a, n, verbose=False):
 # classic list programming exercise. This being Python, the correct
 # "duck typing" spirit of checking of something is an iterable
 # sequence is to check if it allows creation of iterator objects
-# with the magic method __iter__, that is, for our purposes it acts
+# with the dunder method __iter__, that is, for our purposes it acts
 # like a sequence.
 
 def flatten(items):
     result = []
     for x in items:
-        if hasattr(x, '__iter__'):  # is x an iterable?
-            result.extend(flatten(x))
+        if hasattr(x, '__iter__'):  # Is x an iterable?
+            result.extend(flatten(x))  # If yes, recursively flatten it
         else:
-            result.append(x)
+            result.append(x)  # If x is an atom, just append it to result
     return result
 
 
@@ -81,6 +82,10 @@ def flatten(items):
 # otherwise it returns the lexicographically highest sublist of
 # items whose elements together add up exactly to the goal.
 
+# Note that all levels of recursion share the same items list object,
+# so we don't need to inefficiently create a new list object with
+# slicing at each level of recursion.
+
 def subset_sum(items, goal):
     # Base case for success in this search branch.
     if goal == 0:
@@ -88,7 +93,7 @@ def subset_sum(items, goal):
     # Base case for failure in this search branch.
     if len(items) == 0 or goal < 0:
         return None
-    # Extract the last item.
+    # Extract the last item from the items.
     last = items.pop()
     # Try taking the last item into chosen subset.
     answer = subset_sum(items, goal-last)
@@ -114,7 +119,7 @@ def hof_q(n):
 
 
 # Alternatively, an implementation as a generator that builds up
-# the table of Q-values, in dynamic programming paradigm.
+# the table of Q-values, using the dynamic programming paradigm.
 
 def hof_q_gen():
     # The list of results that we fill in as we go.
@@ -130,7 +135,10 @@ def hof_q_gen():
 
 # The famous Thue-Morse sequence for "fairly taking turns". To
 # illustrate the power of memoization, let's use a global count
-# of how many times the function has been called.
+# of how many times the function has been called. You can next
+# uncomment the @lru_cache line and run the script again to see
+# the difference of 2035 recursive calls without lru_cache, versus
+# 19 calls with lru_cache.
 
 __tm_call_count = 0
 
@@ -193,7 +201,7 @@ def __demo():
 
     items = [1, 4, 7, 10, 15, 22, 23, 30, 32]
     print(f"\nSolving subset sum with {items}:")
-    for goal in range(100, 110):
+    for goal in range(60, 81):
         print(f"Goal {goal}: solution {subset_sum(items, goal)!r}")
 
     print("\nFlattening the list produces the following:")
@@ -205,7 +213,7 @@ def __demo():
     # would give error "recursion limit exceeded"
 
     print(f"\nSteps of computing binary_power(2, 100) are:")
-    bp = binary_power(2, 100, True)
+    bp = binary_power(2, 100, verbose=True)
     print(f"The result is {bp}.")
 
     # Gold testing means testing a function against some existing
