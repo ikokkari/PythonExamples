@@ -1,4 +1,4 @@
-from random import choice, sample
+from random import Random
 from bisect import bisect_left, bisect_right
 
 
@@ -241,6 +241,9 @@ def all_anagrams(words):
 
 
 def __demo():
+
+    rng = Random(12345)
+
     with open('words_sorted.txt', encoding="utf-8") as f:
         words = [x.strip() for x in f]
     print(f"Read in {len(words)} words.")
@@ -275,25 +278,25 @@ def __demo():
     print(hist)
 
     pals = find_palindromes(words)
-    print(f"\nThere are {len(pals)} find_palindromes. ", end="")
-    print("Some of them are:")
-    print(", ".join(sample(pals, 10)))
+    print(f"\nThere are {len(pals)} palindromes. ", end="")
+    print("Some of them aresa.:")
+    print(", ".join(rng.sample(pals, 10)))
 
     sems = find_semordnilaps(words)
     print(f"\nThere are {len(sems)} semordnilaps. Some of them are:")
-    print(", ".join(sample(sems, 10)))
+    print(", ".join(rng.sample(sems, 10)))
 
     almost = find_almost_palindromes(words)
     print(f"\nThere are {len(almost)} almost palindromes. ", end="")
     print("Some of them are:")
-    print(", ".join(sample(almost, 10)))
+    print(", ".join(rng.sample(almost, 10)))
 
     print("\nLet us next look for some rotodromes.")
     for n in range(2, 13):
         rotos = find_rotodromes([word for word in words if len(word) == n])
         print(f"There are {len(rotos)} rotodromes of length {n}.")
         print(f"Some of these rotodromes are:")
-        print(f"{', '.join(sample(rotos, min(10, len(rotos))))}.")
+        print(f"{', '.join(rng.sample(rotos, min(10, len(rotos))))}.")
 
     name = 'Donald Erwin Knuth'
     print(f"\nSome consonant rotations of {name!r}.")
@@ -329,7 +332,7 @@ def __demo():
     count, total = 0, 0
     while count < 10:
         total += 1
-        first = choice(words5)
+        first = rng.choice(words5)
         best = [first]
         while len(best) < 5:
             better = word_chain(words5, [first], 1, len(best) + 1)
@@ -346,10 +349,10 @@ def __demo():
     elim_dict_list = remain_words(words)
     start_words = list(elim_dict_list[8])
     for n in range(10):
-        word = choice(start_words)
+        word = rng.choice(start_words)
         while len(word) > 1:
             print(word, end=" -> ")
-            word = choice(elim_dict_list[len(word)][word])
+            word = rng.choice(elim_dict_list[len(word)][word])
         print(word)
 
     N, M = 7, 8

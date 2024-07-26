@@ -38,18 +38,18 @@ codes_r = {codes[k]: k for k in codes}
 # in this encoding.
 
 def encode_morse(text, sep=''):
-    return sep.join((codes_r.get(c, '') for c in text.lower()))
+    return sep.join(codes_r.get(c, '') for c in text.lower())
 
 
-# To filter out decoded words that are actual words, utility
-# function using bisection method.
+# To filter out decoded words that are actual words, two utility
+# functions using the bisection method from the standard library.
 
-def is_legal_word_prefix(word, words):
+def is_legal_word_prefix(prefix, words):
     # Find the first word in wordlist that is lexicographically
     # at least as large as the given prefix.
-    idx = bisect_left(words, word)
+    idx = bisect_left(words, prefix)
     # Check that that word starts with the given prefix.
-    return idx < len(words) and words[idx].startswith(word)
+    return idx < len(words) and words[idx].startswith(prefix)
 
 
 def is_legal_word(word, words):
@@ -61,15 +61,15 @@ def is_legal_word(word, words):
 # decode the given Morse code message back to letters so that
 # only actual words are generated.
 
-def decode_morse(message, words, word=""):
+def decode_morse(message, words, word_so_far=""):
     if message == "":
-        if is_legal_word(word, words):
-            yield word
+        if is_legal_word(word_so_far, words):
+            yield word_so_far
     else:
         # Complete the current word from the remaining message.
         for prefix in codes:
             if message.startswith(prefix):
-                new_word = word + codes[prefix]
+                new_word = word_so_far + codes[prefix]
                 if is_legal_word_prefix(new_word, words):
                     yield from decode_morse(message[len(prefix):], words, new_word)
 
@@ -93,7 +93,7 @@ def __demo():
         words = [word.strip() for word in f if len(word) < 12]
     print(f'Read a list of {len(words)} words.')
 
-    rng = Random(12345)
+    rng = Random(424242)
 
     for text in rng.sample(words, 20):
         message = encode_morse(text)
