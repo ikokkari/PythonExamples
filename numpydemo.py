@@ -1,109 +1,100 @@
+# Updated for NumPy 2.0 and SciPy 1.14, July 31, 2024.
+
 import numpy as np
-import matplotlib.pyplot as plt
-import scipy.interpolate
 import scipy.integrate
 import scipy.optimize
+import scipy.interpolate
 
-a = np.array([1.2, 5.5, -4.3, 9.1, 0.2, -3.3], dtype='double')
-print(f"a is now:\n{a!s}")
-a = a.reshape((2, 3))
-print(f"a is now:\n{a!s}")
-a = a.reshape(6)
-print(f"a is now:\n{a!s}")
+# Numpy has its own random number generators.
 
-# Unlike Python lists, slicing and views share underlying data.
+rng = np.random.default_rng()
 
-b = a[2:4]
-print(f"b is now:\n{b!s}")
-a[2] = 2.54
-print(f"b is now:\n{b!s}")
+# Ordinary Python list for comparison of operations.
+a_p = [42, 99, 17, 0, -1]
 
-# Arithmetic works differently for numpy arrays and Python lists.
+# Numpy arrays can be created in many ways.
+a_n = np.array(a_p, dtype=np.int16)
+b_n = np.arange(-5, 6) ** 2
+c_n = rng.poisson(5, 15)
 
-pl = [1, 2, 3]
-print(f"Python list addition: {pl + pl}")
-print(f"Python list multiplication: {pl * 3}")
-na = np.array([1, 2, 3])
-print(f"Numpy array addition: {na + na}")
-print(f"Numpy array multiplication: {na * na}")
+print(f"a_n is {a_n} with shape {a_n.shape}.")
+print(f"b_n is {b_n} with shape {b_n.shape}.")
+print(f"c_n is {c_n} with shape {c_n.shape}.")
+print(f"Mean, median, and variance of c_n are {np.mean(c_n)}, {np.median(c_n)} and {np.var(c_n)}.")
 
-# Ufuncs apply separately to each element of the array. This
-# eliminates the need for us to write that loop explicitly. Often
-# we do not wish to use list comprehension, since that could not
-# operate in a numpy array in place, which might be important if
-# the array is humongous.
+# Numpy arrays can be reshaped, and they still have the same elements.
 
-a = a + np.cos(a)
-print(f"a is now:\n{a!s}")
+c_n.shape = (3, 5)
+print(f"After changing shape, c_n now equals {c_n}.")
+print(f"Mean, median, and variance of c_n are {np.mean(c_n)}, {np.median(c_n)} and {np.var(c_n)}.")
 
-# When combining tensors of different ranks, the smaller tensor
-# is automatically broadcast into higher dimensions so that the
-# shapes of the two matrices are compatible for that operation.
+# Numpy array arithmetic is always elementwise.
 
-c = np.array([1, 2, 3, 4, 5, 6])
-c = c.reshape((2, 3))  # shape (2, 3)
-d = np.array([1, 2, 3])  # broadcast into (2, 3)
-print("c + d equals:")
-print(c + d)
+print(f"a_n + a_n equals {a_n + a_n}.")
+print(f"a_p + a_p equals {a_p + a_p}.")
+print(f"a_n * 3 equals {a_n * 3}.")
+print(f"a_p * 3 equals {a_p * 3}.\n")
 
-# Cherry picking elements by indexing with a truth-valued array.
+# Python list elementwise addition can be done with comprehension and zip.
 
-v = a > 3  # A truth-valued array from element-wise comparisons.
-print(f"v is now: {v}")
-print(f"a[v] is: {a[v]}")
+print(f"a_p + a_p done elementwise equals {[x + y for (x, y) in zip(a_p, a_p)]}.\n")
+
+# Slicing a Numpy array creates a view that shares the underlying data.
+
+d_n = a_n[:3]
+d_n[0] = 33
+print(f"a_n is {a_n} with shape {a_n.shape}.")
+print(f"d_n is {d_n} with shape {d_n.shape}.")
+
+# If you want the data to be separate, you must use method .copy()
+
+e_n = a_n[:3].copy()
+e_n[0] = 123
+print(f"a_n is {a_n} with shape {a_n.shape}.")
+print(f"e_n is {e_n} with shape {e_n.shape}.\n")
+
+# Numpy arrays allow "fancy indexing" with vector of truth values, akin
+# to the standard library Python function itertools.compress.
+
+idx = c_n > 5  # Produces a truth-valued array
+print(f"Elements of c_n greater than 5 are {c_n[idx]}.")
+
+# An array with floating point values.
+
+f_n = np.linspace(0, np.pi, 20)
+print(f"f_n is {f_n} with type {f_n.dtype}.")
+
+# Universal functions are automatically vectorized over the array, so that
+# you don't need to write a loop to apply them to every element.
+
+f_n = np.sin(f_n)
+print(f"After taking sine, f_n is {f_n} with type {f_n.dtype}.\n")
 
 
-# Then, onto scipy and its basic functions in style MATLAB.
+# Next, we will demonstrate a bit of scipy. Let's define a black box function
+# that we will use in integration, optimization and interpolation.
 
-# Scipy offers a host of numerical integration functions.
-
-
-# First, let's make up a function to integrate.
-
-def f(x_):
-    return x_ * (x_ - 4) / (3 + np.cos(2 * (x_ + 1) + 4 * np.sin(x_ / 10)))
+def f(x):
+    return np.float_power(np.e, np.sin(x))
 
 
-# Integration, given a function f that works in any single point.
-print(f"Quad: {scipy.integrate.quad(f, -5, 5)[0]:.6f}")
-print(f"Romberg: {scipy.integrate.romberg(f, -5, 5):.6f}")
-print(f"Fixed quad: {scipy.integrate.fixed_quad(f, -5, 5)[0]:.6f}")
+# Integration of arbitrary black box function.
+y = scipy.integrate.quad(f, 0, 10)
+print(f"Quadratic numeral integral of f from 0 to 10 equals {y}.")
 
-# Integration, given a fixed set of samples of values of f.
-xx = np.linspace(-5, 5, 100)
-yy = f(xx)
-print(f"Trapezoidal: {scipy.integrate.trapz(yy, x=xx):.6f}")
-print(f"Simpson: {scipy.integrate.simps(yy, x=xx):.6f}")
+# Sometimes we only have some sample points.
+xs = np.linspace(0, 10, 11) # A good value to create a ruler.
+ys = f(xs)  # Ufuncs are vectorized over the entire vector.
+y = scipy.integrate.simpson(ys, xs)
+print(f"Simpson sample point integral of f from 0 to 10 equals {y}.")
 
-# Next, the minimization of some function f. (To maximize f,
-# you can always simply minimize -f.)
+# Finding the minimum of the given black box function.
+x_min = scipy.optimize.minimize_scalar(f, bounds=[-5, 5])
+print(f"In [-5, 5], f is minimized at {x_min.x}, where it equals {f(x_min.x)}.")
 
-result = scipy.optimize.minimize(f, np.array([0]), method='BFGS')
-print(f"Function is minimized at x = {result.x[0]:.5f}.")
-
-# The lower resolution data points from interval [0, 10].
-x = np.linspace(0, 10, 10)
-# The higher resolution data points on same interval [0, 10].
-xx = np.linspace(0, 10, 500)
-
-# Ufuncs again apply to all elements of the array.
-y = f(x)
-
-# Last, interpolation of values between given data points.
-
-# Create function to represent the interpolation.
-f_linear = scipy.interpolate.interp1d(x, y, kind='linear')
-f_cubic = scipy.interpolate.interp1d(x, y, kind='cubic')
-
-# Apply that function to values on higher resolution.
-y_linear = f_linear(xx)
-y_cubic = f_cubic(xx)
-
-# Create the figure to display.
-plt.figure(1)
-
-# Classic MATLAB plotting syntax, two plots in the same graph.
-# Good thing that Python functions can handle any number of
-# any type of arguments given to them with *args and **kwargs.
-plt.plot(x, y, 'o', xx, y_linear, 'r', xx, y_cubic, 'g')
-plt.show()
+# Last, some interpolation of values from the known sample points.
+cubic_spline = scipy.interpolate.CubicSpline(xs, ys)
+print(f"Cubic spline says that f(5.5) = {cubic_spline(5.5)}.")
+akima = scipy.interpolate.Akima1DInterpolator(xs, ys)
+print(f"Akima interpolator says that f(5.5) = {akima(5.5)}.")
+print(f"The exact value of f(5.5) = {f(5.5)}.")
