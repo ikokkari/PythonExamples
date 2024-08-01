@@ -4,6 +4,7 @@ import numpy as np
 import scipy.integrate
 import scipy.optimize
 import scipy.interpolate
+import matplotlib.pyplot as plt
 
 # Numpy has its own random number generators.
 
@@ -75,7 +76,7 @@ print(f"After taking sine, f_n is {f_n} with type {f_n.dtype}.\n")
 # that we will use in integration, optimization and interpolation.
 
 def f(x):
-    return np.float_power(np.e, np.sin(x))
+    return np.float_power((np.e + np.cos(10*x)), np.sin(x - np.sqrt(x)))
 
 
 # Integration of arbitrary black box function.
@@ -98,3 +99,10 @@ print(f"Cubic spline says that f(5.5) = {cubic_spline(5.5)}.")
 akima = scipy.interpolate.Akima1DInterpolator(xs, ys)
 print(f"Akima interpolator says that f(5.5) = {akima(5.5)}.")
 print(f"The exact value of f(5.5) = {f(5.5)}.")
+
+# Finish up with flourish with some Matplotlib plotting.
+xxs = np.linspace(0, 10, 1001)
+plt.figure()
+# This is all just straight up Matlab.
+plt.plot(xs, f(xs), 'bo', xxs, f(xxs), 'k')
+plt.show()
