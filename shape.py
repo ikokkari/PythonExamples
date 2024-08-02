@@ -13,6 +13,7 @@ from random import Random
 
 rng = Random(12345)
 
+
 class Shape(ABC):
 
     # A class attribute, so the same value is shared by everyone.
@@ -98,19 +99,19 @@ class Circle(Shape):
 
 class Scaled(Shape):
 
-    def __init__(self, other, scale):
+    def __init__(self, client, scale):
         super().__init__()
-        self.other = other
+        self.client = client
         self.scale = scale
 
     def name(self):
-        return f"({self.other.name()} scaled by {self.scale})"
+        return f"({self.client.name()} scaled by {self.scale})"
 
     def area(self):
-        return self.other.area() * self.scale * self.scale
+        return self.client.area() * self.scale * self.scale
 
     def perimeter(self):
-        return self.other.perimeter() * self.scale
+        return self.client.perimeter() * self.scale
 
 
 # Demonstrate the previous classes in action.
@@ -127,10 +128,10 @@ def __demo():
     print(f"Created: {r1}.")
     r2 = Rectangle(5, 5)
     print(f"Created: {r2}.")
-    c = Circle(10)
-    print(f"Created: {c}.")
-    d = Circle(5)
-    print(f"Created: {d}.")
+    c1 = Circle(10)
+    print(f"Created: {c1}.")
+    c2 = Circle(5)
+    print(f"Created: {c2}.")
 
     # Next, we ask these objects what they think they are.
     print(f"\nObject r1 is of type {type(r1)}.")
@@ -145,24 +146,24 @@ def __demo():
     # back in horror seeing something like this. But go bananas!
 
     # First, take the original names for safekeeping.
-    tmp1, tmp2 = c.name, c.area
+    tmp1, tmp2 = c1.name, c1.area
     # Lambdas can be defined to take no parameters, thus behaving
     # essentially as data.
-    c.name = lambda: "Bob"
-    c.area = lambda: rng.randint(1, 100)
-    print(f"\nObject c is now: {c}")  # Bob
-    print(f"Object d is now: {d}")    # behaves normally
+    c1.name = lambda: "Bob"
+    c1.area = lambda: rng.randint(1, 100)
+    print(f"\nObject c1 is now: {c1}")  # Bob
+    print(f"Object c2 is now: {c2}")    # behaves normally
 
     # Restore the balance of the world.
-    c.name, c.area = tmp1, tmp2
-    print(f"Object c is now: {c}")  # behaves normally again
-    print(f"Object d is now: {d}")  # behaves normally (still)
+    c1.name, c1.area = tmp1, tmp2
+    print(f"Object c1 is now: {c1}")  # behaves normally again
+    print(f"Object c2 is now: {c2}")  # behaves normally (still)
 
     # Demonstrate an object decorator in action.
     s1 = Scaled(r1, 2)
     print(f"Created: {s1}.")
-    # Why not? Scalers are shapes, same way as any other shape.
-    # Therefore they can be further decorated.
+    # Why not? Scaled objects are shapes, same way as any other shape.
+    # Therefore, they can be further decorated.
     s2 = Scaled(s1, 3)
     print(f"Created: {s2}.")
 

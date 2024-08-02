@@ -63,6 +63,27 @@ class Temperature:
     def __repr__(self):
         return f"Temperature({self.K}, 'K')"
 
+    # To allow order and equality comparisons, define the following
+    # dunder methods in your class for the six operators.
+
+    def __lt__(self, other):  # <
+        return self.K < other.K
+
+    def __gt__(self, other):  # >
+        return self.K > other.K
+
+    def __eq__(self, other):  # ==
+        return self.K == other.K
+
+    def __ne__(self, other):  # !=
+        return self.K != other.K
+
+    def __le__(self, other):  # <=
+        return self.K <= other.K
+
+    def __ge__(self, other):  # >=
+        return self.K >= other.K
+
     # For temperatures, addition is meaningless, but temperatures
     # can be meaningfully subtracted from each other. Weird.
     def __sub__(self, other):
@@ -77,11 +98,14 @@ class Temperature:
 
 def __demo():
     t1 = Temperature(30, 'C')
-    print(f"Temperature is {t1.C:.1f} C, {t1.F:.1f} F, {t1.K:.1f} K.")
+    print(f"Temperature t1 is {t1.C:.1f} C, {t1.F:.1f} F, {t1.K:.1f} K.")
     t2 = Temperature(100, 'F')
-    print(f"Temperature is {t2.C:.1f} C, {t2.F:.1f} F, {t2.K:.1f} K.")
+    print(f"Temperature t2 is {t2.C:.1f} C, {t2.F:.1f} F, {t2.K:.1f} K.")
     t3 = t1 - t2
     print(f"Their difference is {t3.K:.1f} K.")
+    print(f"Does t1 < t2 ? {t1 < t2}")
+    print(f"Does t1 > t2 ? {t1 > t2}")
+    print(f"Does t1 == t1 ? {t1 == t1}")
     # And the crash.
     try:
         _ = Temperature(-400, 'C')

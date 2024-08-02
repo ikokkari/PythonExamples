@@ -11,7 +11,7 @@ class Card:
 
     # Normally you would only put function and name declarations
     # inside a class body, but this one just goes to show that any
-    # statements inside he class body are executed the same way as
+    # statements inside the class body are executed the same way as
     # any other statements.
     print('Here we are, declaring a class...')
 
@@ -78,7 +78,7 @@ print(f"The type object of that object is {type(type(type(c1)))}.")
 
 print(f"Here is the directory of names in {c1}:")
 print(", ".join(dir(c1)))
-print(f"Here is the directory of names its class:")
+print("Here is the directory of names its class:")
 print(", ".join(dir(Card)))
 
 # Cards have the ability to check if they outrank other cards.
@@ -89,22 +89,23 @@ print(f"Does {c1} outrank {c2} in hearts? {c1.outranks(c2, 'hearts')}")
 print(f"Does {c1} outrank {c3} in notrump? {c1.outranks(c3)}")
 print(f"Does {c3} outrank {c1} in notrump? {c3.outranks(c1)}")
 
+
 # Watch how much easier thinking about computations becomes once the
 # concepts are sufficiently high level. One from your graded labs:
 
-
-def winning_card(cards_, trump=None, winner_so_far=None):
-    for card in cards_:
+def winning_card(cards, trump=None):
+    winner_so_far = None
+    for card in cards:
         if card.outranks(winner_so_far, trump):
             winner_so_far = card
     return winner_so_far
 
 
-cards = [c1, c2, c3, c4]
+trick = [c1, c2, c3, c4]
 # Conversion of list to string uses repr, not str, for the list elements.
-print(f"\nCards played into the trick are: {str(cards)}.")
-# Usually you want to get a human readable representation of the list.
-print(f"Cards played are: {', '.join([str(c) for c in cards])}.")
-print(f"In notrump, trick is won by {winning_card(cards, None)}.")
-print(f"Hearts as trump, trick is won by {winning_card(cards, 'hearts')}.")
-print(f"Diamonds as trump, trick is won by {winning_card(cards, 'diamonds')}.")
+print(f"\nCards played into the trick are: {str(trick)}.")
+# Usually you want to get a human-readable representation of the list.
+print(f"Cards played are: {', '.join([str(c) for c in trick])}.")
+print(f"In notrump, trick is won by {winning_card(trick, None)}.")
+print(f"Hearts as trump, trick is won by {winning_card(trick, 'hearts')}.")
+print(f"Diamonds as trump, trick is won by {winning_card(trick, 'diamonds')}.")
