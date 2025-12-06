@@ -34,10 +34,8 @@ with open('warandpeace.txt', encoding="utf-8") as wap:
     for line in wap:
         if len(line) < 2:  # skip empty lines
             continue
-        # Lowercase the line and remove the trailing linebreak character.
-        line = line.lower()
-        if line[-1] == '\n':
-            line = line[:-1]
+        # Lowercase the line and remove the trailing whitespace.
+        line = line.lower().strip()
         # Remove the contractions (see above).
         for (orig, repl) in replacements:
             line = line.replace(orig, repl)
